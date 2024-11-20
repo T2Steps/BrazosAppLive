@@ -3,8 +3,7 @@
 ################################################################################
 
 /.vs
-/BrazosAPI/appsettings.Development.json
-/BrazosApp/appsettings.Development.json
+
 /BrazosApp/wwwroot/Images/UsersSignature
 /BrazosApp/wwwroot/PermitDocuments
 /BrazosApp/.config
