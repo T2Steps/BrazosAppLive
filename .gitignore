@@ -4,10 +4,12 @@
 
 /.vs
 /BrazosAPI/appsettings.Development.json
-/BrazosAPI/appsettings.json
-/BrazosApp/appsettings.json
 /BrazosApp/appsettings.Development.json
 /BrazosApp/wwwroot/Images/UsersSignature
 /BrazosApp/wwwroot/PermitDocuments
 /BrazosApp/.config
 /BrazosAPI/Properties
+/BrazosAPI/appsettings.json
+/BrazosApp/appsettings.json
+/BrazosAPI/appsettings.Development.json
+/BrazosApp/appsettings.Development.json
