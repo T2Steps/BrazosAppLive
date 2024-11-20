@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/BrazosAPI/appsettings.Development.json
+/BrazosAPI/appsettings.json
+/BrazosApp/appsettings.json
+/BrazosApp/appsettings.Development.json
+/BrazosApp/wwwroot/Images/UsersSignature
+/BrazosApp/wwwroot/PermitDocuments
+/BrazosApp/.config
+/BrazosAPI/Properties
