@@ -1,0 +1,81 @@
+﻿@{
+      var lang = Convert.ToInt32(ViewBag.Lang);
+}
+
+<style>
+      .container {
+          width: auto;
+          position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+    }
+
+      body {
+          /*background: #1a1a1d;*/
+          background: lightgray;
+          /*background: whitesmoke*/
+      }
+</style>
+
+
+<section class="content">
+      <input name="Language" id="lang" value="@lang" hidden />
+      <div class="card card-outline" style="border-top:3px solid #022E5F">
+            <div class="card-header">
+                  @{
+                        if(@lang==1)
+                        {
+                              <h5 style="color:#A48464" class="card-title">Application Submitted Successfully</h5>
+                        }
+                        else if(@lang==2)
+                        {
+                              <h5 style="color:#A48464" class="card-title">Solicitud Enviada con éxito</h5>
+                        }
+                  }
+                  
+                  
+            </div>
+            <div class="card-body">
+                  @{
+                        if(@lang==1)
+                        {
+                              <p class="text-success">Thank you for submitting your application. An email confirming receipt with your application number will be sent to the email on record. We may also contact you if additional information is required.</p>
+                        }
+                        else if(@lang==2)
+                        {
+                              <p class="text-success">Gracias por enviar su solicitud. Se enviará un correo electrónico confirmando el recibo con su número de solicitud al correo electrónico registrado. También podemos comunicarnos con usted si se requiere información adicional.</p>
+                        }
+                  }
+                  
+                  
+                  <br />
+                  <p style="font-size:14px;color:#022E5F;font-weight:600" class="mb-0 pb-0">Brazos County Health District</p>
+                  <p style="font-size:14px;color:#022E5F;font-weight:600" class="mb-0 pb-0">201 N Texas Ave Bryan, TX 77803</p>
+                  @{
+                        if(@lang==1)
+                        {
+                              <p style="font-size:14px;color:#022E5F;font-weight:600" class="mb-0 pb-0">Phone: 979-361-4440</p>
+                        }
+                        else if(@lang==2)
+                        {
+                              <p style="font-size:14px;color:#022E5F;font-weight:600" class="mb-0 pb-0">Teléfono: 979-361-4440</p>
+                        }
+                  }
+                  
+            </div>
+            <div class="card-footer">
+                  @{
+                        @if (lang == 1)
+                        {
+                              <button type="button" class="btn btn-sm btn-custom float-right ml-1" onclick="var applicationId = $('#applicationId').val(); window.location.href = '/'"><i id="submiticon" class="fas fa-arrow-circle-left mr-2"></i> Go Back To Home</button>
+                        }
+                        else if (lang == 2)
+                        {
+                              <button type="button" class="btn btn-sm btn-custom float-right ml-1" onclick="var applicationId = $('#applicationId').val(); window.location.href = '/'"><i id="submiticon" class="fas fa-arrow-circle-left mr-2"></i> Vuelve a casa</button>
+                        }
+                  }
+                  
+            </div>
+      </div>
+</section>

@@ -1,0 +1,267 @@
+﻿@using System.Security.Claims
+@model AreaWisePendingInspectionSearchVM
+@{
+    var code = ViewBag.Code;
+    var apiUrl = ViewBag.apiUrl;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    if (code == "RF")
+    {
+        ViewData["Title"] = "Retail Food Pending Inspections";
+    }
+    else if (code == "MF")
+    {
+        ViewData["Title"] = "Mobile Food Pending Inspections";
+    }
+}
+
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+    .ui-autocomplete {
+        z-index: 2147483647;
+    }
+</style>
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Reports</li>
+                    <li class="breadcrumb-item active">Food</li>
+                    <li class="breadcrumb-item active">Pending Inspections</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                @if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector || User.FindFirstValue(ClaimTypes.Role) == SD.Inspector)
+                {
+                    <div class="card-header ">
+                        <div class="card-tools">
+                            <button type="button" id="exportBtn" class="btn btn-sm btn-custom">
+                                <i class="fas fa-file-excel mr-1" title="Export To Excel"></i> Export To Excel
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>                                
+                                <td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name" /></td>
+                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number" /></td>
+                                <td><input id="estAddress" type="text" class="form-control shadow" placeholder="Address" /></td>
+                                <td><select name="Area" id="areaNo" class="form-control shadow" asp-items="@Model.AreaList"><option selected>--Select Area--</option></select></td>
+                                <td><select name="Purpose" id="purposeidx" class="form-control shadow" asp-items="@Model.PurposeList"><option selected>--Select Purpose--</option></select></td>
+                                @if (User.FindFirstValue(ClaimTypes.Role) != SD.Inspector)
+                                {
+                                    <td><select name="Inspector" id="insidx" class="form-control shadow" asp-items="@Model.AssignInspectorList"><option selected>--Select User--</option></select></td>
+                                }
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" /></td>
+                                <td>To</td>
+                                <td><input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" /></td>
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#areawisePendingInspectionsIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-responsive">
+                        <table id="areawisePendingInspectionsIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            @if (@User.FindFirstValue(ClaimTypes.Role) == SD.Inspector)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Sr.No.
+                                        </th>
+                                        <th class="text-left">
+                                            Area
+                                        </th>
+                                        <th class="text-left">
+                                            Permit Number
+                                        </th>
+                                        <th class="text-left">
+                                            Establishment Name
+                                        </th>
+
+                                        <th class="text-left">
+                                            Address
+                                        </th>
+                                        <th class="text-left">
+                                            Purpose
+                                        </th>
+                                        <th class="text-left">
+                                            Scheduled Date
+                                        </th>
+                                        <th class="text-left">
+                                            Is Follow Up Schedule
+                                        </th>
+                                    </tr>
+                                </thead>
+                            }
+                            else
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Sr.No.
+                                        </th>
+                                        <th class="text-left">
+                                            Area
+                                        </th>
+                                        <th class="text-left">
+                                            Permit Number
+                                        </th>
+                                        <th class="text-left">
+                                            Establishment Name
+                                        </th>
+                                        <th class="text-left">
+                                            Address
+                                        </th>
+                                        <th class="text-left">
+                                            Purpose
+                                        </th>
+                                        <th class="text-left">
+                                            Scheduled Date
+                                        </th>
+                                        <th class="text-left">
+                                            Assigned To
+                                        </th>
+                                        <th class="text-left">
+                                            Is Follow Up Schedule
+                                        </th>
+                                    </tr>
+                                </thead>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    @* <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="~/js/Areas/LoggedIn/AreaWisePendingInspectionReport.js"></script>
+
+    <script>
+        var Todaydate = '';
+
+        $(function () {
+            var Role = '@User.FindFirstValue(ClaimTypes.Role)';
+
+            loadDataTable('@code', Role);
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+
+            var year = dtToday.getFullYear();
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+
+            $('#lowerdaternge').prop('max', mindate);
+            $('#upperdaternge').prop('max', mindate);
+
+            $('input').bind('keypress', function (e) {
+                if (e.which === 13) {
+                    $('#areawisePendingInspectionsIdx').DataTable().ajax.reload()
+                }
+
+            });
+            $('#exportBtn').on('click', function () {
+                exportTableToExcel();
+            });
+
+            Todaydate = mindate
+        });
+
+        function ClearSearchPanel() {
+            $('#estName').val('')
+            $('#permitNo').val('')
+            $('#estAddress').val('')
+            $('#purposeidx').val('--Select Purpose--')
+            $('#areaNo').val('--Select Area--')
+            $('#insidx').val('--Select User--')            
+            $('#lowerdaternge').val('')
+            $('#upperdaternge').val('')
+            $('#areawisePendingInspectionsIdx').DataTable().ajax.reload()
+        }
+    </script>
+
+    <script>
+        async function exportTableToExcel() {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Inspection_Report');
+
+            worksheet.columns = [
+                { header: 'Area', key: 'area', width: 20 },
+                { header: 'Permit', key: 'permit', width: 20 },
+                { header: 'Name', key: 'name', width: 30 },
+                { header: 'Address', key: 'address', width: 30 },
+                { header: 'Purpose', key: 'purpose', width: 30 },
+                { header: 'Scheduled Date', key: 'scheduledDateStr', width: 30 },
+                { header: 'Assigned To', key: 'assignedTo', width: 20 },
+                { header: 'Is Follow Up Inspection', key: 'isFollowUpInspection', width: 40 },
+                
+            ];
+
+            worksheet.getRow(1).font = { bold: true, color: { argb: 'ffffff' }, size: 14 };
+            worksheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', border: '1px solid black', fgColor: { argb: '0287dc' } };
+            worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            worksheet.getColumn(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            worksheet.getColumn(2).alignment = { horizontal: 'center', vertical: 'middle' };
+            worksheet.getColumn(8).alignment = { horizontal: 'center', vertical: 'middle' };
+
+            const tableData = $('#areawisePendingInspectionsIdx').DataTable().data().toArray().map(row => ({
+                area: row.area,
+                permit: row.permitNumber,
+                name: row.name,
+                scheduledDateStr: row.scheduledDateStr,
+                purpose: row.purpose,
+                assignedTo: row.assignedTo,
+                isFollowUpInspection: (() => {
+                    if (row.isFollowUpInspection == true) {
+                        return 'Yes'
+                    }
+                    return 'No'
+                })(),
+                address: row.address,
+            }));
+            worksheet.addRows(tableData);
+
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = Todaydate + '_Area Wise Pending Inspection Report.xlsx';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+}

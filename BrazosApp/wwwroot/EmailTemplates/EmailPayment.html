@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+      <meta charset="utf-8" />
+      <meta name="description" content="Brazos County, TX Health District(BCHD)" />
+      <meta name="keywords" content="Brazos App" />
+      <meta name="viewport" content="width=device-width, initial-scale 1.0" />
+      <title>BrazosApp</title>
+      <style>
+          #text p {
+              font-family: 'Open Sans', sans-serif;
+              font-size: medium;
+              font-weight: 400;
+              color: #000000;
+              text-align: justify;
+          }
+      </style>
+</head>
+<body>
+      <div style="height:5px;">&nbsp;</div>
+      <div id="text" style="padding-left:15px;padding-right:15px">
+            <p>Hi <span style="text-transform:capitalize;">{{OwnerName}}</span>,</p>
+            <p style="text-align: justify;">To pay Brazos County Health District <a href="{{PaymentRedirectUrl}}">Click here</a>.</p>
+
+            <div>
+                <div style="float:left">
+                    <img src="{{ServerUrl}}/Images/Logo/logoclient.png" alt="BrazosApp" style="height: 90px; width: 90px" />
+                    <!--<img src="https://stagebrazos.inspect2go44.com//Images/Logo/logoclient.png" alt="BrazosApp" style="height: 90px; width: 90px" />-->
+                </div>
+                <div style="padding-top:35px;padding-left: 105px; color: #022E5F; font-family: 'Open Sans', sans-serif; font-size: large; font-weight: bold">Brazos County Health District</div>
+            </div>
+            <p style="padding-top:45px">
+                <!--Thanks,<br />-->
+                Brazos County, TX Health District (BCHD)<br />
+                201 N Texas Ave Bryan, TX 77803<br />
+                Phone: 979-361-4440
+            </p>
+            
+      </div>
+</body>
+</html>

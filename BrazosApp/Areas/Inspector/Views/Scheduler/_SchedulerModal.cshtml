@@ -1,0 +1,96 @@
+﻿@model ScheduleModalDataRequestDTO
+
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Schedule Inspection</h5>
+                  </div>
+                  <div class="modal-body">
+                        <form action="/scheduleUpsert" enctype="multipart/form-data" id="newScheduleForm">
+                              <div class="card card-outline" style="border-top:3px solid #022E5F">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="card-body">
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <input type="text" class="form-control shadow mb-3" name="EstName" id="estName" placeholder="Establishment Name" onkeyup="nullify()" />
+                                                            <input type="hidden" id="hdnestablishment" name="EstId" />
+                                                            <span id="estNameError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Permit # <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                                            <input type="text" class="form-control shadow mb-3" name="PermitNo" id="permitNo" placeholder="Permit #" disabled />
+                                                            <span id="permitNoError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Address <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                                            <input type="text" class="form-control shadow mb-3" name="AddressModal" id="addrmodal" placeholder="Address" disabled />
+                                                            <span id="addrmodalError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Purpose <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            @*<input type="text" class="form-control shadow mb-3" name="Notes.Title" id="ntitle" placeholder="Establishment Name" />*@
+                                                            @*<select class="custom-select rounded-1 shadow mb-3" id="purpose" >
+                                                            <option disabled selected>---Select---</option>
+                                                            </select>
+                                                            <span id="purposeError" class="error text-danger"></span>*@
+                                                            @* <input type="hidden" name="PurposeId" id="purposeId" value="0" /> *@
+                                                            <select class="custom-select rounded-1 shadow mb-3 required" name="PurposeId" id="purpose" onchange="$('#purposeId').val($(this).val())" asp-items="@Model.Purposes">
+                                                                  <option disabled selected>--Select--</option>
+                                                                  @* <option value="2">Compliance</option>
+                                                                  <option value="3">Routine</option>
+                                                                  <option value="4">Field Investigation</option>
+                                                                  <option value="5">Visit</option>
+                                                                  <option value="6">Other</option> *@
+                                                            </select>
+                                                            <span id="purposeErr" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div> 
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <input type="date" class="form-control shadow mb-3" name="ScheduledDate" id="schdate" placeholder="Establishment Name" />
+                                                            <span id="schdateError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                                
+                                          </div>
+                                          <div class="row" style="display:none" id="AssignUserSection">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label">Assign To <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <select class="custom-select rounded-1 shadow mb-3 required" name="InspectorId" id="inspectorId" onchange="$('#purposeId').val($(this).val())" asp-items="@Model.AssignInspectorList">
+                                                                  <option disabled selected>--Select--</option>
+                                                            </select>
+                                                            <span id="schdateError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                                
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary float-right" onclick="SchModalert()"> Cancel</button>
+                                    <button type="button" class="btn btn-sm btn-custom float-right" onclick="return NewSchedule();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                              </div>
+                        </form>
+                  </div>
+            </div>
+      </div>
+</div>

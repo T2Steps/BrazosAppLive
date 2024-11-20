@@ -1,0 +1,160 @@
+﻿@using System.Security.Claims;
+@model PaymentIndexVM
+@{
+      var code = ViewBag.Code;
+      var apiUrl = ViewBag.apiUrl;
+      var Dashboard = ViewBag.Dashboard.ToString();
+      ViewData["Title"] = "Financials";
+}
+
+<section class="content-header">
+      <div class="container-fluid">
+            <div class="row mb-2">
+                  <div class="col-sm-6">
+                        <h1 style="color:#A48464">@ViewData["Title"]</h1>
+                  </div>
+                  <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                              <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                              <li class="breadcrumb-item active">Financials</li>
+                              @* <li class="breadcrumb-item active">@ViewData["Title"]</li> *@
+                        </ol>
+                  </div>
+            </div>
+      </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+      <div class="row m-2">
+            <div class="col-md-12">
+                  <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        @*<div class="card-header">
+                              <div style="text-align:right">
+                                    <button type="button" id="exportBtn" class="btn btn-sm btn-custom"><i class="fa-solid fa-file-excel" title="Export To Excel"></i> Export To Excel</button>
+                              </div>
+
+                        </div>*@
+                        <div class="card-body">
+                              <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                                    <tbody>
+                                          <tr>
+                                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number" /></td>
+                                                <td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name" /></td>
+                                                <td><input id="estAddress" type="text" class="form-control shadow" placeholder="Address" /></td>
+                                                <td><input id="invNo" type="text" class="form-control shadow" placeholder="Invoice Number" /></td>
+                                                <td><input id="amountSearch" type="text" class="form-control shadow" placeholder="Amount ($)" oninput="$(this).val($(this).val().replace(/\D/g, ''));" /></td>
+                                                @*<td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" /></td>
+                                                <td>To</td>
+                                                <td><input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" /></td>*@
+                                                <td>
+                                                      <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#paymentTableIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                                      <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                                </td>
+
+                                          </tr>
+                                          <tr>
+                                                <td>
+                                                </td>
+                                          </tr>
+                                    </tbody>
+                              </table>
+                              <div class="table-responsive">
+                                    <table id="paymentTableIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                                          <thead>
+                                                <tr>
+                                                      <th class="text-left">
+                                                            Sr.No.
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Permit Number
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Establishment Name
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Address
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Invoice Number
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Receipt Number
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Amount($)
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Status
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Payment Date
+                                                      </th>
+                                                      <th>
+                                                            Invoice
+                                                      </th>
+                                                      <th>
+                                                            Receipt
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Action
+                                                      </th>
+                                                </tr>
+                                          </thead>
+                                    </table>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+
+
+@await Html.PartialAsync("_payMailModal.cshtml")
+@await Html.PartialAsync("_offlinePaymentPartial.cshtml", Model.OfflinePaymentVM)
+
+@section Scripts {
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+      @*<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.core.min.js"></script>*@
+
+      <script src="~/js/Areas/LoggedIn/PaymentIndex.js?vs=@ViewBag.randomNumber.ToString()"></script>
+      <script src="~/js/Areas/LoggedIn/PaymentTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+      <script>
+            $(function () {
+                loadDataTable('@User.FindFirstValue(ClaimTypes.Role)');
+                //var dtToday = new Date();
+                //var month = dtToday.getMonth() + 1;
+                //var day = dtToday.getDate();
+
+                //var year = dtToday.getFullYear();
+                //if (month < 10) { month = '0' + month.toString() };
+                //if (day < 10) { day = '0' + day.toString(); }
+
+                //var mindate = year + '-' + month + '-' + day;
+
+                //$('#lowerdaternge').prop('max', mindate);
+                //$('#upperdaternge').prop('max', mindate);
+
+                $('input').bind('keypress', function (e) {
+                    if (e.which === 13) {
+                        $('#paymentTableIdx').DataTable().ajax.reload()
+                    }
+
+                });
+            });
+
+            
+
+            function ClearSearchPanel() {
+                $('#estName').val('')
+                $('#permitNo').val('')
+                $('#estAddress').val('')
+                $('#estAddress').val('')
+                $('#amountSearch').val('')
+                $('#invNo').val('')
+                //$('#lowerdaternge').val('')
+                //$('#upperdaternge').val('')
+                $('#paymentTableIdx').DataTable().ajax.reload()
+            }
+      </script>
+}

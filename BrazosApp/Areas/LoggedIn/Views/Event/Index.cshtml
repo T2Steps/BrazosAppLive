@@ -1,0 +1,116 @@
+﻿@model Events
+@{
+    ViewData["Title"] = "Events";
+    var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Events</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Associated Data</li>
+                    <li class="breadcrumb-item active">Events</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+
+                    @* <div class="card-tools">
+                    <div class="float-right"><a asp-action="Upsert" asp-controller="UserManage" asp-area="LoggedIn" class="btn btn-block btn-outline-info float-right"><i class="fas fa-plus mr-2"></i>Register New User</a></div>
+                    </div> *@
+                    <div class="card-tools">
+                        @* <button type="button" data-bs-toggle="modal" data-bs-target="#territoryModal" class="btn btn-block btn-custom float-right mt-2" onclick="clrall();"><i class="fas fa-plus mr-2"></i> Add New Territory</button>  *@
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#eventUpsertModal" class="btn btn-block btn-custom float-right mt-2" onclick="$('#eventUpsertForm').trigger('reset')"><i class="fas fa-plus mr-2"></i> Add New Event</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="eventIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Sr.No.
+                                    </th>
+                                    <th class="text-left">
+                                        Event Name
+                                    </th>
+                                    <th class="text-left">
+                                        Location
+                                    </th>
+                                    <th class="text-left">
+                                        Start Date
+                                    </th>
+                                    <th class="text-left">
+                                        End Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_eventUpsert.cshtml", Model)
+
+@section Scripts {
+    <script src="~/js/Areas/LoggedIn/Event.js"></script>
+
+
+    <script>
+        $(function(){
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+            var year = dtToday.getFullYear();
+            var maxyear = dtToday.getFullYear() + 1;
+
+            var mindate = year + '-' + month + '-' + day;
+            var maxdate = maxyear + '-' + month + '-' + day;
+
+            $('#startDt').attr('min', mindate);
+            $('#endDt').attr('min', mindate);
+
+            $('#startDt').attr('max', maxdate);
+            $('#endDt').attr('max', maxdate);
+        })
+    </script>
+
+}

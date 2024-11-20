@@ -1,0 +1,163 @@
+﻿<style>
+      .progress-container {
+          width: 100%;
+          /*max-width: 400px;*/
+          margin: 0 auto;
+          padding: 20px;
+      }
+
+      .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+          position: relative;
+          overflow: hidden;
+          margin-bottom: 10px;
+      }
+
+      .progress {
+          width: 0%;
+          height: 100%;
+          background-color: #4caf50;
+          transition: width 0.5s ease-in-out;
+      }
+
+      .badge {
+          display: inline-block;
+          padding: 10px 20px; /* Increased padding */
+          font-size: 14px; /* Increased font size */
+          background-color: #28a745; /* Green color */
+          color: white;
+          border-radius: 20px; /* Rounded corners */
+        }
+
+      /*.btn {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          cursor: pointer;
+          text-align: center;
+      }*/
+</style>
+<style>
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f9f9f9;
+          color: #444;
+      }
+
+      .container {
+          max-width: 800px;
+          margin: 50px auto;
+          text-align: center;
+      }
+
+      .logo {
+          margin-bottom: 20px;
+      }
+
+      h1 {
+          font-size: 3em;
+          color: #333;
+          margin-bottom: 20px;
+      }
+
+      p {
+          font-size: 1.2em;
+          margin-bottom: 30px;
+      }
+
+      .button {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+      }
+
+          .button:hover {
+              background-color: #0056b3;
+          }
+</style>
+
+@*<section class="content">
+      <div class="col-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                  <div class="card-header">
+                        <h5 style="color:#A48464" class="card-title" id="exampleModalLabel">Permit Status</h5>
+                  </div>
+                  <div class="card-body">
+                        <div class="progress-container">
+                              <div class="progress-bar">
+                                    <div class="progress" id="progress"></div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-3">
+                                          <p class="badge bg-success">Pending Admin Review</p>
+                                    </div>
+                              </div>
+                              
+                              <button class="btn btn-sm btn-custom float-right" id="increaseBtn">Button</button>
+                        </div>
+                  </div>
+                  
+            </div>
+      </div>
+
+      <div style="width:100%">
+          <div style="display:inline-block; width:19%; border:3px solid">
+              <img src="~/Images/AdminLte/avatar.png" style="width:100%" />
+          </div>
+          <div style="display:inline-block; width:19%; border:3px solid">
+              <img src="~/Images/AdminLte/avatar2.png" style="width:100%" />
+          </div>
+          <div style="display:inline-block; width:19%; border:3px solid">
+              <img src="~/Images/AdminLte/avatar3.png" style="width:100%" />
+          </div>
+          <div style="display:inline-block; width:19%; border:3px solid">
+              <img src="~/Images/AdminLte/avatar4.png" style="width:100%"/>
+          </div>
+          <div style="display:inline-block; width:19%; border:3px solid ">
+              <img src="~/Images/AdminLte/avatar5.png" style="width:100%" />
+          </div>
+      </div>
+
+      <div class="container">
+            <h1>ID Not Found</h1>
+            <p>We're sorry, but the requested ID was not found.</p>
+            <a href="index.html" class="button">Return to Home</a>
+      </div>
+</section>*@
+
+<div class="container">
+        <img src="/Images/Logo/logoclient.png" alt="Logo" class="logo" style="width:10%; height:10%">
+        <h1>Oops! Page Not Found</h1>
+        <p>We're sorry, the page you are looking for cannot be found.</p>
+        <a href="/" class="button">Go Back to Home</a>
+    </div>
+
+
+@section Scripts{
+      <script>
+            $(document).ready(function () {
+                var progress = 0;
+                var progressBar = $('#progress');
+
+                $('#increaseBtn').click(function () {
+                    progress += 10;
+                    if (progress <= 100) {
+                        progressBar.css('width', progress + '%');
+                    }
+                });
+            });
+      </script>
+}
+

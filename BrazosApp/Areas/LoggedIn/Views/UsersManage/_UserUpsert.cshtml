@@ -1,0 +1,132 @@
+﻿@model UserRegistrationVM
+
+<div class="modal fade" id="userUpsert" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Add User</h5>
+                @* <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> *@
+            </div>
+            <div class="modal-body">
+                <form action="/UserUpsert" enctype="multipart/form-data" id="userUpsertForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input name="user.Id" id="userId" value="0" hidden />
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        
+                                        <label style="font-weight:600" class="col-form-label">First Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.FirstName" id="firstName" placeholder="First Name" />
+                                        <span id="firstNamerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Last Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.LastName" id="lastName" placeholder="Last Name"/>
+                                        <span id="lastNamerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">BCHD Employee ID <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.BHCD" id="bhcd" placeholder="BCHD" />
+                                        <span id="bhcderror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Email Id <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.EmailId" id="emailId" placeholder="Email @@" />
+                                        <span id="Emailerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Registered Sanitarian <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.RegisteredSanitarian" id="rSanitarian" placeholder="Registered Sanitarian" />
+                                        <span id="rSanitarianerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Sanitarian In Training <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.SanitarianInTrain" id="sanitarianTrain" placeholder="Sanitarian In Training" />
+                                        <span id="tSanitarianerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Designated Representative <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.DesignatedRepresentative" id="designRepresentative" placeholder="Designated Representative"/>
+                                        <span id="desigRepresentativeError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Certified Pool Operator <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="user.CertifiedPoolOperator" id="poolOperator" placeholder="Certified Pool Operator"/>
+                                        <span id="poolOperatorError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">                                  
+                                  <div class="col-6">
+                                        <div class="form-group">
+                                                @*<label style="font-weight:600" class="col-form-label">Signature <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                                <div class="custom-file shadow mb-3">
+                                                      <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                </div>*@
+                                                <label style="font-weight:600" class="col-form-label">Certified Pool Inspector <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                                <input type="text" class="form-control shadow mb-3" name="user.CertifiedPoolInspector" id="certPoolInspector" placeholder="Certified Pool Inspector"/>
+                                                <span id="certPoolInspectorError" class="text-danger"></span>
+                                        </div>
+                                  </div>
+                                  <div class="col-6">
+                                        <div class="form-group">
+                                          <label style="font-weight:600" class="col-form-label">Designation/Role <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <select class="custom-select rounded-1 shadow mb-3" id="roleId" name="user.RoleId" asp-items="@Model.RoleList">
+                                                   <option disabled selected>---Select---</option>
+                                          </select>
+                                          <span id="roleError" class="text-danger"></span>
+                                        </div>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                  <div class="col-12">
+                                        <div class="form-group">
+                                                <label style="font-weight:600" class="col-form-label">Signature <span style="font-size: 20px ;visibility:hidden">.</span></label>
+                                                <div class="custom-file shadow mb-3">
+                                                      <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                </div>
+                                        </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lg btn-outline-secondary float-right" onclick="Modalert()"> Cancel</button>
+                        <button type="button" class="btn btn-lg btn-custom float-right" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

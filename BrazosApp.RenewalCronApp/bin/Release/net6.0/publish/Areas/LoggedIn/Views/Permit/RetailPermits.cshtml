@@ -1,0 +1,287 @@
+﻿@using System.Security.Claims
+@model PermitSearchParamsVM
+@{
+    ViewData["Title"] = "Retail Permits";
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var randomNumber = (new Random()).Next(1, 999999).ToString();
+}
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+      rel="Stylesheet" type="text/css" />
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Retail Permit List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Retail Permits</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    @* @if (User.FindFirstValue(ClaimTypes.Role) != SD.Inspector && User.FindFirstValue(ClaimTypes.Role) != SD.ViewOnly)
+                    {
+                        <div class="card-tools">
+                            <button type="button" onclick="window.location.href='/RFNewMPermit'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Create New Permit</button>
+                        </div>
+                    }  *@
+                    @* <div class="card-tools" style="border: 1px solid red;">
+                        <form asp-action="ExportToExcelReport" method="post">
+                            <button type="submit" class="btn btn-block btn-custom float-right mt-2"><i class="fa-solid fa-file-excel mr-2" title="Export To Excel"></i> Export To Excel</button>
+                        </form>
+                    </div>
+                    <div class="card-tools" style="border: 1px solid red;">
+                        @if (User.FindFirstValue(ClaimTypes.Role) != SD.Inspector && User.FindFirstValue(ClaimTypes.Role) != SD.ViewOnly)
+                        {
+                            <button type="button" onclick="window.location.href='/RFNewMPermit'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Create New Permit</button>
+                        }
+                    </div> *@
+                    <div class="row justify-content-md-end">
+                        <div class="col-3 text-right">
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (User.FindFirstValue(ClaimTypes.Role) != SD.Inspector && User.FindFirstValue(ClaimTypes.Role) != SD.ViewOnly)
+                                    {
+                                        <button type="button" onclick="window.location.href='/RFNewMPermit'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Create New Permit</button>
+                                    }
+                                </div>
+                                <div class="col-6">
+                                    <form asp-action="ExportToExcelReport" method="post">
+                                        <button type="submit" class="btn btn-block btn-custom float-right mt-2"><i class="fa-solid fa-file-excel mr-2" title="Export To Excel"></i> Export To Excel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>
+                                
+                                @* <td><input id="areaNo" type="text" class="form-control shadow mb-3" placeholder="Area" /></td>
+                                <td><input id="riskidx" type="text" class="form-control shadow mb-3" placeholder="Risk" /></td>
+                                <td><input id="pStat" type="text" class="form-control shadow mb-3" placeholder="Permit Status" /></td> *@
+                                <td><select name="Area" id="areaNo" class="form-control shadow" asp-items="@Model.AreaList"><option  selected>--Select Area--</option></select></td>
+                                <td><select name="Risk" id="riskidx" class="form-control shadow" asp-items="@Model.RiskList"><option  selected>--Select Risk--</option></select></td>
+                                <td><select name="PermitStatus" id="pStat" class="form-control shadow" asp-items="@Model.PermitStatList"><option  selected>--Select Permit Status--</option></select></td>
+                                @* <td><input id="purposeidx" type="text" class="form-control shadow" placeholder="Purpose" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" @ /></td> *@
+                                <td>
+                                    <select name="SearchBy" id="searchby" class="form-control shadow" onchange="if($(this).val()!='--Search By--'){$('#lowerdaternge').prop('disabled', false); $('#upperdaternge').prop('disabled', false);} else{$('#lowerdaternge').prop('disabled', true); $('#upperdaternge').prop('disabled', true);}">
+                                        <option selected>--Search By--</option>
+                                        <option value="Application Date">Application Date</option>
+                                        <option value="Next Inspection Date">Next Inspection Date</option>
+                                    </select>
+                                </td>
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" disabled/></td>
+                                
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            To
+                                        </div>
+                                        <div class="col-10">
+                                            <input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" disabled />
+                                        </div>
+                                    </div>                                    
+                                </td>
+                                <td>&nbsp;</td>
+                                
+                                @* <td><input id="submitBtn" type="button" class="btn btn-sm btn-custom" value="Search" placeholder="Purpose" onclick="$('#retailPermitIdx').DataTable().ajax.reload()" /></td> *@
+                                @* <td><input type="text" placeholder="Search Establishment Name" /></td> *@
+                                
+                                
+                            </tr>
+
+                            <tr>
+                                <td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" *@ /></td>
+                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" *@ /></td>
+                                <td><input id="applicationNo" type="text" class="form-control shadow" placeholder="Application Number" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" *@ /></td>
+                                <td><input id="owner" type="text" class="form-control shadow" placeholder="Owner Name" /></td>
+                                <td><input id="estAddress" type="text" class="form-control shadow" placeholder="Address" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" *@ /></td>
+                                <td><input id="estCity" type="text" class="form-control shadow" placeholder="City" @* oninput="$('#retailPermitIdx').DataTable().ajax.reload()" *@ /></td>
+                                @*<td><input id="estType" type="text" class="form-control shadow" placeholder="Establishment Type" /></td>*@
+                                <td><select name="EstType" id="estType" class="form-control shadow" asp-items="@Model.EstTypeList"><option  selected>--Select Establishment Type--</option></select></td>
+                                
+                                
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#retailPermitIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                                @* <td></td> *@
+                                
+                            </tr>
+                            @* <tr>
+                                <td>Date:</td>
+                                <td><input type="text" id="txtFromDate" name="min" placeholder="From:"><b>-</b><input type="text" id="txtToDate" name="max" placeholder="To:"></td>
+                            </tr> *@
+                            @* <tr>
+                                <td><button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#retailPermitIdx').DataTable().ajax.reload()">Search</button></td>
+                            </tr> *@
+                        </tbody>
+                    </table>
+
+                    <div style="overflow-x: auto;" class="table-responsive">
+                        <table id="retailPermitIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              @* <tr>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Application Number"></th>
+                                    <th data-dt-order="disable"><input type="text" id="txtFromDate" style="width:99%" placeholder="Application Date"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Permit Number"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Establishment Name"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Area"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Risk"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Permit Status"></th>
+                                    <th data-dt-order="disable"><input type="text" style="width:99%" placeholder="Search Purpose"></th>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"></th>
+                              </tr> *@
+                                <tr>
+                                    @* <th class="text-left">
+                                        Sr.No.
+                                    </th> *@
+                                    <th class="text-left" >
+                                        Application <br /> Number
+                                    </th>
+                                    @* <th class="text-left">
+                                        Application Date
+                                    </th> *@
+                                    <th class="text-left">
+                                        Permit Number.
+                                    </th>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Owner
+                                    </th>
+                                    <th class="text-left">
+                                        Address
+                                    </th>
+                                    <th class="text-left">
+                                        City
+                                    </th>
+                                    <th class="text-left">
+                                        Establishment Type
+                                    </th>
+                                    <th class="text-left">
+                                        Area
+                                    </th>
+                                    <th class="text-left">
+                                        Risk Level
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Status
+                                    </th>
+                                    <th class="text-left">
+                                        Last Inspection Date
+                                    </th>
+                                    <th class="text-left">
+                                        Next Inspection Date
+                                    </th>
+                                    <th class="text-left">
+                                        Activation Date
+                                    </th>
+                                    <th class="text-left">
+                                        Expiry Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Areas/LoggedIn/PermitIndex.js?vs=@randomNumber"></script>
+   
+    
+
+    <script>
+        $(function () {
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+
+            var year = dtToday.getFullYear();
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+
+            //$('#lowerdaternge').prop('max', mindate);
+            //$('#upperdaternge').prop('max', mindate);
+
+            $('input').bind('keypress', function (e) {
+                if (e.which === 13) {
+                    $('#retailPermitIdx').DataTable().ajax.reload()
+                }
+                
+            });
+
+            loadRetailDataTable('@User.FindFirstValue(ClaimTypes.Role)');
+
+            // $('#exportToExcel').on('click', function () {
+            //     console.log('test 1');
+            //     exportTableToExcel();
+            // });
+        });
+
+        // function exportTableToExcel() {
+        //     console.log('test 2');
+        //     $.ajax({
+        //         type: "GET",
+        //         url: '/ExportToExcelReport',
+        //         success: function (data) {
+        //             if (data.success) {
+                        
+        //             } else {
+        //                 console.log(data.msg);
+        //             }
+        //         },
+        //         error: function (data) {
+                    
+        //         }
+        //     });
+        // }
+
+        function ClearSearchPanel(){
+            $('#estName').val('')
+            $('#owner').val('')
+            $('#permitNo').val('')
+            $('#estAddress').val('')
+            $('#estCity').val('')
+            $('#estType').val('--Select Establishment Type--')
+            $('#applicationNo').val('')
+            $('#areaNo').val('--Select Area--')
+            $('#riskidx').val('--Select Risk--')
+            $('#pStat').val('--Select Permit Status--')
+            $('#searchby').val('--Search By--')
+            //$('#purposeidx').val('')
+            $('#lowerdaternge').val('')
+            $('#upperdaternge').val('')
+            $('#lowerdaternge').prop('disabled', true)
+            $('#upperdaternge').prop('disabled', true)
+            $('#retailPermitIdx').DataTable().ajax.reload()
+        }
+    </script>
+}

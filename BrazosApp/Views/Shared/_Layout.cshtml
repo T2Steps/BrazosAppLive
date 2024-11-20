@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BrazosApp</title>
+    <link rel="icon" href="@ViewBag.baseurl/Images/Logo/logoclient.png" type="image/x-icon" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BrazosApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+@*     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> *@
+    <link rel="stylesheet" href="~/lib/AdminLTE/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="~/lib/AdminLte/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" />
+
+    <style>
+        /* .card label {
+            font-weight: normal;
+            font-size: medium;
+            padding: 2px;
+        }
+
+        .form-group label {
+            font-weight: normal;
+            padding: 2px;
+        }
+
+        .card input {
+            font-size: medium;
+        } */
+
+        /*#overlay { 
+                  position: fixed; 
+                  display: none; 
+                  width: 100%; 
+                  height: 100%; 
+                  top: 0; 
+                  left: 0; 
+                  right: 0; 
+                  bottom: 0; 
+                  background-color: rgba(0,0,0,0.5);
+                  z-index: 2;
+                  cursor: pointer;}
+            #overlay i { 
+                  position: absolute; 
+                  top: 50%; 
+                  left: 50%; 
+                  font-size: 50px; 
+                  color: white; 
+                  transform: translate(-50%,-50%); 
+                  -ms-transform: translate(-50%,-50%);
+            }*/
+
+            #loading-wrapper {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        #loading-text {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          color: #999;
+          width: 100px;
+          height: 30px;
+          margin: -38px 0 0 -55px;
+          text-align: center;
+          font-family: 'PT Sans Narrow', sans-serif;
+          font-size: 20px;
+        }
+
+        #loading-content {
+          display: block;
+          position: relative;
+          left: 50%;
+          top: 50%;
+          width: 170px;
+          height: 170px;
+          margin: -85px 0 0 -85px;
+        }
+
+      .btn-custom {
+            font-weight:400;
+            color: #7aa1db;
+            border-color: #7aa1db;
+      }
+
+      .btn-custom:hover {
+            font-weight:400;
+            background-color: #7aa1db;
+            border-color: #7aa1db;
+            color: white
+      }
+
+    </style>
+
+</head>
+<body>
+    <div>
+        @*<header id="head">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <img src="~/Images/Logo/logoclient.png" style="height:25px; width:25px" class="mr-2" />
+                    <h5 style="color:#022E5F;font-weight:bold">Brazos County</h5>
+                    <button type="button" style="visibility:hidden" class="float-right"> .</button>
+                    <button type="button" id="SignInBtn" class="btn btn-sm btn-custom btn-sm float-right" onclick="location.href='/Login'">Sign In</button>
+                </div>
+            </nav>
+        </header>*@
+            <header id="head">
+                  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                        <div class="container-fluid">
+                              <div class="row align-items-center">
+                                    <div class="col-auto">
+                                          <img src="~/Images/Logo/logoclient.png" style="height:35px; width:35px"  />
+                                    </div>
+                                    <div class="col-auto mt-1">
+                                          <h5 style="color:#022E5F;font-weight:bold">Brazos County Health District</h5>
+                                    </div>
+                                    @* <div class="col"><a href="/Test">Test</a></div>
+                                    <div class="col"><a href="/Accessed_Denied">AccessDenied</a></div>
+                                    <div class="col"><a href="/Not_Found">Not_Found</a></div> *@
+                                    @* <div class="col"><a href="/RetailFoodNewPermit?id=1">New Permit</a></div>
+                                    <div class="col"><a href="/RetailFoodNewPermit?id=2">New Permit Spanish</a></div>
+                                    <div class="col"><a href="/MobileFoodNewPermit?id=1">Mobile</a></div>
+                                    <div class="col"><a href="/MobileFoodNewPermit?id=2">Mobile Spanish</a></div> *@
+                                    @*<div class="col"><a href="/Success">Success</a></div>
+                                    <div class="col"><a href="/Accessed_Denied">AccessDenied</a></div>*@
+                              </div>
+                              <div class="row">
+                                    <div class="col text-right">
+                                          <button type="button" id="SignInBtn" class="btn btn-sm btn-custom px-3" onclick="location.href='/Login'">Sign In</button>
+                                          <button type="button" id="SignInAppBtn" class="btn btn-sm btn-custom px-3" onclick="location.href='/InspectorLogin'">Inspector Sign In</button>
+                                    </div>
+                              </div>
+                        </div>
+                  </nav>
+            </header>
+        <div class="container" id="bdy">
+            <audio id="errorsound">
+                <source src="~/Audio/error-126627.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="success_sound">
+                <source src="~/Audio/short-success-sound-glockenspiel-treasure-video-game-6346.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="warning">
+                <source src="~/Audio/the-notification-email-143029.mp3" type="audio/mpeg">
+            </audio>
+            @*<div id="overlay">
+                  <i class="fas fa-spinner fa-pulse" style="color:#022E5F"></i>Processing - Please Wait...
+            </div>*@
+            <div id="loading-wrapper">
+                <div id="loading-text"><img src="~/Images/Logo/logoclient.png" alt="Brazos" class="img-circle" style="max-width:70px;max-height: 70px"></div>
+                <div id="loading-content"><i class="fas fa-spinner fa-pulse" style="color:#7aa1db; font-size:160px"></i></div>
+            </div>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+
+        </div>
+        <footer class="text-muted fixed-bottom bg-white border-top box-shadow" id="foot">
+            <div style="padding-left:10px;margin-bottom:5px">
+                <strong>Copyright &copy; <a style="color:#9DB6DC" href="@ViewBag.baseurl">Brazos County, TX Health District(BCHD)</a>.</strong>
+                All rights reserved.
+            </div>
+            
+        </footer>
+    </div>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="/lib/AdminLTE/dist/js/adminlte.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Input Mask -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>*@
+    <script src="~/lib/inputmask/jquery.inputmask.min.js"></script>
+
+    <!-- DataTable -->
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.min.js"></script>
+
+    <!-- SweetAlert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
+
+    <!-- BS Custom File Input -->
+    <script src="~/lib/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @* <script type="text/javascript" language="javascript">
+        function DisableBackButton() {
+            window.history.forward()
+        }
+        DisableBackButton();
+        window.onload = DisableBackButton;
+        window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
+        window.onunload = function () { void (0) }
+    </script> *@
+
+</body>
+</html>

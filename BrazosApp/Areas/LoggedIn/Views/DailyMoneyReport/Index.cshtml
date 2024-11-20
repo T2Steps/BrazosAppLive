@@ -1,0 +1,120 @@
+﻿@model DailyMoneyReportVM
+@{
+    var Dashboard = ViewBag.Dashboard.ToString();
+    ViewData["Title"] = "Daily Money Report";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Inspection</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-body">
+                    <form method="post" action="/DailyMoneyReport">
+                        <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td><input type="date" class="form-control shadow" asp-for="fromDate" /></td>
+                                    <td>To</td>
+                                    <td><input type="date" class="form-control shadow" asp-for="toDate" /></td>
+                                    <td><select class="form-control shadow" multiple="multiple" asp-items="@Model.ProgramList" asp-for="programs"></select></td>
+                                    <td><select class="form-control shadow" multiple="multiple" asp-items="@Model.JurisdictionList" asp-for="jurisdictions"></select></td>
+                                    <td><select class="form-control shadow" multiple="multiple" asp-items="@Model.AccountDescriptionList" asp-for="accountDescriptions"></select></td>
+                                    <td><select class="form-control shadow" multiple="multiple" asp-items="@Model.UserList" asp-for="users"></select></td>
+                                    @* <td>
+                                        <select class="form-control shadow" multiple="multiple" asp-for="paymentModes">
+                                            <option value="Cash">Cash</option>
+                                            <option value="Check">Check</option>
+                                            <option value="Card">Card</option>
+                                            <option value="Money Order">Money Order</option>
+                                        </select>
+                                    </td> *@
+                                    <td>
+                                        <button type="submit" class="btn btn-sm btn-custom"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                        <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            @if(Model.reportFlag == true)
+            {
+                <partial name="_DailyMoneyReport.cshtml" model="@Model" />
+            }            
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#programs option').attr('selected', true);
+            $('#jurisdictions option').attr('selected', true);
+            $('#accountDescriptions option').attr('selected', true);
+            $('#users option').attr('selected', true);
+        });
+
+        function ExportToPdf() {
+            $.ajax({
+                type: "GET",
+                url: "/GetDailyMoneyReportPdf",                
+                beforeSend: function () {
+                    
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    const byteArray = new Uint8Array(data.view);
+
+                    // Convert the byte array to a Base64 string
+                    const base64String = btoa(String.fromCharCode.apply(null, byteArray));
+
+                    // Construct the new URL with the Base64 string as a query parameter
+                    const newUrl = 'https://localhost:44357/' + encodeURIComponent(base64String);
+
+                    console.log(newUrl);
+
+                    // Redirect to the new URL
+                    //window.location.href = newUrl;
+
+                    // data = data.view;
+
+                    // var byteArray = new Uint8Array(data);
+                    // console.log(byteArray);
+                    // var a = window.document.getElementById('exportBtn');
+
+                    // a.href = window.URL.createObjectURL(new Blob([byteArray], { type: 'application/pdf' }));                    
+                },
+                error: function (data) {
+                    
+                },
+                complete: function () {
+                    
+                }
+            })
+        }
+    </script>
+}

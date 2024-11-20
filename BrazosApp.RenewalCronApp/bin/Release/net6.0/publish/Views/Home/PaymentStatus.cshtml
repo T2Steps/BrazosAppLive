@@ -1,0 +1,22 @@
+﻿@{
+    var msg = "";    
+    var flg = Convert.ToInt32(ViewBag.flg);
+
+    if (flg == 0)
+    {
+        msg = "Payment Cancelled";
+    }
+    else if (flg == 1)
+    {
+        msg = "Payment Approved";
+    }
+}
+
+
+<section class="content">
+    <div class="card card-outline" style="border-top:3px solid #022E5F">
+        <div class="card-body">
+            <h5 style="color:#A48464" class="card-title">@Html.Raw(msg)</h5>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,125 @@
+﻿@model OfflinePaymentVM
+
+<div class="modal fade" id="offlinePayModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Payment Details</h5>
+            </div>
+            <div class="modal-body">
+                <form id="OfflinePaymentForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input name="EstId" id="payEstID"  hidden />
+                            <input name="PaymentId" id="payfeesID" hidden />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Invoice No</label>
+                                        <input type="text" name="InvoiceOfflineNo" id="invoiceOffLineNo" class="form-control shadow mb-3" readonly />
+                                        <span id="invoiceOffLineNoErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Collection Date <span style="font-size: 20px ;color:red; display:none">&#42;</span></label>
+                                        @* <input type="datetime-local" name="CollectionDate" id="collectionDt" class="form-control shadow mb-3 required" /> *@
+                                        <input type="text" name="CollectionDate" id="collectionDt" class="form-control shadow mb-3 required" value="@DateTime.Now.ToShortDateString()" disabled/>
+                                        <span id="collectionDtErr" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Amount($) </label>
+                                        <input type="text" name="Amount" id="amount" class="form-control shadow mb-3" readonly />
+                                        <span id="amountErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Amount Due($) </label>
+                                        <input type="text" name="AmountDue" id="offlinepayamountDue" class="form-control shadow mb-3" readonly />
+                                        <span id="offlinepayamountDueErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table id="tblCustomers" class="table table-bordered" cellpadding="0" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 30%">Payment Mode</th>
+                                                <th style="width: 40%">Reference Number</th>
+                                                <th style="width: 20%">Amount ($)</th>
+                                                <th style="width: 10%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="offlineitemCount" value="0" />
+                                                    <input type="hidden" id="totalAmt" value="0" />
+                                                    @* <input class="form-control  form-control-sm" type="text" id="txtName" /> *@
+                                                    <select name="PaymentMethodId" id="payMethodId" class="form-control form-control-sm shadow mb-3 required" onchange="if($(this).val()!=2){$('#itemReferenceNumber').prop('disabled', false);} else{$('#itemReferenceNumber').val('');$('#itemReferenceNumber').prop('disabled', true);}" @* onchange="ShowHideAdjuncData($(this).val())" *@>
+                                                        <option disabled selected>--Select--</option>
+                                                        <option value="2">Cash</option>
+                                                        <option value="3">Check</option>
+                                                        <option value="4">Card</option>
+                                                        <option value="5">Money Order</option>
+                                                    </select>
+                                                </td>
+                                                <td>                        
+                                                    <input class="form-control form-control-sm" type="text" id="itemReferenceNumber" placeholder="Reference Number" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" />
+                                                </td>
+                                                <td>                                                    
+                                                    <input class="form-control  form-control-sm" type="text" id="itemAmt" placeholder="Amount" oninput="$(this).val($(this).val().replace(/\D/g, ''))" />
+                                                </td>
+                                                @* <td><input class="form-control" type="text" id="txtCountry" onkeyup="$(this).val($(this).val().replace(/[^0-9-.]/g, ''))" /></td> *@
+                                                <td><input type="button" class="btn btn-sm btn-custom" style="padding-left:25px;padding-right:25px;" id="btnAdd" value="Add" /></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="display:none" id="ReferenceDetailsSection">
+                                @* <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Bank Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="BankName" id="bankName" class="form-control shadow mb-3 required" placeholder="Bank Name" />
+                                        <span id="bankNameErr" class="error text-danger"></span>
+                                    </div>
+                                </div> *@
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Reference Number <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="ReferenceNumber" id="referenceNumber" class="form-control shadow mb-3 required" placeholder="Reference Number" onkeypress="return /[0-9a-zA-Z]/i.test(event.key)" @* oninput="$(this).val($(this).val().replace(/\D/g, ''))" *@ />
+                                        <span id="referenceNumberErr" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @* <div class="row" style="display:none" id="CardDetailsSection">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Reference Number <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="CardNumber" id="cardNumber" class="form-control shadow mb-3 required" placeholder="Reference Number" oninput="$(this).val($(this).val().replace(/\D/g, ''))" />
+                                        <span id="cardNumberErr" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div> *@
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="PayOfflineModalClose()"> Cancel</button>
+                        <button type="button" id="OfflinePaySubmitBtn" class="btn btn-sm btn-custom float-right" onclick="PaymentOfflineSubmit()"><i id="Payspin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="Paysaveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

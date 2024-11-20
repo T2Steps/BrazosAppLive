@@ -1,0 +1,996 @@
+﻿@model OnlineMFPermitVM
+@{
+    ViewData["Title"] = "New Permit";
+    var flg = 0;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var role = ViewBag.role.ToString();
+    var userId = Convert.ToInt32(ViewBag.userId);
+    var username = ViewBag.userName;
+    var reqTxt = "Required Field ";
+
+}
+@*<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />*@
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<style>
+    body {
+        background-color: whitesmoke;
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    input[type="radio"][id="ctylimitChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="ctylimitChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="planReviewChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="planReviewChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">New Mobile Food Permit</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Dashboard" style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Permits</li>
+                    <li class="breadcrumb-item active">New Mobile Food Permit</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <form action="/MFNewMPermit" enctype="multipart/form-data" method="post" id="NewPermitDataForm">
+                <fieldset id="info">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <input name="Establishment.Id" id="estId" value="0" hidden />
+                            <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="" />
+                            <input type="hidden" name="Rl" id="rl" value="@role" />
+                            <input type="hidden" name="user" id="userId" value="@userId" />
+                            <input type="hidden" name="userName" id="username" value="@username" />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Application Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="date" class="form-control shadow mb-2 required" id="applicationDt" name="ApplicationDate" />
+                                        <span id="applicationDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" value="@Model.Establishment!.Name" placeholder="Establishment Name" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" value="@Model.Establishment.Address" placeholder="Street" />
+                                        <span id="strtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" value="@Model.Establishment.City" placeholder="City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" value="TX" placeholder="State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" value="@Model.Establishment.Zip" placeholder="Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" value="@Model.Establishment.ContactNo" placeholder="Phone" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                    <h5 style="color:#A48464">OWNER DETAILS</h5>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                    <div class="icheck-marine">
+                                        <input type="checkbox" id="sameAddresscheck" onclick="if($(this).is(':checked')){$('#oAddress').val($('#strt').val());$('#ocity').val($('#cty').val());$('#ostate').val($('#state').val());$('#ozip').val($('#zip').val());$('#oAddress').trigger('change');$('#ocity').trigger('change');$('#ostate').trigger('change');$('#ozip').trigger('change'); } else{$('#oAddress').val('');$('#ocity').val('');$('#ostate').val('');$('#ozip').val('');}">
+                                        <label for="sameAddresscheck">
+                                            Same As Establishment Address
+                                        </label>
+                                    </div>
+                                    @*<input type="checkbox" id="sameAddresscheck"  />
+                                    <span style="font-weight:bold">Same As Establishment Address</span>*@
+                                </div>
+                            </div>
+                            @* <h5 style="color:#A48464">OWNER DETAILS</h5> *@
+                        </div>
+                        <div class="card-body">
+                            <input name="EstId" id="eid" value="@Model.Establishment.Id" hidden />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="required form-control shadow mb-2" value="@Model.Owner!.Name" placeholder="Owner Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" value="@Model.Owner!.EmailId" placeholder="Email Id" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.MailingAddress" id="oAddress" value="@Model.Owner!.MailingAddress" placeholder="Street" />
+                                        <span id="oAddressError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.City" id="ocity" value="@Model.Owner!.City" placeholder="City" />
+                                        <span id="ocityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.State" id="ostate" value="TX" placeholder="State" />
+                                        <span id="ostateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.Zip" id="ozip" value="@Model.Owner!.Zip" placeholder="Zip" />
+                                        <span id="ozipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of Business <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="businessId" name="OperationDetails.BusinessTypeId" value="@Model.OperationDetails!.BusinessTypeId" asp-items="@Model.BusinessTypesEng">
+                                            <option selected disabled>--Select--</option>
+                                        </select>
+                                        <span id="businessIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of operation <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="operationtypeId" name="OperationDetails.OperationTypeId" value="@Model.OperationDetails!.OperationTypeId" asp-items="@Model.OperationTypesEng">
+                                            <option selected disabled>--Select--</option>
+                                        </select>
+                                        <span id="operationtypeIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Central Processing Facility <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.CentralProcessingFacility" id="cpf" placeholder="Central Processing Facility" value="@Model.OperationDetails!.CentralProcessingFacility" />
+                                        <span id="cpfError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Street" id="cpfStreet" placeholder="Street" value="@Model.OperationDetails!.Street" />
+                                        <span id="cpfStreetError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.City" id="cpfcity" placeholder="City" value="@Model.OperationDetails!.City" />
+                                        <span id="cpfcityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.State" id="cpfstate" placeholder="State" value="TX" />
+                                        <span id="cpfstateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Zip" id="cpfzip" placeholder="Zip" value="@Model.OperationDetails!.Zip" />
+                                        <span id="cpfzipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Locations where mobile will operate <span style="font-size: 20px ;color:red;">&#42;</span></label>
+                                        @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.MobileOperationLocation" id="mobilefoodlocation" placeholder="Locations where mobile will operate">@Model.OperationDetails!.MobileOperationLocation</textarea> *@
+                                        <div class="row">
+                                            <div class="table-responsive">
+                                                <table id="tblCustomers" class="table table-bordered" cellpadding="0" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 90%">Location</th>
+                                                            
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" id="txtCount" value="0" />
+                                                                <input class="form-control" type="text" id="txtName" />
+                                                            </td>
+                                                            @* <td><input class="form-control" type="text" id="txtCountry" onkeyup="$(this).val($(this).val().replace(/[^0-9-.]/g, ''))" /></td> *@
+                                                            <td><input type="button" class="btn btn-lg btn-custom" style="padding-left:25px;padding-right:25px;" id="btnAdd" value="Add" /></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <span id="mobilefoodlocationError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">List your public water source <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.PublicWaterSouce" id="pubWatSource" placeholder="Public Water Sources">@Model.OperationDetails!.PublicWaterSouce</textarea> *@
+                                        <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.WaterSourceId" id="pubWatSource" asp-items="@Model.PublicWaterSourceList">
+                                            <option disabled selected>---Select---</option>
+                                        </select>
+                                        <span id="pubWatSourceError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Waste water disposal site <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        @*<textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.WasteWaterDisposalsite" id="wasteWaterSite" placeholder="Waste water disposal site">@Model.OperationDetails!.WasteWaterDisposalsite</textarea>*@
+                                        @* <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.WasteWaterDisposalsite" id="wasteWaterSite" placeholder="Waste water disposal site" value="@Model.OperationDetails!.WasteWaterDisposalsite" /> *@
+                                        <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.WasteWaterDisposalsite" id="wasteWaterSite">
+                                            <option disabled selected>--Waste water disposal site--</option>
+                                            <option value="Central Processing Facility">Central Processing Facility</option>
+                                            <option value="Bryan Waste Water Treatment Plant">Bryan Waste Water Treatment Plant</option>
+                                        </select>
+                                        <span id="wasteWaterSiteError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Potable water tank size (gal) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Portablewatertanksize" id="pwTankSize" placeholder="Potable water tank size" value="@Model.OperationDetails!.Portablewatertanksize" oninput="$(this).val($(this).val().replace(/\D/g,''))" />
+                                        <span id="pwTankSizeError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Waste water tank size (gal) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Wastewatertanksize" id="wTankSize" placeholder="Waste water tank size" value="@Model.OperationDetails!.Wastewatertanksize" oninput="$(this).val($(this).val().replace(/\D/g,''))" />
+                                        <span id="wTankSizeError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Certified Food Manager <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2" name="OperationDetails.CertifiedFoodManager" id="FdManager" value="@Model.OperationDetails!.CertifiedFoodManager" placeholder="Certified Food Manager" />
+                                        <span id="FdManagerError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        @*<input type="hidden" name="OperationDetails.CertificateExpirationDt" id="CertExpDate" value="" />*@
+                                        <input type="hidden" name="CertExpiryDt" id="CertExpDate" value="" />
+                                        <label style="font-weight:600" class="col-form-label">Manager’s Certification Expiration Date <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <div class="input-group shadow mb-3">
+                                            <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="certexpdT" class="form-control" @* onchange="$('#CertExpDate').val(new Date($(this).val()));" *@ onchange="validateDate(this)" onblur="validateDate(this)" />
+                                            <div class="input-group-append" style="cursor:pointer">
+                                                <div id="certexpdTDateIcon" class="input-group-text" onclick="$('#certexpdT').datepicker('show');">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                        </div>
+                                        <span id="certexpdTError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">VEHICLE INFORMATION</h5>
+                    </div>
+                    <fieldset id="info2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Make <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="VehicleInformation.Make" id="vMake" class="form-control shadow mb-2 required" placeholder="Make" value="@Model.VehicleInformation!.Make" />
+                                    <span id="vMakeError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Model <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.Model" id="vModel" placeholder="Model" value="@Model.VehicleInformation!.Model" />
+                                    <span id="vModelError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Year <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.Year" id="vyear" placeholder="Year" value="@Model.VehicleInformation!.Year" />
+                                    <span id="vyearError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Color <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="VehicleInformation.Color" id="color" class="form-control shadow mb-2 required" placeholder="Color" value="@Model.VehicleInformation!.Color" />
+                                    <span id="colorError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">License <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.License" id="license" placeholder="License" value="@Model.VehicleInformation!.License" maxlength="7"/>
+                                    <span id="licenseError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">VIN <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.VIN" id="vin" placeholder="VIN" @*oninput="validateInput(this)"*@ value="@Model.VehicleInformation!.VIN" maxlength="17"/>
+                                    <span id="vinError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <div id="btnFooter" class="card-footer">
+                        <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn1" onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+
+                        <button type="button" id="saveBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-save mr-2"></i> Save</button>
+                        <button type="button" id="editBtn" style="display:none" class="btn btn-sm btn-custom float-right" onclick="$('#saveBtn').show();$('#editBtn').css('display', 'none'); $('#info').prop('disabled', false);$('#info2').prop('disabled', false);$('#certexpdTDateIcon').css('pointer-events', 'auto')"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                    </div>
+                </div>
+            </form>
+            <fieldset id="docsView">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="display:inline-block;color:#A48464">Associated Documents</h5>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right " id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Upload New Document</button>
+                        <input name="cnt" id="Cnt" value=0 hidden />
+                    </div>
+                    <div class="card-body">
+                        <partial name="_AssociatedDocsTable" />
+                    </div>
+                    <div id="btnFooter" class="card-footer">
+                        <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn2" onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                        <button type="button" id="submitBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="var encryptedEstId = $('#encryptedEstId').val(); window.location.href = '/MFEdit?id=' + encryptedEstId">Submit <i id="submiticon" class="fas fa-arrow-circle-right ml-2"></i></button>
+                        @* <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="verifyBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Submit and Proceed To Admin Review</button> *@
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+</section>
+
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/Application/DocumentsTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+        function validateDate(input) {
+            const datePattern = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/;
+            const dateValue = input.value;
+            const errorMsg = document.getElementById('certexpdTError');
+
+            if (!datePattern.test(dateValue)) {
+                errorMsg.textContent = 'Please enter a valid date in MM-DD-YYYY format.';
+                input.value = '';
+            } else {
+                errorMsg.textContent = '';
+                $('#CertExpDate').val(dateValue);
+            }
+        }
+
+        $("body").on("click", "#btnAdd", function () {
+            var txtName = $("#txtName");
+
+            if (txtName.val()==''){
+                txtName.css('border-color', 'red');
+                setTimeout(()=>{
+                    txtName.css('border-color', '');
+                }, 4000)
+                $('audio#errorsound')[0].play();
+                setTimeout(() => {
+                    toastr.error("Please Fill Up Location Field");
+                }, 775)
+                return false;
+            }
+
+            //var txtCountry = $("#txtCountry");
+            var txtCount = $("#txtCount");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblCustomers > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Name cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtName.val());
+            cell.append("<input type=\"hidden\" id=\"MFOperationLocationsList_Location\" name=\"MFOperationLocationsList[" + txtCount.val() + "].Location\" value=\"" + txtName.val() + "\">");
+
+            //Add Country cell.
+            //cell = $(row.insertCell(-1));
+            //cell.html(txtCountry.val());
+            //cell.append("<input type=\"hidden\" id=\"FinalTemperatureList_Temperature\" name=\"FinalTemperatureList[" + txtCount.val() + "].Temperature\" value=\"" + txtCountry.val() + "\">");
+
+            //document.getElementById("txtCount").val() = txtCount.val() + 1;
+            txtCount.val(parseInt(txtCount.val()) + 1);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.addClass('btn btn-lg btn-danger remove valid');
+
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtName.val("");
+            //txtCountry.val("");
+
+            //alert($('#txtCount').val());
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            // alert(button);
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            $('audio#warning')[0].play();
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Are you sure?',
+
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#8B9BB2',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //Get the reference of the Table.
+                        var table = $("#tblCustomers")[0];
+
+                        //Delete the Table row using it's Index.
+                        table.deleteRow(row[0].rowIndex);
+
+                        var cnt = $("#txtCount").val();
+                        $("#txtCount").val(parseInt(cnt) - 1);
+
+                        $("#tblCustomers > TBODY > TR").each(function (index) {
+                              var input = $(this).find("input[type='hidden']");
+                              input.attr("name", "MFOperationLocationsList[" + index + "].Location");
+                        });
+
+                    }
+
+                })
+            }, 100)
+            //if (confirm("Do you want to delete: " + name)) {
+            //    //Get the reference of the Table.
+            //    var table = $("#tblCustomers")[0];
+
+            //    //Delete the Table row using it's Index.
+            //    table.deleteRow(row[0].rowIndex);
+            //}
+        };
+    </script>
+
+    <script>
+        function WithinCityLimit() {
+            var yes = $('#ctylimitChoice1');
+            var no = $('#ctylimitChoice2');
+
+            if (yes.is(":checked")) {
+                $('#citylimit').prop("checked", true);
+                $('#citylimit').prop("value", "true");
+            }
+            else if (no.is(":checked")) {
+                $('#citylimit').prop("checked", false);
+                $('#citylimit').prop("value", "false");
+            }
+        }
+
+        // function planReviewCh() {
+        //     var req = $('#planReviewChoice1');
+        //     var ntreq = $('#planReviewChoice2');
+
+        //     if (req.is(":checked")) {
+        //         $('#isPlanReview').val("true");
+        //     }
+        //     else if (ntreq.is(":checked")) {
+        //         $('#isPlanReview').val("false");
+        //     }
+        // }
+
+        function validateInput(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/\D/g, '');
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var daystr = "";
+            var monthstr = "";
+
+            if (day < 10) {
+                day = '0' + day.toString();
+            }
+            else {
+                day = day.toString();
+            }
+
+            if (month < 10) {
+                month = '0' + month.toString();
+            }
+            else {
+                month = month.toString();
+            }
+            var todayDt = year + '-' + month + '-' + day;
+
+            $('#applicationDt').attr('max', todayDt);
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+            $('#cpfzip').inputmask('99999');
+            $('#vyear').inputmask('9999');
+
+            $('#ctylimitChoice1').prop("checked", true);
+            $('#citylimit').prop("checked", true);
+            $('#citylimit').prop("value", "true");
+            $('#docsView').css('display', 'none');
+
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            //$("#applicantsignDt").change(function () {
+            //    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            //});
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#certexpdT").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+                $("#cpf").autocomplete({
+                    autoFocus: true,
+                    source: function (request, response) {
+
+                        $.ajax({
+                            url: '/MFAutoComplete',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    console.log(item);
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                //alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                //alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+
+                        //debugger;
+                        //$("#txtEstablishment").val(i.item.label + "(" + i.item.permit + ")");
+                        //$("#permitNo").val(i.item.permit);
+                        //$("#ownerPhone").val(i.item.ownerphone);
+                        //$("#Contact").val(i.item.ownername);
+                        //$("#physicalAddress").val(i.item.address);
+                        //$("#City").val(i.item.city);
+                        //$("#zip").val(i.item.zip);
+                        //$("#inspectionPanel").show();
+                        //$("#hdnestablishment").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+        });
+    </script>
+
+    <script>
+        function validate() {
+            var flg = 0;
+            let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#applicationDt').val() == "") {
+                $('#applicationDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#oAddress').val() == "") {
+                $('#oAddressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ostate').val() == "") {
+                $('#ostateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ocity').val() == "") {
+                $('#ocityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ozip').val() == "") {
+                $('#ozipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() == "") {
+                $('#cpfzipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+
+            if ($('#OwnName').val() == "") {
+                $('#OwnNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() == "") {
+                $('#emailAddrError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() != "" && EmailPattern.test($('#emailAddr').val()) == false) {
+                $('#emailAddrError').text("\u24d8 Invalid Email ");
+                flg = 1;
+            }
+
+            if ($('#ocontactNo').val() == "") {
+                $('#ocontactNoError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#ocontactNo').val() != "" && $('#ocontactNo').val().replace(/\D/g, '').length < 10) {
+                $('#ocontactNoError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#oAddress').val() == "") {
+                $('#oAddressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ostate').val() == "") {
+                $('#ostateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ocity').val() == "") {
+                $('#ocityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ozip').val() == "") {
+                $('#ozipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            // if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+            //     $('#ozipError').text("\u24d8 Invalid Input ");
+            //     flg = 1;
+            // }
+
+
+            if ($('#vMake').val() == "") {
+                $('#vMakeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vModel').val() == "") {
+                $('#vModelError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vyear').val() == "") {
+                $('#vyearError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#color').val() == "") {
+                $('#colorError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#license').val() == "") {
+                $('#licenseError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vin').val() == "") {
+                $('#vinError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#businessId').val() == null) {
+                $('#businessIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#operationtypeId').val() == null) {
+                $('#operationtypeIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpf').val() == "") {
+                $('#cpfError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfStreet').val() == "") {
+                $('#cpfStreetError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfstate').val() == "") {
+                $('#cpfstateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfcity').val() == "") {
+                $('#cpfcityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#mobilefoodlocation').val() == "") {
+                $('#mobilefoodlocationError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            // if ($('#pubWatSource').val() == "") {
+            //     $('#pubWatSourceError').text("\u24d8 @reqTxt")
+            //     flg = 1;
+            // }
+
+            // if ($('#wasteWaterSite').val() == "") {
+            //     $('#wasteWaterSiteError').text("\u24d8 @reqTxt")
+            //     flg = 1;
+            // }
+
+            if ($('#pubWatSource').val() == null) {
+                $('#pubWatSourceError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wasteWaterSite').val() == null) {
+                $('#wasteWaterSiteError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#pwTankSize').val() == "") {
+                $('#pwTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wTankSize').val() == "") {
+                $('#wTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                $('#contactError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                $('#zipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+                $('#ozipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() != "" && $('#cpfzip').val().replace(/\D/g, '').length < 5) {
+                $('#cpfzipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#vyear').val() != "" && $('#vyear').val().replace(/\D/g, '').length < 4) {
+                $('#vyearError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if (flg == 1) {
+                return "Invalid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+    </script>
+
+    <script>
+        function Submit() {
+
+            var str = validate();
+            //console.log(str);
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+                var successmsg = "Information Saved Successfully";
+                var errormsg = "Unexpected Error Occurred";
+
+                $.ajax({
+                    type: "POST",
+                    url: "/MFNewMPermit",
+                    data: $('#NewPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.type == "Create") {
+                                $('#estId').val(data.id);
+                                $('#encryptedEstId').val(data.encryptid);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                                setTimeout(() => {
+                                    toastr.info(infomsg);
+                                }, 3000)
+                                $('#BackBtn1').css('display', 'none');
+                                //$('#info').prop('disabled', true);
+                                //loadDataTable(false, "No");
+                                loadDataTable(false, "Yes");
+                            }
+                            else if (data.type == "Update") {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#info2').prop('disabled', true);
+                            $('#docsView').show();
+                            //$('#submitBtn').show();
+                            $('#saveBtn').hide();
+                            $('#editBtn').show();
+                            //$('#estId').val(data.id);
+                            //$('audio#success_sound')[0].play();
+                            //setTimeout(() => {
+                            //    toastr.success(successmsg);
+                            //}, 500)
+                            //if(data.info != "") {
+                            //      setTimeout(() => {
+                            //        toastr.info(infomsg);
+                            //      }, 3000)
+                            //}
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                    }
+                })
+            }
+        }
+    </script>
+}
+

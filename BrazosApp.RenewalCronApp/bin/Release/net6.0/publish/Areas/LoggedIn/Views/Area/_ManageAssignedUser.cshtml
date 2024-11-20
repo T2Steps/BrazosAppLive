@@ -1,0 +1,77 @@
+﻿@model AreaUpsertVM
+
+<div class="modal fade" id="manageUserModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Manage Assigned Users</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <form action="/AssignInspectorsToTerritory" enctype="multipart/form-data" id="manageUserForm">
+                            <input name="AreaWiseInspectors.AreaId" id="areaId" value="0" hidden />
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Area </label>
+                                        <input type="text" class="form-control shadow mb-3" id="areaNo" name="Area.AreaNumber" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Description</label>
+                                        <input type="text" class="form-control shadow mb-3" id="areaDescription" name="Area.Description" readonly />
+                                        <span id="lastNamerror" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Choose Inspector <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3" id="InspectorId" name="TerritoryWiseInspectors.AssignedUserId" asp-items="@Model.InspectorList">
+                                            <option disabled selected>---Select---</option>
+                                        </select>
+                                        <span id="inspectorAssignErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="visibility:hidden" class="col-form-label">Button</label>
+                                        <button type="button" class="btn btn-block btn-custom float-right mt-2" onclick="AssignInspector();"><i class="fa-solid fa-user-tag mr-2"></i> Assign</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <input name="Rowcnt" id="rcount" value="0" hidden />
+                            <table id="userManageTable" class="table table-bordered table-hover table-responsive-sm table-responsive-xs table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userManageData">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

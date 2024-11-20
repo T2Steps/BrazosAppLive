@@ -1,0 +1,318 @@
+﻿@using System.Security.Claims
+@using BrazosApp.Utility
+@model InspectorReportVM
+@{
+      var code = ViewBag.Code;
+      var apiUrl = ViewBag.apiUrl;
+      var Dashboard = ViewBag.Dashboard.ToString();
+      if (code == "RF")
+      {
+            ViewData["Title"] = "Retail Food Inspection";
+      }
+      else if (code == "MF")
+      {
+            ViewData["Title"] = "Mobile Food Inspection";
+      }
+}
+
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+    .ui-autocomplete {
+        z-index: 2147483647;
+    }
+</style>
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Inspection</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <div class="card-tools">
+                         <button type="button" id="exportBtn" class="btn btn-sm btn-custom"><i class="fa-solid fa-file-excel" title="Export To Excel"></i> Export To Excel</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>
+                                @*<td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name"  /></td>
+                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number"  /></td>  *@                              
+                                @if(User.FindFirstValue(ClaimTypes.Role)!=SD.Inspector){
+                                    <td><select name="Inspector" id="insidx" class="form-control shadow" asp-items="@Model.UserList"><option  selected>--Select User--</option></select></td>
+                                }
+                                <td>
+                                      <select name="SearchBy" id="searchbyidx" class="form-control shadow">
+                                          <option  selected>--Select By--</option>
+                                          <option  value="Follow Up Date">Follow Up Date</option>
+                                          <option  value="Inspection Date">Inspection Date</option>
+                                      </select>
+                                </td>
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" /></td>
+                                <td>To</td>
+                                <td><input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" /></td>                                
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#inspectionTableIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-responsive">
+                        <table id="inspectionTableIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                              @if (@User.FindFirstValue(ClaimTypes.Role) == SD.Inspector)
+                              {
+                                      <thead>
+                                          <tr>
+                                              <th class="text-left">
+                                                  Sr.No.
+                                              </th>
+                                              <th class="text-left">
+                                                  Permit Number
+                                              </th>
+                                              <th class="text-left">
+                                                  Establishment Name
+                                              </th>
+                                              <th class="text-left">
+                                                  Purpose
+                                              </th>
+                                              <th class="text-left">
+                                                  Inspection Date
+                                              </th>
+                                              <th class="text-left">
+                                                  Score
+                                              </th>
+                                              <th class="text-left">
+                                                  Follow Up
+                                              </th>
+                                              <th class="text-left">
+                                                  Follow Up Date
+                                              </th>
+                                              @*<th class="text-left">
+                                                  Action
+                                              </th>*@
+                                          </tr>
+                                      </thead>
+                              }
+                              else
+                              {
+                                      <thead>
+                                          <tr>
+                                              <th class="text-left">
+                                                  Sr.No.
+                                              </th>
+                                              <th class="text-left">
+                                                  Permit Number
+                                              </th>
+                                              <th class="text-left">
+                                                  Establishment Name
+                                              </th>
+                                              <th class="text-left">
+                                                  Purpose
+                                              </th>
+                                              <th class="text-left">
+                                                  Inspection Date
+                                              </th>
+                                              <th class="text-left">
+                                                  Inspected By
+                                              </th>
+                                              <th class="text-left">
+                                                  Score
+                                              </th>
+                                              <th class="text-left">
+                                                  Follow Up
+                                              </th>
+                                              <th class="text-left">
+                                                  Follow Up Date
+                                              </th>
+                                              @*<th class="text-left">
+                                                  Action
+                                              </th>*@
+                                          </tr>
+                                      </thead>
+                              }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+      @* <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script> *@
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+          <script src="~/js/Areas/LoggedIn/InspectionReport.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+          <script>
+              $(function () {
+                  //var Tok = '@User.FindFirstValue("Token")'
+                  var Role = '@User.FindFirstValue(ClaimTypes.Role)';
+
+                  loadDataTable('@code', Role);
+
+                  var dtToday = new Date();
+                  var month = dtToday.getMonth() + 1;
+                  var day = dtToday.getDate();
+
+                  var year = dtToday.getFullYear();
+                  if (month < 10) { month = '0' + month.toString() };
+                  if (day < 10) { day = '0' + day.toString(); }
+
+                  var mindate = year + '-' + month + '-' + day;
+
+                  //$('#lowerdaternge').prop('max', mindate);
+                  //$('#upperdaternge').prop('max', mindate);
+
+                  $('input').bind('keypress', function (e) {
+                      if (e.which === 13) {
+                          $('#inspectionTableIdx').DataTable().ajax.reload()
+                      }
+
+                  });
+
+                  $('#exportBtn').on('click', function () {
+                        exportTableToExcel();
+                  });
+              });
+
+              function exportTableToExcel() {
+                var tableData = $('#inspectionTableIdx').DataTable().data().toArray();
+                  //console.log(tableData);
+            
+                  var wb = XLSX.utils.book_new();
+                  var ws = XLSX.utils.json_to_sheet(tableData);
+                  var range = XLSX.utils.decode_range(ws['!ref']);
+
+                      for (var C = range.s.c; C <= range.e.c; ++C) {
+                              var cell_address = XLSX.utils.encode_cell({r: 0, c: C});
+                              ws[cell_address].v = ws[cell_address].v.toUpperCase();
+                              ws[cell_address].v = ws[cell_address].v.replace('_', ' ');
+                      }
+
+                      console.log(ws[cell_address])
+                  XLSX.utils.book_append_sheet(wb, ws, 'Inspection_Report');
+                  XLSX.writeFile(wb, 'Inspection_Report.xlsx');
+
+                  //var tableData = $('#inspectionTableIdx').DataTable().data().toArray();
+
+                  //// Create a new workbook
+                  //var wb = XLSX.utils.book_new();
+                  //var ws = {};
+
+                  //// Manually add headers (you may need to get these from DataTables columns, or manually define them)
+                  //var headers = $('#inspectionTableIdx').DataTable().columns().header().toArray().map(h => h.innerText);
+
+                  //// Add header row manually
+                  //headers.forEach((header, index) => {
+                  //    let cellAddress = XLSX.utils.encode_cell({ r: 0, c: index }); // Header row is the first row (r: 0)
+                  //    ws[cellAddress] = { v: header, s: { 
+                  //        font: { bold: true, color: { rgb: "FFFFFF" } }, // White bold text
+                  //        fill: { fgColor: { rgb: "000000" } }, // Black background
+                  //        alignment: { horizontal: "center", vertical: "center" } // Center text
+                  //    }};
+                  //});
+
+                  //// Add the rest of the data manually
+                  //tableData.forEach((rowData, rowIndex) => {
+                  //    rowData.forEach((cellData, colIndex) => {
+                  //        let cellAddress = XLSX.utils.encode_cell({ r: rowIndex + 1, c: colIndex }); // Data starts at row 1 (headers are row 0)
+                  //        ws[cellAddress] = { v: cellData, s: { 
+                  //            alignment: { horizontal: "left", vertical: "center" } // Left-align text for data rows
+                  //        }};
+                  //    });
+                  //});
+
+                  //// Calculate the range of the worksheet
+                  //ws['!ref'] = XLSX.utils.encode_range({
+                  //    s: { r: 0, c: 0 }, // Start at A1
+                  //    e: { r: tableData.length, c: headers.length - 1 } // End at last row/column
+                  //});
+
+                  //// Append the worksheet to the workbook
+                  //XLSX.utils.book_append_sheet(wb, ws, 'Inspection_Report');
+
+                  //// Write the workbook to a file
+                  //XLSX.writeFile(wb, 'Inspection_Report.xlsx');
+
+                //var tableData = $('#inspectionTableIdx').DataTable().data().toArray();
+
+                //console.log(tableData)
+
+                //// Create a new workbook
+                //var wb = XLSX.utils.book_new();
+                //var ws = {};
+
+                //// Manually add headers
+                //var headers = $('#inspectionTableIdx').DataTable().columns().header().toArray().map(h => h.innerText);
+                //console.log(headers);
+
+                //// Add header row manually
+                //headers.forEach((header, index) => {
+                //    let cellAddress = XLSX.utils.encode_cell({ r: 0, c: index }); // Header row is the first row (r: 0)
+                //    ws[cellAddress] = {
+                //        v: header, s: {
+                //            font: { bold: true, color: { rgb: "FFFFFF" } }, // White bold text
+                //            fill: { fgColor: { rgb: "000000" } }, // Black background
+                //            alignment: { horizontal: "center", vertical: "center" } // Center text
+                //        }
+                //    };
+                //});
+
+                //// Add the rest of the data manually
+                //tableData.forEach((rowData, rowIndex) => {
+                //    // rowData will be an object if using DataTable().data().toArray()
+                //    headers.forEach((header, colIndex) => {
+                //        let cellData = rowData[header]; // Access the cell data using the header key (for objects)
+                //        let cellAddress = XLSX.utils.encode_cell({ r: rowIndex + 1, c: colIndex }); // Data starts at row 1 (headers are row 0)
+                //        ws[cellAddress] = {
+                //            v: cellData, s: {
+                //                alignment: { horizontal: "left", vertical: "center" } // Left-align text for data rows
+                //            }
+                //        };
+                //    });
+                //});
+
+                //// Calculate the range of the worksheet
+                //ws['!ref'] = XLSX.utils.encode_range({
+                //    s: { r: 0, c: 0 }, // Start at A1
+                //    e: { r: tableData.length, c: headers.length - 1 } // End at last row/column
+                //});
+
+                //// Append the worksheet to the workbook
+                //XLSX.utils.book_append_sheet(wb, ws, 'Inspection_Report');
+
+                //// Write the workbook to a file
+                //XLSX.writeFile(wb, 'Inspection_Report.xlsx');
+              }
+
+              function ClearSearchPanel(){
+                  $('#insidx').val('--Select User--')
+                  $('#searchbyidx').val('--Select By--')
+                  $('#lowerdaternge').val('')
+                  $('#upperdaternge').val('')
+                  $('#inspectionTableIdx').DataTable().ajax.reload()
+              }
+          </script>
+}

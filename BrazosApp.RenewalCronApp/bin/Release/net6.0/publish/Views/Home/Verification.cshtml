@@ -1,0 +1,78 @@
+﻿@{
+      var msg = "";
+      var href = "";
+      var flg = Convert.ToInt32(ViewBag.flg);
+      var code = TempData["Code"]!.ToString();
+      var purpose = TempData["Purpose"]!.ToString();
+      var applicationID = TempData["ApplicationId"];
+
+      if (flg == 1)
+      {
+            msg = "Email verified successfully. Please <a id='link' href='#'>Click here</a> to open the application portal page.";
+            //href = "/Login";
+            // if (code == "RF")
+            // {
+            //       href = "/RetailFoodNewPermit/" + applicationID;
+            // }
+            // else if (code == "MF")
+            // {
+            //       href = "/MobileFoodNewPermit/" + applicationID;
+            // }
+
+            href = "/" + code + purpose + "?id=" + applicationID;
+      }
+      else if (flg == 2)
+      {
+            msg = "Email already Verified. Please <a id='link' href='#'>Click here</a> to open the application portal page.";
+            //href = "/Login";
+            // if (code == "RF")
+            // {
+            //       href = "/RetailFoodNewPermit/" + applicationID;
+            // }
+            // else if (code == "MF")
+            // {
+            //       href = "/MobileFoodNewPermit/" + applicationID;
+            // }
+            href = "/" + code + purpose + "?id=" + applicationID;
+      }
+      else if (flg == 3)
+      {
+            msg = "This Link is Expired.Please <a id='link' href='#'>Click here</a> to proceed to home page and get new application link to proceed further ";
+            href = "/Home/Index";
+      }
+}
+
+<style>
+      .container {
+          width: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%)
+      }
+
+      body {
+          /*background: #1a1a1d;*/
+          background: lightgray;
+          /*background: whitesmoke*/
+      }
+</style>
+
+
+<section class="content">
+      <div class="card card-outline" style="border-top:3px solid #022E5F">
+            <div class="card-body">
+                  <h5 style="color:#A48464" class="card-title">@Html.Raw(msg)</h5>
+            </div>
+      </div>
+
+</section>
+
+
+@section Scripts{
+      <script>
+            $(function () {
+                $('#link').attr('href', "@href");
+            });
+      </script>
+}

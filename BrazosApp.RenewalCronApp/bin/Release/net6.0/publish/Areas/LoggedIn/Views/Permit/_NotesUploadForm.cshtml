@@ -1,0 +1,44 @@
+﻿@model Notes
+
+<div class="modal fade" id="notesUploadModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Notes</h5>
+            </div>
+            <div class="modal-body">
+                <form action="/notesUpsert" enctype="multipart/form-data" id="notesUploadForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input name="user.Id" id="userId" value="0" hidden />
+                            <input name="Notes.NoteId" id="noteId" value="0" hidden />
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">Title <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="Notes.Title" id="ntitle" placeholder="Title" />
+                                        <span id="ntitleError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">Description <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <textarea type="text" class="form-control shadow mb-2 required" name="Notes.Description" id="ndescription" placeholder="Description..."></textarea>
+                                        <span id="ndescriptionError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="nModalert()"> Cancel</button>
+                        <button type="button" class="btn btn-sm btn-custom float-right" id="notesFormSubmitBtn" onclick="return NotesUpsert();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

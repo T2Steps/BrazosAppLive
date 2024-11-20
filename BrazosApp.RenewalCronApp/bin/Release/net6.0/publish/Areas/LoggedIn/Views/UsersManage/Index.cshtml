@@ -1,0 +1,286 @@
+﻿@using System.Security.Claims;
+@model UserRegistrationVM
+
+@{
+      ViewData["Title"] = "Manage Users";
+      var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<section class="content-header">
+      <div class="container-fluid">
+            <div class="row mb-2">
+                  <div class="col-sm-6">
+                        <h1 style="color:#A48464">Registered Users</h1>
+                  </div>
+                  <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                              <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                              <li class="breadcrumb-item active">User Management</li>
+                        </ol>
+                  </div>
+            </div>
+      </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+      <div class="row m-2">
+            <div class="col-md-12">
+                  <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        @if(User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin){
+                              <div class="card-header">
+
+                                    @* <div class="card-tools">
+                                    <div class="float-right"><a asp-action="Upsert" asp-controller="UserManage" asp-area="LoggedIn" class="btn btn-block btn-outline-info float-right"><i class="fas fa-plus mr-2"></i>Register New User</a></div>
+                                    </div> *@
+                                    <div class="card-tools">
+                                          <button type="button" data-bs-toggle="modal" data-bs-target="#userUpsert" class="btn btn-block btn-custom float-right mt-2" onclick="clrall();"><i class="fas fa-plus mr-2"></i> Register New User</button>
+                                    </div>
+                              </div>
+                        }
+                        
+                        <div class="card-body">
+                              <div class="table-responsive">
+                                    <table id="userManageIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                                          <thead>
+                                                <tr>
+                                                      <th class="text-left">
+                                                            Sr.No.
+                                                      </th>
+                                                      <th class="text-left">
+                                                            First Name
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Last Name
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Role
+                                                      </th>
+                                                      <th class="text-left">
+                                                            BCHD Employee ID
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Email Id
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Registered Sanitarian
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Sanitarian In Training
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Designated Representative
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Certified Pool Operator
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Certified Pool Inspector
+                                                      </th>
+                                                      <th class="text-left">
+                                                            Action
+                                                      </th>
+                                                </tr>
+                                          </thead>
+                                    </table>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+
+@await Html.PartialAsync("_UserUpsert.cshtml", Model)
+
+@section Scripts{
+    <script src="~/js/Areas/LoggedIn/UserManageTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+            $(document).ready(function () {
+                bsCustomFileInput.init();
+                loadDataTable('@User.FindFirstValue(ClaimTypes.Role)');
+            });
+    </script>
+
+    <script>
+        function clrall() {
+            $('#userUpsertForm').trigger('reset');
+        }
+    </script>
+
+    <script>
+            function validate() {
+                let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+                var BHCDPattern = new RegExp("^[0-9]{4,6}$");
+                var flg = 0;
+                if ($('#firstName').val() == "") {
+                    $('#firstNamerror').text("ⓘ Required Field");
+                    setTimeout(() => {
+                        $('#firstNamerror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+                if ($('#lastName').val() == "") {
+                    $('#lastNamerror').text("ⓘ Required Field");
+                    setTimeout(() => {
+                        $('#lastNamerror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+                if ($('#bhcd').val() == "") {
+                    $('#bhcderror').text("ⓘ Required Field ");
+                    setTimeout(() => {
+                        $('#bhcderror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+                if ($('#emailId').val() == "") {
+                    $('#Emailerror').text("ⓘ Required Field ");
+                    setTimeout(() => {
+                        $('#Emailerror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+                if ($('#roleId').val() == null) {
+                    $('#roleError').text("ⓘ Required Field ");
+                    setTimeout(() => {
+                        $('#roleError').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+                if ($('#emailId').val() != "" && EmailPattern.test($('#emailId').val()) == false) {
+                    $('#Emailerror').text("ⓘ Invalid Email ");
+                    setTimeout(() => {
+                        $('#Emailerror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+
+                if ($('#bhcd').val() != "" && BHCDPattern.test($('#bhcd').val()) == false) {
+                    $('#bhcderror').text("ⓘ Invalid BHCD ");
+                    setTimeout(() => {
+                        $('#bhcderror').html("");
+                    }, 5000)
+                    flg = 1;
+                }
+
+                if (flg == 1) { return "Invalid" }
+                else { return "Valid" }
+            }
+
+            function Submit()
+            {
+                  var str = validate();
+                  if (str == "Invalid") {
+                      return false;
+                  }
+                  else if (str == "Valid") {
+                    
+                    var formData = new FormData();
+                    formData.append('user.Id', $('#userId').val());
+                    formData.append('user.FirstName', $('#firstName').val());
+                    formData.append('user.LastName', $('#lastName').val());
+                    formData.append('user.BHCD', $('#bhcd').val());
+                    formData.append('user.EmailId', $('#emailId').val());
+                    formData.append('user.RegisteredSanitarian', $('#rSanitarian').val());
+                    formData.append('user.SanitarianInTrain', $('#sanitarianTrain').val());
+                    formData.append('user.DesignatedRepresentative', $('#designRepresentative').val());
+                    formData.append('user.CertifiedPoolOperator', $('#poolOperator').val());
+                    formData.append('user.CertifiedPoolInspector', $('#certPoolInspector').val());
+                    formData.append('user.RoleId', $('#roleId').val());
+                    formData.append('user.SignFile', $('#exampleInputFile')[0].files[0]);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/UserUpsert",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('div#loading-wrapper').show();
+                            $('#spin').show();
+                            $('#saveicon').hide();
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(data.msg);
+                                }, 500)
+                                if(data.info != "") {
+                                      setTimeout(() => {
+                                        toastr.info(data.info);
+                                      }, 3000)
+                                } 
+                            }
+                            else {
+                                $('audio#errorsound')[0].play();
+                                setTimeout(() => {
+                                    toastr.error(data.msg);
+                                }, 775)
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                        complete: function () {
+                            $('div#loading-wrapper').hide();
+                            $('#spin').hide();
+                            $('#saveicon').show();
+                            $('#userUpsert').modal('hide');
+                            dataTable.ajax.reload();
+                        }
+                    })
+                  }
+            }
+    </script>
+
+    <script>
+        function Modalert() {
+            var flg = 0;
+            if ($('#firstName').val() != "") {
+                flg = 1;
+            }
+            if ($('#lastName').val() != "") {
+                flg = 1;
+            }
+            if ($('#bhcd').val() != "") {
+                flg = 1;
+            }
+            if ($('#emailId').val() != "") {
+                flg = 1;
+            }
+            if ($('#rSanitarian').val() != "") {
+                flg = 1;
+            }
+            if ($('#sanitarianTrain').val() != "") {
+                flg = 1;
+            }
+            if ($('#designRepresentative').val() != "") {
+                flg = 1;
+            }
+            if ($('#poolOperator').val() != "") {
+                flg = 1;
+            }
+            if ($('#certPoolInspector').val() != "") {
+                flg = 1;
+            }
+            if ($('#roleId').val() != null) {
+                flg = 1;
+            }
+            if ($('#exampleInputFile').val() != "") {
+                flg = 1;
+            }
+            //console.log($('#roleId').val());
+            //console.log($('#exampleInputFile').val());
+
+            if (flg == 1) {
+                if (confirm("You have some unsaved Changes. On closing, your progress will be lost")) {
+                    $('#userUpsert').modal('hide');
+                }
+            }
+            else {
+                $('#userUpsert').modal('hide');
+            }
+        }
+    </script>
+}

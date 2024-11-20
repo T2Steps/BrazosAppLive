@@ -1,0 +1,486 @@
+﻿@model OnlineTFNewPermitVM
+
+@{
+    var lang = Convert.ToInt32(ViewBag.Lang);
+    var owner = ViewBag.Owner.ToString();
+    var email = ViewBag.Email.ToString();
+    var contact = ViewBag.Phone.ToString();
+    var reqTxt = "";
+    var signNotSavedTxt = "";
+    //var invalidTxt = "";
+}
+
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+@* <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> *@
+<style>
+    @@media only screen and (max-width: 768px) {
+        canvas {
+            width: 300px;
+            height: 100px;
+        }
+    }
+
+    body {
+        background-color: whitesmoke;
+    }
+</style>
+
+<input id="lang" name="Language" value="@lang" hidden />
+ <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="" />
+<input type="hidden" id="encryptedApplicationId" name="EncryptedApplicationId" value="@Model.EncryptedApplicationId" /> 
+@if (lang == 1)
+{
+    reqTxt = "Required Field ";
+    signNotSavedTxt = " Signature Not Saved";
+    <partial name="_TemporaryFoodNewPermitEng.cshtml" />
+}
+else if (lang == 2)
+{
+    reqTxt = "Campo requerido ";
+    signNotSavedTxt = " Firma no guardada";
+    <partial name="_TemporaryFoodNewPermitSp.cshtml" />
+}
+
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+
+@section Scripts {
+    <!-- jQuery UI -->
+    <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script>
+    @* <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script> *@
+    @*<script src="https://code.jquery.com/ui/1.13.1/i18n/jquery-ui-i18n.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    @if (lang == 2)
+    {
+        <script src="~/js/datepicker-es.js"></script>
+    }
+
+    <script src="~/lib/signature_pad/signature_pad.umd.js"></script>
+    <script src="~/js/Application/DocumentsTable.js"></script>
+    <script>
+        var signaturePadApplicant;
+        var lang = $('#lang').val();
+
+        function nullAll() {
+            if ($('#event').val() == "") {
+                $('#eventId').val(0);
+                $('#eventLocation').val("");
+                $('#dateControl').hide();
+                $('#fromDt').datepicker('setDate', null);
+                $('#toDt').datepicker('setDate', null);
+                $('#startDate').val("");
+                $('#endDate').val("");
+
+            }
+            else {
+                $('#eventIdError').text("");
+            }
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            $('#OwnName').val("@owner");
+            $('#emailAddr').val("@email");
+            $('#ocontactNo').val("@contact");
+            $('#OwnName').attr('readonly', true);
+            $('#ocontactNo').attr('readonly', true);
+            $('#emailAddr').attr('readonly', true);
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+            $('#cpfzip').inputmask('99999');
+            $('#vyear').inputmask('9999');
+            //$('#ozip').inputmask('99999');
+
+            $('#ownerContact').val('@contact');
+
+            $('#docsView').css('display', 'none');
+
+
+            var applicant = document.getElementById("applicantSignature");
+            var applicantclearButton = applicant.querySelector("[data-action=clear]");
+            var applicantCanvas = applicant.querySelector("canvas");
+
+            signaturePadApplicant = new SignaturePad(applicantCanvas);
+            applicantclearButton.addEventListener("click", function (event) {
+                signaturePadApplicant.clear();
+                $('#applicantSignatureBase64').val("");
+            });
+
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+            $("input[type='text'].required, input[type='date'].required,input[type='time'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#applicantsignDt").change(function () {
+                $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            });
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#toDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#fromDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#applicantsignDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: false,
+                changeYear: false,
+                minDate: new Date(),
+                maxDate: new Date(),
+                yearRange: '-0:+0',
+            });
+            $("#applicantsignDt").datepicker("setDate", new Date())
+            $('#ApplicantsignDate').val(($('#applicantsignDt').val()));
+            $("#applicantsignDt").prop('readonly', true)
+
+            $('#listofFoodToBePrepared').summernote({
+                toolbar: [
+                    ['style', ['bold', 'underline', 'clear']],
+                    ['para', ['ul', 'ol']],
+                ],
+                placeholder: 'List of foods to be prepared or served...',
+                spellCheck: false
+            });
+
+                    
+
+            $('.summernote').each(function () {
+                $(this).val($(this).code());
+            });
+
+            $("#event").autocomplete({
+                autoFocus: true,
+                source: function (request, response) {
+                    var url = '/EventAutoComplete';
+                    var pref = '';
+                    if (request.term.length >= 3) {
+                        pref = request.term;
+                    }
+                    //console.log(request.term);
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        //data: { "prefix": request.term },
+                        data: { "prefix": pref },
+                        success: function (data) {
+                            //console.log(data);
+                            response($.map(data.response, function (item) {
+                                //console.log(item);
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            //console.log(response.responseText)
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    //debugger;
+                    //alert(2);
+                    $("#eventLocation").val(i.item.location);
+                    $("#eventId").val(i.item.val);
+
+                    $('#dateControl').show();
+                    //$("#SchEstId").val(i.item.val);
+                    //alert(1);
+
+                    var fromdt = i.item.startDt.split('T');
+                    var todt = i.item.endDt.split('T');
+                    var fromdate = fromdt[0].replace(/\//g, '-');
+                    var todate = todt[0].replace(/\//g, '-');
+
+                    //console.log(fromdate)
+                    //console.log(todate)
+
+                    var stDt = fromdate.split('-');
+                    var toDt = todate.split('-');
+
+                    var frmonth = parseInt(stDt[1]) - 1;
+                    var tomonth = parseInt(toDt[1]) - 1;
+
+                     $("#fromDt").datepicker("option", "minDate", new Date());
+                     $("#fromDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+                     $("#toDt").datepicker("option", "minDate", new Date());
+                     $("#toDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+
+                    // var dt = date.split(' ')
+                    // var s = dt[0].split('-');
+
+                    // $("#toDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+
+                    // $("#fromDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+    <script>
+        function validate() {
+            var flg = 0;
+            if ($('#eventId').val() == 0) {
+                $('#eventIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#preparingTime').val() == "") {
+                $('#preparingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#servingTime').val() == "") {
+                $('#servingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#startDate').val() == "") {
+                $('#fromDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#endDate').val() == "") {
+                $('#toDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#listofFoodToBePrepared').val() == "") {
+                $('#listofFoodToBePreparedError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#applicantSignatureBase64').val() == "") {
+                if (!signaturePadApplicant.isEmpty()) {
+                    $('#ApplicantSignError').text("\u24d8 @signNotSavedTxt")
+                }
+                else {
+                    $('#ApplicantSignError').text("\u24d8 @reqTxt")
+                }
+                flg = 1;
+            }
+            if ($('#ApplicantsignDate').val() == "") {
+                $('#ApplicantSignDateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                if (@lang== 1) {
+                    $('#contactError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#contactError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                if (@lang== 1) {
+                    $('#zipError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#zipError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+            if (flg == 1) {
+                return "Invalid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+    </script>
+
+    <script>
+        function Submit() {
+
+            var str = validate();
+
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+
+                var successmsg = "";
+                var infomsg = "";
+                var errormsg = "";
+
+                if (lang == 1) {
+                    successmsg = "Informations Saved Successfully";
+                    infomsg = "Please Upload Relevent Documents and Submit the Form";
+                    errormsg = "Unexpected Error Occurred"
+                }
+                else if (lang == 2) {
+                    successmsg = "Información guardada exitosamente";
+                    infomsg = "Cargue los documentos relevantes y envíe el formulario";
+                    errormsg = "Ocurrió un error inesperado"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/TFNewPermit",
+                    data: $('#NewPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        $('#saveBtn').prop('disabled', true);
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.type == "Create") {
+                                $('#estId').val(data.id);
+                                $('#encryptedEstId').val(data.encryptid);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                                setTimeout(() => {
+                                    toastr.info(infomsg);
+                                }, 3000)
+                                loadDataTable(false, "No");
+                            }
+                            else if (data.type == "Update") {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#docsView').show();
+                            $('#submitBtn').show();
+                            $('#saveBtn').hide();
+                            $('#editBtn').show();
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                        $('#saveBtn').prop('disabled', false);
+                    }
+                })
+            }
+        }
+    </script>
+
+    <script>
+        function SaveSignature() {
+            var alertTxt = "";
+            if (@lang== 1) {
+                alertTxt = "Please provide your signature.";
+            }
+            else if (lang == 2) {
+                alertTxt = "Por favor proporcione su firma.";
+            }
+            var applicant = $('#applicantSignature')[0];
+            var applicantCanvas = applicant.querySelector("canvas");
+            if (signaturePadApplicant.isEmpty()) {
+                alert(alertTxt);
+                return false;
+            }
+            var signatureString = applicantCanvas.toDataURL();
+            $('#applicantSignatureBase64').val(signatureString);
+
+            $('#applicantSignatureBase64').parents("div.form-group").find("span.error").text("");
+        }
+    </script>
+}

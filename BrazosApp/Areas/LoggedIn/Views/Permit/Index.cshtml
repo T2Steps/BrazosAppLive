@@ -1,0 +1,88 @@
+﻿@* @model UserRegistrationVM *@
+
+@{
+    ViewData["Title"] = "Manage Users";
+    var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Permit List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Permits</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    @* <div class="card-tools">
+                    <div class="float-right"><a asp-action="Upsert" asp-controller="UserManage" asp-area="LoggedIn" class="btn btn-block btn-outline-info float-right"><i class="fas fa-plus mr-2"></i>Register New User</a></div>
+                    </div> *@
+                    @* <div class="card-tools">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#userUpsert" class="btn btn-block btn-custom float-right mt-2" onclick="clrall();"><i class="fas fa-plus mr-2"></i> Register New User</button>
+                    </div> *@
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="permitIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Sr.No.
+                                    </th>
+                                    <th class="text-left">
+                                        Application Number
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Number.
+                                    </th>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Territory
+                                    </th>
+                                    <th class="text-left">
+                                        Risk Level
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Status
+                                    </th>
+                                    <th class="text-left">
+                                        Purpose
+                                    </th>
+                                    <th class="text-left">
+                                        Activation Date
+                                    </th>
+                                    <th class="text-left">
+                                        Expiry Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* @await Html.PartialAsync("_UserUpsert.cshtml", Model) *@
+
+@section Scripts {
+    <script src="~/js/Areas/LoggedIn/PermitIndex.js"></script>
+}

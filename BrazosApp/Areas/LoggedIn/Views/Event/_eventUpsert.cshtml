@@ -1,0 +1,60 @@
+﻿@model Events
+
+<div class="modal fade" id="eventUpsertModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Event</h5>
+            </div>
+            <div class="modal-body">
+                <form action="/eventUpsert" enctype="multipart/form-data" id="eventUpsertForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input name="Id" id="eventId" value="0" hidden />
+                            @* <input name="EncryptedId" id="encryptedEventId" value="" hidden /> *@
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3 required" name="Name" id="name" placeholder="Event Name" />
+                                        <span id="nameError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">Location <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3 required" name="Location" id="location" placeholder="Event Location" />
+                                        <span id="locationError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">Start Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="date" class="form-control shadow mb-3 required" name="StartDate" id="startDt" placeholder="" onchange="$('#endDt').val(''); $('#endDt').attr('min', $(this).val());" />
+                                        <span id="startDtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label en">End Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="date" class="form-control shadow mb-3 required" name="EndDate" id="endDt" placeholder="Title" />
+                                        <span id="endDtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="eventModalert()"> Cancel</button>
+                        <button type="button" id="submitBtn" class="btn btn-sm btn-custom float-right" onclick="return EventUpsert();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

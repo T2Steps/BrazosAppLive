@@ -1,0 +1,523 @@
+﻿@model OnlineDayCareApplicationVM
+@{
+    var owner = ViewBag.Owner.ToString();
+    var email = ViewBag.Email.ToString();
+    var contact = ViewBag.Phone.ToString();
+    var reqTxt = "";
+    var signNotSavedTxt = "";
+
+}
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<style>
+    body {
+        background-color: whitesmoke;
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+  
+</style>
+@if (reqTxt=="")
+{
+    reqTxt = "Required Field ";
+    signNotSavedTxt = "Signature Not Saved";
+}
+
+
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <form action="/NewDayCareApplication" enctype="multipart/form-data" method="post" id="NewDayCareApplicationForm">
+                <fieldset id="info">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">REQUEST FOR SANITATION INSPECTION (DAYCARE)</h5>
+                        </div>
+                        <div class="card-body">
+                            <input name="Establishment.Id" id="estId" value="0" hidden />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Application Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="date" class="form-control shadow mb-2 required" id="applicationDt" name="ApplicationDate" />
+                                        <span id="applicationDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Name of Day Care Center <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="DayCare.Name" id="EstName" class="form-control shadow mb-2 required" value="@Model.Establishment!.Name" placeholder="Name of Day Care Center" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="DayCare.Address" id="address" value="@Model.Establishment.Address" placeholder="Address" />
+                                        <span id="addressError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="DayCare.City" id="cty" value="@Model.Establishment.City" placeholder="City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="DayCare.State" id="state"  value="TX" placeholder="State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="DayCare.Zip" id="zip" value="@Model.Establishment.Zip" placeholder="Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="DayCare.ContactNo" id="contactNo" value="@Model.Establishment.ContactNo" placeholder="Phone" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                    <h5 style="color:#A48464">OWNER DETAILS</h5>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                    <div class="icheck-marine">
+                                        <input type="checkbox" id="sameAddresscheck" onclick="if($(this).is(':checked')){$('#oAddress').val($('#strt').val());$('#ocity').val($('#cty').val());$('#ostate').val($('#state').val());$('#ozip').val($('#zip').val());$('#oAddress').trigger('change');$('#ocity').trigger('change');$('#ostate').trigger('change');$('#ozip').trigger('change'); } else{$('#oAddress').val('');$('#ocity').val('');$('#ostate').val('');$('#ozip').val('');}">
+                                        <label for="sameAddresscheck">
+                                            Same As DayCare Address
+                                        </label>
+                                    </div>
+                                    @*<input type="checkbox" id="sameAddresscheck"  />
+                                    <span style="font-weight:bold">Same As Establishment Address</span>*@
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="card-body">
+                            @* <input name="EstId" id="eid" value="@Model.DayCare.Id" hidden /> *@
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="required form-control shadow mb-2" value="@Model.Owner!.Name" placeholder="Owner Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" value="@Model.Owner!.EmailId" placeholder="Email Id" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.MailingAddress" id="oAddress" value="@Model.Owner!.MailingAddress" placeholder="Street" />
+                                        <span id="oAddressError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.City" id="ocity" value="@Model.Owner!.City" placeholder="City" />
+                                        <span id="ocityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.State" id="ostate" @* value="@Model.Owner!.State" *@ value="TX" placeholder="State" />
+                                        <span id="ostateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.Zip" id="ozip" value="@Model.Owner!.Zip" placeholder="Zip" />
+                                        <span id="ozipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                    </div>
+                    <fieldset id="info2">
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">                                  
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Hours of Operation <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.HoursofOperation" id="empNo" value="@Model.Establishment.Description" />
+                                        <span id="empNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>                       
+                            </div>
+                            <br />                
+                            <p style="text-align:center; font-weight:bold">
+                                I HAVE READ AND AGREE TO THE CONDITIONS OF THIS APPLICATION.
+                            </p>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <div id="applicantSignature">
+                                        <div class="row">
+                                            <input type="hidden" class="required" name="Establishment.ApplicantSign" id="applicantSignatureBase64" value="" />
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <div class="m-signature-pad">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                        <canvas id="applicant" width="490" height="160" style="border:1px solid;padding:7px" @* style="width:90%;display:block" *@ @* class="w-auto h-auto" *@></canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="float-right">
+                                                        <button type="button" class="btn btn-sm btn-custom" onclick="return SaveSignature();">Save&nbsp<i class="fa-regular fa-floppy-disk"></i></button>
+                                                        <button type="button" data-action="clear" class="btn btn-sm btn-danger">Clear&nbsp<i class="fas fa-trash"></i></button>
+                                                    </span>
+                                                </div>
+                                                <label style="font-weight:600" class="col-form-label">Applicant’s Signature</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="ApplicantSignError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Date  <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @*<input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" />  onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" onchange="funSignatureDate($(this))"*@
+                                    @*<input type="hidden" class="required" name="Establishment.ApplicantSignDate" id="ApplicantsignDate" value="" />*@
+                                    <input type="hidden" class="required" name="ApplicationDt" id="ApplicantsignDate" value="" />
+                                    <div class="input-group shadow mb-3">
+                                        <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="applicantsignDt" class="form-control" onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" />
+                                        <div class="input-group-append" style="cursor:pointer">
+                                            <div class="input-group-text" onclick="$('#applicantsignDt').datepicker('show');">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                    </div>
+                                    <span id="ApplicantSignDateError" class="error text-danger"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div id="btnFooter" class="card-footer">
+                        @* <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn1"  onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button> *@
+
+                        <button type="button" id="saveBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-save mr-2"></i> Save</button>
+                        <button type="button" id="editBtn" style="display:none" class="btn btn-sm btn-custom float-right" onclick="$('#saveBtn').show();$('#editBtn').css('display', 'none'); $('#info').prop('disabled', false);$('#info2').prop('disabled', false);$('#certexpdTDateIcon').css('pointer-events', 'auto')"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/AdminLte/Plugins/select2/js/select2.full.min.js"></script>
+
+    <script src="~/lib/signature_pad/signature_pad.umd.js"></script>
+    <script src="~/js/Application/DocumentsTable.js"></script>
+    <script>
+        var signaturePadApplicant;
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            $('#OwnName').val("@owner");
+            $('#emailAddr').val("@email");
+            $('#ocontactNo').val("@contact");
+            $('#OwnName').attr('readonly', true);
+            $('#ocontactNo').attr('readonly', true);
+            $('#emailAddr').attr('readonly', true);
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+
+
+            var applicant = document.getElementById("applicantSignature");
+            var applicantclearButton = applicant.querySelector("[data-action=clear]");
+            
+            var applicantCanvas = applicant.querySelector("canvas");
+
+            signaturePadApplicant = new SignaturePad(applicantCanvas);
+            applicantclearButton.addEventListener("click", function (event) {
+                signaturePadApplicant.clear();
+                $('#applicantSignatureBase64').val("");
+            });
+
+          
+
+            $("#applicantsignDt").change(function () {
+                $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            });
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+
+            $("#certexpdT").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#applicantsignDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: false,
+                changeYear: false,
+                minDate: new Date(),
+                maxDate: new Date(),
+                yearRange: '-0:+0',
+
+            });
+            $("#applicantsignDt").datepicker("setDate", new Date())
+            //$('#ApplicantsignDate').val(new Date($('#applicantsignDt').val()));
+            $('#ApplicantsignDate').val($('#applicantsignDt').val());
+            $("#applicantsignDt").prop('readonly', true)
+        });
+    </script>
+
+    <script>
+        function validate() {
+            var flg = 0;
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#address').val() == "") {
+                $('#addressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#oAddress').val() == "") {
+                $('#oAddressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ostate').val() == "") {
+                $('#ostateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ocity').val() == "") {
+                $('#ocityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ozip').val() == "") {
+                $('#ozipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            // else{
+            //     flg = 1;
+            // }
+           
+            // }
+            if ($('#applicantSignatureBase64').val() == "") {
+                if (!signaturePadApplicant.isEmpty()) {
+                    $('#ApplicantSignError').text("\u24d8 @signNotSavedTxt")
+                }
+                else {
+                    $('#ApplicantSignError').text("\u24d8 @reqTxt")
+                }
+                flg = 1;
+            }
+            if ($('#ApplicantsignDate').val() == "") {
+                $('#ApplicantSignDateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                
+                $('#contactError').text("\u24d8 Invalid Input ");                
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+               
+                    $('#zipError').text("\u24d8 Invalid Input ");
+                    flg = 1;
+            }
+
+            if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+                
+                    $('#ozipError').text("\u24d8 Invalid Input ");
+                
+             
+                flg = 1;
+            }
+            //console.log($('#ApplicantsignDate').val());
+            if (flg == 1) {
+                return "Invalid"
+                //return "Valid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+    </script>
+
+
+    <script>
+        function Submit() {
+
+            var str = validate();
+            //console.log(str);
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+                $('#saveBtn').prop('disabled', true);
+           
+                    var successmsg = "Information Saved Successfully";
+                    var infomsg = "Please Upload Relevent Documents and Submit the Form";
+                    var errormsg = "Unexpected Error Occurred"
+        
+
+                $.ajax({
+                    type: "POST",
+                    url: "/DSNewPermit",
+                    data: $('#NewDayCareApplicationForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.type == "Create") {
+                                $('#estId').val(data.id);
+                                // $('#encryptedEstId').val(data.encryptid);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                                setTimeout(() => {
+                                    toastr.info(infomsg);
+                                }, 3000)
+                                //$('#info').prop('disabled', true);
+                                loadDataTable(false, "No");
+                            }
+                            else if (data.type == "Update") {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#certexpdTDateIcon').css('pointer-events', 'none')
+                            $('#docsView').show();
+                            $('#submitBtn').show();
+                            $('#saveBtn').hide();
+                            $('#editBtn').show();
+                            $('#certexpdTError').text('')
+                            $('#estId').val(data.id);
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                               toastr.success(successmsg);
+                            }, 500)
+                            if(data.info != "") {
+                                 setTimeout(() => {
+                                   toastr.info(infomsg);
+                                 }, 3000)
+                            }
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                        $('#saveBtn').prop('disabled', false);
+                        //dataTable.ajax.reload();
+                    }
+                })
+            }
+            //alert(1);
+            //console.log($('#ApplicantsignDate').val())
+            //console.log(1);
+        }
+
+        //function SpSubmit(){
+        //      if ($('#EstName').val()==""){
+        //        $('#EstNameError').text("ⓘ Campo Requerido")
+        //      }
+        //      //alert(1);
+        //}
+    </script>
+
+
+    <script>
+        function SaveSignature() {                    
+            var alertTxt = "Please provide your signature.";
+                     
+            var applicant = $('#applicantSignature')[0];
+            var applicantCanvas = applicant.querySelector("canvas");
+            if (signaturePadApplicant.isEmpty()) {
+                alert(alertTxt);
+                return false;
+            }
+            var signatureString = applicantCanvas.toDataURL();
+            $('#applicantSignatureBase64').val(signatureString);
+
+            $('#applicantSignatureBase64').parents("div.form-group").find("span.error").text("");
+        }
+    </script>
+
+
+
+
+
+
+}
+

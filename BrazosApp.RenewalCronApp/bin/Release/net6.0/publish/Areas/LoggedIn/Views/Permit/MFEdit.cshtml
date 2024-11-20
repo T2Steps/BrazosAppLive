@@ -1,0 +1,1776 @@
+﻿@using System.Security.Claims
+@model MFPermitEditVM
+
+@{
+    ViewData["Title"] = "Edit Permit";
+    var flg = 0;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var role = ViewBag.role.ToString();
+    var userId = Convert.ToInt32(ViewBag.userId);
+    var username = ViewBag.userName;
+    var reqTxt = "Required Field ";
+    var encryptId = Model.EncryptedEstId;
+    var test = Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1;
+    var btnText = SD.PermitStatName(Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1);
+
+    var isPlanReview = true;
+    var jurisdicId = 0;
+    if (Model.planReviewVM!.agencyStaffReqFields!.Id != 0)
+    {
+        jurisdicId = Model.planReviewVM!.agencyStaffReqFields!.EstablishmentTypes!.JurisdictionId;
+        isPlanReview = Model.planReviewVM!.agencyStaffReqFields!.IsPlanReview;
+    }
+
+    var permitStatusId = @Model.Establishment.PermitStatusId;
+}
+
+@* <link rel="stylesheet" href="~/css/status_bar.css" /> *@
+@*<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">*@
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<link rel="stylesheet" href="~/css/progress-wizard.min.css" />
+<style>
+      /*.container {
+                  width: auto;
+                  position: center;
+                  top: 55%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  border:1px solid red
+              }*/
+      body {
+          background-color: whitesmoke;
+      }
+
+      /* .sp{
+                  display:none
+              } */
+
+      input[type=radio] {
+          display: none;
+      }
+
+      .show-radio {
+          display: inline-block !important; /* display: inline !important */
+      }
+
+/*       input[type="radio"][id="ctylimitChoice2"]:checked + label {
+          background-color: red;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id="ctylimitChoice1"]:checked + label {
+          background-color: green;
+          font-weight: bold;
+          color: #fff;
+      } */
+
+    input[type="radio"][id="planReviewChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="planReviewChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+      .progress-indicator > li .bubble:before,
+      .progress-indicator > li .bubble:after {
+          display: block;
+          position: absolute;
+          top: 14px;
+          width: calc(50% - 15px);
+          height: 3px;
+          content: '';
+          background-color: #bbb;
+      }
+
+      .progress-indicator > li.completed .bubble:before,
+      .progress-indicator > li.completed .bubble:after {
+          background-color: #7aa1db;
+          border-color: #022E5F;
+      }
+
+      .progress-indicator > li .bubble:before {
+          left: 0;
+      }
+
+      .progress-indicator > li .bubble:after {
+          right: 0;
+      }
+
+      .progress-indicator > li:first-child .bubble:before,
+      .progress-indicator > li:last-child .bubble:after {
+          width: calc(45% - 15px);
+          margin-left: 50%;
+      }
+
+      .progress-indicator > li.active .bubble:before,
+      .progress-indicator > li.active .bubble:after {
+          background-color: #337AB7;
+          border-color: #122a3f;
+      }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <h1 class="d-inline" style="color:#A48464;">
+                            <span class="ml-0 badge bg-warning shadow">
+                                @(permitStatusId <= 3 ? "Application Number : " + Model.ApplicationNo : "Permit Number : " + Model.Establishment!.PermitNumber)
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" id="divPermitCertificate" style="@( permitStatusId < 7 ? "display: none" : "" )">
+                        <a href="/GeneratePermitCertificatePdf?id=@(Model.EncryptedEstId)" target="_blank" class="btn btn-sm btn-custom d-inline-block ml-2"><i class="fa-solid fa-download mr-2"></i> Certificate</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Dashboard" style="color:#022E5F">Home</a></li>
+                        <li class="breadcrumb-item active">Permits</li>
+                        <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <input asp-for="Establishment.PermitStatusId" id="permitStatusId" hidden />
+        <input asp-for="Establishment.OldPermitStatusId" id="oldPermitStatusId" hidden />
+
+        @* <input name="PermitTypeId" value="@Model.Establishment.PermitTypeId" id="permitTypeId" hidden /> *@
+        <div id="progressBar" style="display:none" class="col-md-12">
+            <div id="reload">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Permit Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                            <div class="cardprogree ">
+                                <!-- progressbar -->
+                                <ul class="progress-indicator">
+                                    <li id="s2">
+                                        <span class="bubble" id="sb2"></span>
+                                        Pending Admin Review
+                                    </li>
+                                    <li id="s3">
+                                        <span class="bubble" id="sb3"></span>
+                                        Admin Review
+                                    </li>
+                                    <li id="s4">
+                                        <span class="bubble" id="sb4"></span>
+                                        Pending Plan Review
+                                    </li>
+                                    <li id="s5">
+                                        <span class="bubble" id="sb5"></span>
+                                        Plan Review
+                                    </li>
+                                    <li id="s6">
+                                        <span class="bubble" id="sb6"></span>
+                                        Pending Build-Out
+                                    </li>
+                                    <li id="s7">
+                                        <span class="bubble" id="sb7"></span>
+                                        Pending Payment
+                                    </li>
+                                    <li id="s8">
+                                        <span class="bubble" id="sb8"></span>
+                                        Opening Inspection
+                                    </li>
+                                    <li id="s9">
+                                        <span class="bubble" id="sb9"></span>
+                                        Active
+                                    </li>
+                                </ul>
+                                @* <button type="button" id="unapprove" class="btn btn-sm btn-custom float-left" onclick="Unapproved()">Place in Unapproved</button> *@
+                                @if (@Model.Establishment.PermitStatusId < 9)
+                                {
+                                    <button type="button" id="statusbtn" class="btn btn-sm btn-custom float-right mr-1 mt-3" onclick="if($('#permitStatusId').val()==8){ApprovalNote()} else {StatusChange()}"></button>
+                                }
+                                <br>
+
+                                <div id="upcomingtxt" class="col-md-12 mt-4" style="text-align:center; display:none">
+                                    <h5 style="color:red">*This Permit will be activated once the current active permit expires</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <form action="/MFEdit" enctype="multipart/form-data" method="post" id="EditPermitDataForm">
+                <fieldset id="info">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                                <h5 style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" name="Establishment.Id" id="estId" value="@Model.Establishment.Id" />
+                            <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="@Model.EncryptedEstId" />
+                            <input type="hidden" name="Rl" id="rl" value="@role" />
+                            <input type="hidden" name="user" id="userId" value="@userId" />
+                            <input type="hidden" name="userName" id="username" value="@username" />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Application Date <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" id="applicationDt" name="ApplicationDate" value="@Model.ApplicationDate.ToShortDateString()" readonly/>
+                                        <span id="applicationDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Created By <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" id="createdBy" name="CreatedBy" value="@Model.CreatedBy" readonly/>
+                                        <span id="createdByError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" value="@Model.Establishment.Name" placeholder="Establishment Name" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" value="@Model.Establishment.Address" placeholder="Street" />
+                                        <span id="strtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" value="@Model.Establishment.City" placeholder="City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" value="@Model.Establishment.State" placeholder="State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+                                    
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" value="@Model.Establishment.Zip" placeholder="Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" value="@Model.Establishment.ContactNo" placeholder="Phone" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OWNER DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <input name="EstId" id="eid" value="@Model.Establishment.Id" hidden />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="required form-control shadow mb-2" value="@Model.Owner!.Name" placeholder="Owner Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" value="@Model.Owner!.EmailId" placeholder="Email Id" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.MailingAddress" id="oAddress" value="@Model.Owner!.MailingAddress" placeholder="Street" />
+                                        <span id="oAddressError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.City" id="ocity" value="@Model.Owner!.City" placeholder="City" />
+                                        <span id="ocityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.State" id="ostate" value="@Model.Owner!.State" placeholder="State" />
+                                        <span id="ostateError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.Zip" id="ozip" value="@Model.Owner!.Zip" placeholder="Zip" />
+                                        <span id="ozipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of Business <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="businessId" name="OperationDetails.BusinessTypeId" value="@Model.OperationDetails!.BusinessTypeId" asp-items="@Model.BusinessTypesEng">
+                                        </select>
+                                        <span id="businessIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of operation <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="operationtypeId" name="OperationDetails.OperationTypeId" value="@Model.OperationDetails!.OperationTypeId" asp-items="@Model.OperationTypesEng">
+                                        </select>
+                                        <span id="operationtypeIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Central Processing Facility <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.CentralProcessingFacility" id="cpf" placeholder="Central Processing Facility" value="@Model.OperationDetails!.CentralProcessingFacility" />
+                                        <span id="cpfError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Street" id="cpfStreet" placeholder="Street" value="@Model.OperationDetails!.Street" />
+                                        <span id="cpfStreetError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.City" id="cpfcity" placeholder="City" value="@Model.OperationDetails!.City" />
+                                        <span id="cpfcityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.State" id="cpfstate" placeholder="State" value="@Model.OperationDetails!.State"/>
+                                        <span id="cpfstateError" class="error text-danger"></span>
+                                    </div>
+                                    
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Zip" id="cpfzip" placeholder="Zip" value="@Model.OperationDetails!.Zip" />
+                                        <span id="cpfzipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Locations where mobile will operate <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.MobileOperationLocation" id="mobilefoodlocation" placeholder="Locations where mobile will operate">@Model.OperationDetails!.MobileOperationLocation</textarea> *@
+                                        <div class="row">
+                                            <div class="table-responsive">
+                                                <table id="tblCustomers" class="table table-bordered" cellpadding="0" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 90%">Location</th>
+                                                            
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                          @if(Model.MFOperationLocationsList!.Any()){
+                                                                for(@*var items in Model.MFOperationLocationsList!*@ int i = 0; i<Model.MFOperationLocationsList!.Count(); i++ ){
+                                                                      <tr>
+                                                                            <td>
+                                                                                  @Model.MFOperationLocationsList![i].Location
+                                                                                  <input type="hidden" id="MFOperationLocationsList_Location" name="MFOperationLocationsList[@i].Location" value = "@Model.MFOperationLocationsList![i].Location" />
+                                                                            </td>
+                                                                            <td>
+                                                                                  <input type="button" onclick="Remove(this);" class="btn btn-lg btn-danger remove valid" value="Remove">
+                                                                            </td>
+                                                                      </tr>
+                                                                      
+                                                                }
+                                                          }
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" id="txtCount" value="@Model.MFOperationLocationsList!.Count()" />
+                                                                <input class="form-control" type="text" id="txtName" />
+                                                            </td>
+                                                            @* <td><input class="form-control" type="text" id="txtCountry" onkeyup="$(this).val($(this).val().replace(/[^0-9-.]/g, ''))" /></td> *@
+                                                            <td><input type="button" class="btn btn-lg btn-custom" style="padding-left:25px;padding-right:25px;" id="btnAdd" value="Add" /></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <span id="mobilefoodlocationError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">List your public water source <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.PublicWaterSouce" id="pubWatSource" placeholder="Public Water Sources">@Model.OperationDetails!.PublicWaterSouce</textarea> *@
+                                        <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.WaterSourceId" id="pubWatSource" asp-items="@Model.PublicWaterSourceList" asp-for="@Model.OperationDetails.WaterSourceId">
+                                        </select>
+                                        <span id="pubWatSourceError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Waste water disposal site <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        @*<textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.WasteWaterDisposalsite" id="wasteWaterSite" placeholder="Waste water disposal site">@Model.OperationDetails!.WasteWaterDisposalsite</textarea>*@
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.WasteWaterDisposalsite" id="wasteWaterSite" placeholder="Waste water disposal site" value="@Model.OperationDetails!.WasteWaterDisposalsite" />
+                                        <span id="wasteWaterSiteError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Potable water tank size (gal) <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Portablewatertanksize" id="pwTankSize" placeholder="Potable water tank size" value="@Model.OperationDetails!.Portablewatertanksize" oninput="$(this).val($(this).val().replace(/\D/g,''))" />
+                                        <span id="pwTankSizeError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Waste water tank size (gal) <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.Wastewatertanksize" id="wTankSize" placeholder="Waste water tank size" value="@Model.OperationDetails!.Wastewatertanksize" oninput="$(this).val($(this).val().replace(/\D/g,''))" />
+                                        <span id="wTankSizeError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Certified Food Manager <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2" name="OperationDetails.CertifiedFoodManager" id="FdManager" value="@Model.OperationDetails!.CertifiedFoodManager" placeholder="Certified Food Manager" />
+                                        <span id="FdManagerError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        @*<input type="hidden" name="OperationDetails.CertificateExpirationDt" id="CertExpDate" value="" />*@
+                                        <input type="hidden" name="CertExpiryDt" id="CertExpDate" value="" />
+                                        <label style="font-weight:600" class="col-form-label">Manager’s Certification Expiration Date <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <div class="input-group shadow mb-3">
+                                            <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="certexpdT" class="form-control" onchange="$('#CertExpDate').val(new Date($(this).val()));" />
+                                            <div class="input-group-append" style="cursor:pointer">
+                                                <div class="input-group-text" onclick="$('#certexpdT').datepicker('show');">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                        </div>
+                                        <span id="certexpdTError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">VEHICLE INFORMATION</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Make <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="VehicleInformation.Make" id="vMake" class="form-control shadow mb-2 required" placeholder="Make" value="@Model.VehicleInformation!.Make" />
+                                    <span id="vMakeError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Model <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.Model" id="vModel" placeholder="Model" value="@Model.VehicleInformation!.Model" />
+                                    <span id="vModelError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Year <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.Year" id="vyear" placeholder="Year" value="@Model.VehicleInformation!.Year" />
+                                    <span id="vyearError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Color <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="VehicleInformation.Color" id="color" class="form-control shadow mb-2 required" placeholder="Color" value="@Model.VehicleInformation!.Color" />
+                                    <span id="colorError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">License <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.License" id="license" placeholder="License" value="@Model.VehicleInformation!.License" />
+                                    <span id="licenseError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">VIN <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="VehicleInformation.VIN" id="vin" placeholder="VIN" @*oninput="validateInput(this)"*@ value="@Model.VehicleInformation!.VIN" />
+                                    <span id="vinError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <partial name="_AgencyReqFieldsPartial.cshtml" model="@Model.planReviewVM" />
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Documents</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right " id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Upload New Document</button>
+                    <input name="cnt" id="Cnt" value=0 hidden />
+                </div>
+                <div class="card-body">
+                    <partial name="_AssociatedDocsTable" />
+                </div>
+            </div>
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Notes</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#notesUploadModal" class="btn btn-sm btn-custom float-right " id="notesUploadBtn" onclick="notesclrall();"><i class="fas fa-plus mr-2"></i> Add New Note</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_NotesTablePartial" />
+                </div>
+                <div id="btnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-right ml-3" @* style="display:none" *@ id="verifyBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Submit and Proceed To Admin Review</button>
+                    <button type="button" class="btn btn-sm btn-custom float-right ml-3" @* style="display:none" *@ id="saveBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Update Information</button>
+                    <button type="button" id="editBtn" class="btn btn-sm btn-custom float-right" @* style="display:none" *@ onclick="$('#saveBtn').show();$('#editBtn').css('display', 'none');$('#verifyBtn').css('display', 'none'); $('#info').prop('disabled', false);"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                </div>
+            </div>
+            <div class="card card-outline" id="paymentCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Payment Details</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#paymentAddModal" class="btn btn-sm btn-custom float-right " id="paymentAddBtn" onclick="$('#PaymentForm').trigger('reset')"><i class="fas fa-plus mr-2"></i> Add Payment</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_PaymentTablePartial" />
+                </div>
+                <div id="paymentFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/MobilePermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                    @if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.Admin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector)
+                    {
+                        <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="pfsaveBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Update Information</button>
+                        <button type="button" id="pfeditBtn" class="btn btn-sm btn-custom float-right" onclick="$('#pfsaveBtn').show();$('#pfeditBtn').css('display', 'none'); $('#info').prop('disabled', false);"><i id="pfediticon" class="fas fa-edit mr-2"></i> Edit</button>
+                    }
+                </div>
+            </div>
+            <div class="card card-outline" id="SchCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Scheduled Inspections</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#scheduleUploadModal" class="btn btn-sm btn-custom float-right " id="scheduleUploadBtn" onclick="Scheduleclrall();"><i class="fas fa-plus mr-2"></i> Schedule New Inspection</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_SchedulerTablePartial" />
+                </div>
+                @* <div id="SbtnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/MobilePermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                </div> *@
+            </div>
+            <div class="card card-outline" id="InsCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Inspections</h5>
+                    @* <button type="button" data-bs-toggle="modal" data-bs-target="#scheduleUploadModal" class="btn btn-sm btn-custom float-right " id="scheduleUploadBtn" onclick="Scheduleclrall();"><i class="fas fa-plus mr-2"></i> Schedule New Inspection</button> *@
+                </div>
+                <div class="card-body">
+                    <partial name="_InspectionTablePartial" />
+                </div>
+                <div id="SbtnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/MobilePermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                    @if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.Admin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector)
+                    {
+                        <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="sfsaveBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Update Information</button>
+                        <button type="button" id="sfeditBtn" class="btn btn-sm btn-custom float-right" onclick="$('#sfsaveBtn').show();$('#sfeditBtn').css('display', 'none'); $('#info').prop('disabled', false);"><i id="sfediticon" class="fas fa-edit mr-2"></i> Edit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+@await Html.PartialAsync("_NotesUploadForm.cshtml", Model.Notes)
+@await Html.PartialAsync("_SchedulerPartial.cshtml", Model.ScheduleVM)
+@await Html.PartialAsync("_paymentDetailsPartial.cshtml", Model.AddPaymentDTO)
+@await Html.PartialAsync("_offlinePaymentPartial.cshtml", Model.OfflinePaymentVM)
+@await Html.PartialAsync("_permitApprovalModal.cshtml")
+@await Html.PartialAsync("_InspectionReportMailModel.cshtml")
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="~/js/CertificateDate.js?vs=@ViewBag.randomNumber.ToString()"></script>
+    <script src="~/js/Application/DocumentsTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+    <script src="~/js/Areas/LoggedIn/NotesTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+    <script src="~/js/Areas/LoggedIn/PermitScheduleTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+    <script src="~/js/Areas/LoggedIn/PaymentTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+    <script src="~/js/Areas/LoggedIn/PermitInspectionTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+        $("body").on("click", "#btnAdd", function () {
+            var txtName = $("#txtName");
+
+            if (txtName.val()==''){
+                txtName.css('border-color', 'red');
+                setTimeout(()=>{
+                    txtName.css('border-color', '');
+                }, 4000)
+                $('audio#errorsound')[0].play();
+                setTimeout(() => {
+                    toastr.error("Please Fill Up Location Field");
+                }, 775)
+                return false;
+            }
+
+            //var txtCountry = $("#txtCountry");
+            var txtCount = $("#txtCount");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblCustomers > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Name cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtName.val());
+            cell.append("<input type=\"hidden\" id=\"MFOperationLocationsList_Location\" name=\"MFOperationLocationsList[" + txtCount.val() + "].Location\" value=\"" + txtName.val() + "\">");
+
+            //Add Country cell.
+            //cell = $(row.insertCell(-1));
+            //cell.html(txtCountry.val());
+            //cell.append("<input type=\"hidden\" id=\"FinalTemperatureList_Temperature\" name=\"FinalTemperatureList[" + txtCount.val() + "].Temperature\" value=\"" + txtCountry.val() + "\">");
+
+            //document.getElementById("txtCount").val() = txtCount.val() + 1;
+            txtCount.val(parseInt(txtCount.val()) + 1);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.addClass('btn btn-lg btn-danger remove valid');
+
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtName.val("");
+            //txtCountry.val("");
+
+            //alert($('#txtCount').val());
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            // alert(button);
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            $('audio#warning')[0].play();
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Are you sure?',
+
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#8B9BB2',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //Get the reference of the Table.
+                        var table = $("#tblCustomers")[0];
+
+                        //Delete the Table row using it's Index.
+                        table.deleteRow(row[0].rowIndex);
+
+                        var cnt = $("#txtCount").val();
+                        $("#txtCount").val(parseInt(cnt) - 1);
+
+                        $("#tblCustomers > TBODY > TR").each(function (index) {
+                              var input = $(this).find("input[type='hidden']");
+                              input.attr("name", "MFOperationLocationsList[" + index + "].Location");
+                        });
+
+                    }
+
+                })
+            }, 100)
+            //if (confirm("Do you want to delete: " + name)) {
+            //    //Get the reference of the Table.
+            //    var table = $("#tblCustomers")[0];
+
+            //    //Delete the Table row using it's Index.
+            //    table.deleteRow(row[0].rowIndex);
+            //}
+        };
+    </script>
+
+    <script>
+        function CheckOpeningInsStatus() {
+            var id = $('#encryptedEstId').val();
+            // $.ajax({
+            //     type: "GET",
+            //     url: '/CheckOpeningSchStat?id=' + id,
+            //     success: function (data) {
+            //         console.log(data);
+            //         if (data.success) {
+            //             if (data.msg == "Pass") {
+            //                 $('#scheduleUploadBtn').prop('disabled', 'true');
+            //             }
+            //             else if (data.msg == "Not Pass") {
+            //                 $('#scheduleUploadBtn').prop('disabled', 'false');
+            //             }
+            //         }
+            //         else {
+            //             console.log(data.msg)
+            //         }
+            //     },
+            //     error: function (data) {
+            //         console.log(data);
+            //     },
+            //     complete: function () {
+            //         $('div#loading-wrapper').hide();
+            //     }
+            // })
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "GET",
+                    url: '/CheckOpeningSchStat?id=' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            resolve(data.msg);
+                        } else {
+                            console.log(data.msg);
+                            reject(data.msg);
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        reject(data);
+                    }
+                });
+            });
+        }
+
+        function ValidateAgencyFields() {
+            var flg = 0;
+            if ($('#rskcatId').val() == null) {
+                $('#rskcatIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#terId').val() == null) {
+                $('#terIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#estSizeId').val() == null) {
+                $('#estSizeIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#jurId').val() == null) {
+                $('#jurIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#estTpe').val() == null) {
+                $('#estTpeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if (flg == 1) {
+                return "Invalid"
+                //return "Valid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+
+        function SubmiAgencyFields() {
+
+            var str = ValidateAgencyFields();
+            if (str == "Invalid") {
+                return false;
+            }
+            else if (str == "Valid") {
+                $.ajax({
+                    type: "POST",
+                    url: '/SaveAgencyFields',
+                    data: $('#agencyReqForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            // if (data.type == "Create") {
+                            //     $('#AgentId').val(data.id);
+                            // }
+
+                            $('#agencyStaffRequiredId').val(data.id);
+                            $('#feesCount').val(data.feesCount);
+
+                            $('#statusbtn').prop('disabled', false);
+                            $('#statusbtn').text(data.btntxt);
+
+                            $('#permitStatusId').val(data.permitStatusId);
+                            $('#oldPermitStatusId').val(data.oldPermitStatusId);
+
+                            $('#s4').removeClass("completed");
+                            $('#sb4').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                            $('#s5').removeClass("completed");
+                            $('#sb5').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                            $('#s6').removeClass("completed");
+                            $('#sb6').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+
+                            if (data.permitStatusId == 5) {
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb4')
+                                $('#s4').addClass("completed");
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb5')
+                                $('#s5').addClass("completed");
+                            }
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.success("Information Saved Successfully");
+                            }, 500)
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error("Unexpected Error Occurred");
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#agencyRequiredinfo').prop('disabled', true);
+                        $('#editARFields').show();
+                        $('#saveARFields').css('display', 'none')
+                        location.reload();
+                    }
+                })
+            }
+
+        }
+    </script>
+
+    <script>
+        function LoadEstTypes(id, tok) {
+            $.ajax({
+                type: "GET",
+                url: "/LoadEstTypes?id=" + id,
+                success: function (data) {
+                    //console.log(data);
+                    $('#agencyStaffReqFields_EstablishmentTypeId').empty();
+                    $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option disabled selected>---Select---</option>`)
+                    $('#Quater').val("");
+                    $('#amount').val("");
+                    if (data.success) {
+                        for (let i = 0; i < data.estTypes.length; i++) {
+                            $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option value='${data.estTypes[i].id}'>${data.estTypes[i].name}</option>`)
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    //console.log(tok);
+                    if (tok != "N") {
+                        $('#agencyStaffReqFields_EstablishmentTypeId').val(tok);
+                    }
+                }
+            })
+        }
+
+        function FeesCalc(id) {
+            $.ajax({
+                type: "GET",
+                url: "/GetFee?id=" + id,
+                success: function (data) {
+                    if (data.success) {
+                        $('#Quater').val(data.quater);
+                        $('#amount').val(data.amount);
+                    }
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function planReviewCh() {
+            var req = $('#planReviewChoice1');
+            var ntreq = $('#planReviewChoice2');
+
+            if (req.is(":checked")) {
+                $('#isPlanReview').val("true");
+                // $('#isPlanReview').prop("checked", true);
+                // $('#isPlanReview').prop("value", "true");
+            }
+            else if (ntreq.is(":checked")) {
+                $('#isPlanReview').val("false");
+                // $('#isPlanReview').prop("checked", false);
+                // $('#isPlanReview').prop("value", "false");
+            }
+        }
+
+        function validateInput(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/\D/g, '');
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+            
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            //var prevdt = dtToday.getDate() - 1;
+            var hours = dtToday.getHours();
+            var minutes = dtToday.getMinutes();
+            var year = dtToday.getFullYear();
+            var maxyear = dtToday.getFullYear() + 1;
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+            if (hours < 10) { hours = '0' + hours.toString(); }
+            if (minutes < 10) { minutes = '0' + minutes.toString(); }
+            //if (prevdt < 10) { prevdt = '0' + prevdt.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+            var maxdate = maxyear + '-' + month + '-' + day;
+
+            var collectionMindate = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+             $('#schDate').attr('min', mindate);
+            $('#schDate').attr('max', maxdate);
+
+            $('#collectionDt').attr('max', collectionMindate)
+
+            debugger;
+            if ($('#permitStatusId').val() == 1) {
+                $('#saveBtn').hide();
+                $('#pfsaveBtn').hide();
+                $('#sfsaveBtn').hide();
+                $('#verifyBtn').show();
+                $('#editBtn').hide();
+                $('#sfeditBtn').hide();
+                $('#pfeditBtn').hide();
+                $('#info').prop('disabled', false);
+            }
+            else {
+                $('#saveBtn').hide();
+                $('#pfsaveBtn').hide();
+                $('#sfsaveBtn').hide();
+                $('#verifyBtn').hide();
+                $('#editBtn').show();
+                $('#sfeditBtn').show();
+                $('#pfeditBtn').show();
+                $('#info').prop('disabled', true);
+            }
+
+            if ($('#permitStatusId').val() >= 7) {
+                debugger;
+                $('#saveBtn').hide();
+                $('#verifyBtn').hide();
+                $('#editBtn').hide();
+                //$('#agencyFooter').hide();
+                $('#info').prop('disabled', true);
+                $('#btnFooter').hide();
+
+                $('#divPermitCertificate').show();
+                $('#paymentCard').show();
+                loadPaymentTable();
+
+                if ($('#permitStatusId').val() > 7) {
+                    loadSchedulerTable();
+                    loadInspectionTable();
+                    $('#SchCard').show();
+                    $('#InsCard').show();
+                    $('#paymentFooter').hide();
+                    //CheckOpeningInsStatus()
+                }
+            }
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+            $('#cpfzip').inputmask('99999');
+            $('#vyear').inputmask('9999');
+
+            loadDataTable(false, "Yes");
+            loadNotesDataTable();
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            //$("#applicantsignDt").change(function () {
+            //    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            //});
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#certexpdT").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#wasteWaterSite").autocomplete({
+                    autoFocus: true,
+                    source: function (request, response) {
+
+                        $.ajax({
+                            url: '/MFAutoComplete',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    console.log(item);
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                //alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                //alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+
+                        //debugger;
+                        //$("#txtEstablishment").val(i.item.label + "(" + i.item.permit + ")");
+                        //$("#permitNo").val(i.item.permit);
+                        //$("#ownerPhone").val(i.item.ownerphone);
+                        //$("#Contact").val(i.item.ownername);
+                        //$("#physicalAddress").val(i.item.address);
+                        //$("#City").val(i.item.city);
+                        //$("#zip").val(i.item.zip);
+                        //$("#inspectionPanel").show();
+                        //$("#hdnestablishment").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+
+            //if ('@Model.OperationDetails!.CertificateExpirationDt' != '') {
+            //    var date = '@Model.OperationDetails!.CertificateExpirationDt';
+            //    date = date.replace(/\//g, '-');
+            //    var dt = date.split(' ')
+            //    var s = dt[0].split('-');
+            //    //console.log(s);
+            //    var month = parseInt(s[1]) - 1;
+
+            //    $("#certexpdT").datepicker("setDate", new Date(s[2], month, s[0]));
+            //    $('#CertExpDate').val(new Date($(certexpdT).val()));
+            //}
+
+            if('@Model.OperationDetails!.CertificateExpirationDt' != '')
+            {
+                    // var date = '@Model.OperationDetails!.CertificateExpirationDt';
+                    // console.log(date);
+                    // date = date.replace(/\//g, '-');
+                    // console.log(date);
+                    // //console.log("Test");
+                    
+                    // var dt = date.split(' ')
+                    // var s = dt[0].split('-');
+                    
+                    // var month = parseInt(s[1]) - 1;
+
+                    // console.log(s[2]);
+                    // console.log(month);
+                    // console.log(s[0]);
+
+
+                    // $("#certexpdT").datepicker("setDate", new Date(s[2], month, s[0]));
+                    // console.log("CertDate: " $("#certexpdT").val())
+                    // $('#CertExpDate').val(new Date($(certexpdT).val()));
+                    // console.log(new Date($(certexpdT).val()));
+
+                DateModifier('@Model.OperationDetails!.CertificateExpirationDt')
+            }
+
+            var permitStatus = $('#permitStatusId').val();
+            //var oldStatus = $('#Oldstat').val();
+
+            if (parseInt(permitStatus) > 1) {
+                $('#progressBar').show()
+            }
+
+            if (parseInt(permitStatus) >= 3 /*&& parseInt(permitStatus) >= 3*/) {
+                $('#agencyReqTab').show();
+            }
+
+            $('#agencyEstablishmentId').val($('#estId').val());
+
+            for (let i = parseInt(permitStatus); i >= 2; i--) {
+                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + i)
+                $('#s' + i).addClass("completed");
+            }
+
+            var butText = '@SD.PermitStatName(test)';
+            $('#statusbtn').text("Place in " + butText);
+
+            if ($('#agencyStaffRequiredId').val() == 0) {
+                $('#planReviewChoice1').prop("checked", true);
+                $('#plnR').prop("checked", true);
+                $('#plnR').prop("value", "true");
+                $('#agencyStaffReqFields_RiskCategoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_TerritoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentSizeId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypeId').prepend(`<option disabled selected>---Select---</option>`)
+            }
+            else {
+                $('#agencyStaffReqFields_RiskCategoryId').val(@Model.planReviewVM.agencyStaffReqFields.RiskCategoryId);
+                $('#agencyStaffReqFields_TerritoryId').val(@Model.planReviewVM.agencyStaffReqFields.AreaId);
+                $('#agencyStaffReqFields_EstablishmentSizeId').val(@Model.planReviewVM.agencyStaffReqFields.EstablishmentSizeId);
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').val(@jurisdicId);
+                LoadEstTypes(@jurisdicId, @Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+                
+                setTimeout(function () {
+                    FeesCalc(@Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+                }, 150);
+
+                $('#agencyRequiredinfo').prop('disabled', true);
+                $('#editARFields').show();
+                $('#saveARFields').css('display', 'none')
+
+                if ('@isPlanReview' == 'True') {
+                    $('#planReviewChoice1').prop("checked", true);
+                    $('#plnR').prop("checked", true);
+                    $('#plnR').prop("value", "true");
+                }
+                else if ('@isPlanReview' == 'False') {
+                    $('#planReviewChoice2').prop("checked", true);
+                    $('#plnR').prop("checked", false);
+                    $('#plnR').prop("value", "false");
+                }
+            }
+
+            if (parseInt(permitStatus) == 3) {
+                if ($('#agencyStaffRequiredId').val() == 0) {
+                    $('#statusbtn').prop('disabled', true)
+                }
+                else {
+                    $('#statusbtn').prop('disabled', false)
+                }
+            }
+
+            if ($('#subTotal').val() == 0) {
+                $(".show-radio").prop("disabled", true);
+                $('#miscelliniusfees').prop('readonly', true)
+                $('#miscelliniusfeesTitle').prop('readonly', true)
+                //$('.show-radio').prop('disabled', true)
+            }
+
+            CheckPendingPayment();
+            //if (parseInt(permitStatus) == 7) {
+            //    if ($('#feesCount').val() != 0) {
+            //        $('#statusbtn').prop('disabled', true)
+            //    }
+            //    else {
+            //        $('#statusbtn').prop('disabled', false)
+            //    }
+            //}
+        });
+
+
+        function RefreshStatus() {
+            var id = $('#encryptedEstId').val();
+            var permitStatus = $('#permitStatusId').val();
+            if (permitStatus >= 7) {
+                $.ajax({
+                    type: "GET",
+                    url: "/GetPermitStatusInfo?id=" + id,
+                    success: function (data) {
+                        console.log(data);
+                        $('#permitStatusId').val(data.permitstat)
+                        $('#oldPermitStatusId').val(data.oldstat)
+                        //$("#reload").load(location.href + " #reload");
+                        for (let i = 7; i <= data.permitstat; i++) {
+                            $('#sb' + i).next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                            $('#s' + i).removeClass("completed");
+                        }
+                        for (let i = 7; i <= data.permitstat; i++) {
+                            $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + i)
+                            $('#s' + i).addClass("completed");
+                        }
+                        $('#PaymentTable').DataTable().ajax.reload();
+                        $('#SchedulerTable').DataTable().ajax.reload();
+                        $('#InspectionTable').DataTable().ajax.reload();
+                    },
+
+                })
+            }
+
+        }
+
+        setInterval(function () {
+            RefreshStatus()
+        }, 5000);
+    </script>
+
+    <script>
+        //function ApprovalNote() {
+        //    var permitNo = $('#permitStatusId').val();
+        //    //console.log(permitNo);
+        //    if (permitNo == 8) {
+        //        CheckOpeningInsStatus()
+        //            .then(msg => {
+        //                //console.log(msg);
+        //                toastr.info("It seems that this establishment has not yet received Permit Approval. To grant Approval and Place the Establishment in Active Status, kindly provide a note.")
+        //                if (msg == "Not Pass") {
+        //                    $('audio#warning')[0].play();
+        //                    setTimeout(() => {
+        //                        Swal.fire({
+        //                            input: "textarea",
+        //                            inputLabel: "Note",
+        //                            inputPlaceholder: "Type your message here...",
+        //                            inputAttributes: {
+        //                                "aria-label": "Type your message here"
+        //                            },
+        //                            showCancelButton: true,
+        //                            confirmButtonText: 'Submit'
+        //                        }).then((result) => {
+        //                            //console.log(result);
+
+        //                            if (result.isConfirmed) {
+        //                                //Swal.fire(result.value);
+        //                                if (result.value != "") {
+        //                                    //Swal.fire(result.value);
+        //                                    var formData = new FormData();
+        //                                    formData.append('NoteId', 0);
+        //                                    formData.append('Title', "Permit Approval");
+        //                                    formData.append('Description', result.value);
+        //                                    formData.append('EstablishmentId', $('#estId').val());
+
+        //                                    $.ajax({
+        //                                        type: "POST",
+        //                                        url: '/NotesUpsert',
+        //                                        data: formData,
+        //                                        contentType: false,
+        //                                        processData: false,
+        //                                        beforeSend: function () {
+        //                                            $('div#loading-wrapper').show();
+        //                                        },
+        //                                        success: function (data) {
+        //                                            console.log(data);
+        //                                            if (data.success) {
+        //                                                $('audio#success_sound')[0].play();
+        //                                                setTimeout(() => {
+        //                                                    toastr.success(data.msg);
+        //                                                }, 500)
+        //                                                StatusChange()
+        //                                            }
+        //                                            else {
+        //                                                $('audio#errorsound')[0].play();
+        //                                                setTimeout(() => {
+        //                                                    toastr.error(data.msg);
+        //                                                }, 775)
+        //                                            }
+        //                                        },
+        //                                        error: function (data) {
+        //                                            console.log(data);
+        //                                        },
+        //                                        complete: function () {
+        //                                            $('div#loading-wrapper').hide();
+        //                                            notesdataTable.ajax.reload();
+        //                                        }
+        //                                    });
+
+        //                                }
+        //                                else {
+
+        //                                }
+        //                            }
+        //                            else {
+
+        //                            }
+        //                        })
+
+        //                    }, 150)
+
+        //                }
+        //            })
+        //            .catch(error => {
+        //                console.log("Error:", error);
+        //            });
+
+        //    }
+        //    //return false
+        //}
+
+        
+        function ApprovalNote() {
+          var permitNo = $('#permitStatusId').val();
+          if (permitNo == 8) {
+              CheckOpeningInsStatus()
+                  .then(msg => {
+                      toastr.info("It seems that this establishment has not yet received Permit Approval. To grant Approval and Place the Establishment in Active Status, kindly provide a note.");
+                      if (msg == "Not Pass") {
+                          $('audio#warning')[0].play();
+                          setTimeout(() => {
+                              $('#noteModal').modal('show');
+                          }, 150);
+
+                          $('#submitNote').off('click').on('click', function () {
+                              var note = $('#noteTextArea').val();
+                              if (note.trim() !== "") {
+                                  var formData = new FormData();
+                                  formData.append('NoteId', 0);
+                                  formData.append('Title', "Permit Approval");
+                                  formData.append('Description', note);
+                                  formData.append('EstablishmentId', $('#estId').val());
+
+                                  $.ajax({
+                                      type: "POST",
+                                      url: '/NotesUpsert',
+                                      data: formData,
+                                      contentType: false,
+                                      processData: false,
+                                      beforeSend: function () {
+                                          $('div#loading-wrapper').show();
+                                      },
+                                      success: function (data) {
+                                          console.log(data);
+                                          if (data.success) {
+                                              // $('audio#success_sound')[0].play();
+                                              // setTimeout(() => {
+                                              //     toastr.success(data.msg);
+                                              // }, 500);
+                                              StatusChange();
+                                          } else {
+                                              $('audio#errorsound')[0].play();
+                                              setTimeout(() => {
+                                                  toastr.error(data.msg);
+                                              }, 775);
+                                          }
+                                      },
+                                      error: function (data) {
+                                          console.log(data);
+                                      },
+                                      complete: function () {
+                                          $('div#loading-wrapper').hide();
+                                          notesdataTable.ajax.reload();
+                                      }
+                                  });
+
+                                  $('#noteModal').modal('hide'); 
+                              }
+                          });
+                      }
+                  })
+                  .catch(error => {
+                      console.log("Error:", error);
+                  });
+          }
+       }
+        
+        
+        function StatusChange() {
+            var id = $('#encryptedEstId').val();
+            $.ajax({
+                type: "POST",
+                url: "/StepupPermit?id=" + id,
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        $('audio#success_sound')[0].play();
+                        setTimeout(() => {
+                            toastr.success(data.msg);
+                        }, 500)
+                        $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + data.permitStatusId)
+                        $('#s' + data.permitStatusId).addClass("completed");
+
+                        $('#permitStatusId').val(data.permitStatusId);
+                        $('#oldPermitStatusId').val(data.oldPermitStatusId);
+
+                        if (data.permitStatusId >= 9) {
+                            $('#statusbtn').hide();
+                            $('#paymentFooter').hide();
+                        }
+                        else{
+                            $('#statusbtn').text("Place in " + data.btnText);
+                        }
+
+                        if (data.permitStatusId >= 7) {
+                            $('#saveBtn').hide();
+                            $('#verifyBtn').hide();
+                            $('#editBtn').hide();
+                            //$('#agencyFooter').hide();
+                            $('#info').prop('disabled', true);
+                            $('#btnFooter').hide();
+                            //$('#agencyReqTab').hide();
+
+                            //var permitStatus = $('#stat').val();
+                            if (data.permitStatusId == 7) {
+                                // if ($('#feesCount').val() != 0) {
+                                //     $('#statusbtn').prop('disabled', true)
+                                // }
+                                // else {
+                                //     $('#statusbtn').prop('disabled', false)
+                                // }
+
+                                $('#divPermitCertificate').show();
+                                $('#paymentCard').show();
+                                loadPaymentTable();
+                                //CreateOpeningSchedule();
+                            }
+                            if (data.permitStatusId == 8) {
+                                loadSchedulerTable();
+                                loadInspectionTable();
+                                $('#SchCard').show();
+                                $('#InsCard').show();
+
+                            }
+                        }
+
+                        if (data.permitStatusId == 3) {
+                            $('#statusbtn').prop('disabled', true)
+                            $('#agencyReqTab').show();
+                            setTimeout(() => {
+                                toastr.info("Please Fill Out The Required Fields From Agency Staff Required Fields To Proceed Further");
+                            }, 1000)
+                        }
+                    }
+                    else {
+                        $('audio#errorsound')[0].play();
+                        setTimeout(() => {
+                            toastr.error(data.msg);
+                            if (data.info != undefined || data.info != null) {
+                                toastr.info(data.info);
+                            }
+                        }, 775)
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                }
+            })
+        }
+
+        function CreateOpeningSchedule() {
+            var id = $('#encryptedEstId').val();
+            $.ajax({
+                type: "POST",
+                url: "/CreateOpeningSchedule?id=" + id,
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        loadSchedulerTable();
+                        loadInspectionTable();
+                        $('#SchCard').show();
+                        $('#InsCard').show();
+                    }
+                    else {
+                        $('audio#errorsound')[0].play();
+                        setTimeout(() => {
+                            toastr.error(data.msg);
+                        }, 775)
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function validate() {
+            var flg = 0;
+            let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#OwnName').val() == "") {
+                $('#OwnNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() == "") {
+                $('#emailAddrError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() != "" && EmailPattern.test($('#emailAddr').val()) == false) {
+                $('#emailAddrError').text("\u24d8 Invalid Email ");
+                flg = 1;
+            }
+
+
+            if ($('#ocontactNo').val() == "") {
+                $('#ocontactNoError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#ocontactNo').val() != "" && $('#ocontactNo').val().replace(/\D/g, '').length < 10) {
+                $('#ocontactNoError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#oAddress').val() == "") {
+                $('#oAddressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ostate').val() == "") {
+                $('#ostateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ocity').val() == "") {
+                $('#ocityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ozip').val() == "") {
+                $('#ozipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() == "") {
+                $('#cpfzipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vMake').val() == "") {
+                $('#vMakeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vModel').val() == "") {
+                $('#vModelError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vyear').val() == "") {
+                $('#vyearError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#color').val() == "") {
+                $('#colorError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#license').val() == "") {
+                $('#licenseError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vin').val() == "") {
+                $('#vinError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#businessId').val() == null) {
+                $('#businessIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#operationtypeId').val() == null) {
+                $('#operationtypeIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpf').val() == "") {
+                $('#cpfError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfStreet').val() == "") {
+                $('#cpfStreetError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfstate').val() == "") {
+                $('#cpfstateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfcity').val() == "") {
+                $('#cpfcityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#mobilefoodlocation').val() == "") {
+                $('#mobilefoodlocationError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#pubWatSource').val() == "") {
+                $('#pubWatSourceError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wasteWaterSite').val() == "") {
+                $('#wasteWaterSiteError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#pwTankSize').val() == "") {
+                $('#pwTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wTankSize').val() == "") {
+                $('#wTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                $('#contactError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                $('#zipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+                $('#ozipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() != "" && $('#cpfzip').val().replace(/\D/g, '').length < 5) {
+                $('#cpfzipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#vyear').val() != "" && $('#vyear').val().replace(/\D/g, '').length < 4) {
+                $('#vyearError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if (flg == 1) {
+                return "Invalid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+    </script>
+
+    <script>
+        function Submit() {
+
+            var str = validate();
+            //console.log(str);
+            if (str == "Invalid") {
+                return false;
+            }
+            else if (str == "Valid") {
+                var successmsg = "Information Saved Successfully";
+                var errormsg = "Unexpected Error Occurred";
+
+                $.ajax({
+                    type: "POST",
+                    url: "/MFEdit",
+                    data: $('#EditPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.success(successmsg);
+                            }, 500)
+                            if (data.type == 1) {
+                                $('#progressBar').show();
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb2')
+                                $('#s2').addClass("completed");
+                                $('#statusbtn').text("Place in Admin Review");
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#saveBtn').hide();
+                            $('#sfsaveBtn').hide();
+                            $('#pfsaveBtn').hide();
+                            $('#verifyBtn').hide();
+                            $('#editBtn').show();
+                            $('#pfeditBtn').show();
+                            $('#sfeditBtn').show();
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                    }
+                })
+            }
+        }
+    </script>
+}
+

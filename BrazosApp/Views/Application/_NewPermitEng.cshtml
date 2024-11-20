@@ -1,0 +1,347 @@
+﻿
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Food Permit Application	</h1>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="AppDt" id="Appdt" class="form-control shadow" value="Application Date: @DateTime.Now.Date.ToShortDateString()" style="font-weight:bold" disabled />
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline " style="border-top:3px solid #022E5F">
+
+                <div class="card-body">
+                    <form action="/RFNewPermit" enctype="multipart/form-data" method="post" id="NewPermitDataForm">
+                        <fieldset id="info">
+                            <div class="row shadow mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                            </div>
+                            <input name="ApplicationForId" id="applicationforId" value="@Model.ApplicationForId" hidden />
+                            <input name="ApplicationId" id="applicationId" value="@Model.ApplicationId" hidden />
+                            <input name="Establishment.Id" id="estId" value="0" hidden />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Establishment Name" />
+                                    <span id="EstNameError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" placeholder="Street" />
+                                    <span id="strtError" class="error text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" placeholder="City" />
+                                    <span id="ctyError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" placeholder="State" value="TX" />
+                                    <span id="stateError" class="error text-danger"></span>
+                                </div>
+                                
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" placeholder="Zip" />
+                                    <span id="zipError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" placeholder="Phone" />
+                                    <span id="contactError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                @*<h5  style="color:#A48464">OWNER DETAILS</h5>*@
+                                <div class="row pt-1">
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                          <h5 style="color:#A48464">OWNER DETAILS</h5>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                          <div class="icheck-marine">
+                                                <input type="checkbox" id="sameAddresscheck" onclick="if($(this).is(':checked')){$('#oAddress').val($('#strt').val());$('#ocity').val($('#cty').val());$('#ostate').val($('#state').val());$('#ozip').val($('#zip').val());$('#oAddress').trigger('change');$('#ocity').trigger('change');$('#ostate').trigger('change');$('#ozip').trigger('change'); } else{$('#oAddress').val('');$('#ocity').val('');$('#ostate').val('');$('#ozip').val('');}">
+                                                <label  for="sameAddresscheck">
+                                                      Same As Establishment Address
+                                                </label>
+                                          </div>
+                                          @*<input type="checkbox" id="sameAddresscheck"  />
+                                          <span style="font-weight:bold">Same As Establishment Address</span>*@
+                                    </div>
+                                 </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="Owner.Name" id="OwnName" class="form-control shadow mb-2" placeholder="Owner Name" />
+                                    <span id="OwnNameError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" placeholder="Phone" />
+                                    <span id="emailAddrError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" placeholder="Phone" />
+                                    <span id="ocontactNoError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Owner.MailingAddress" id="oAddress" placeholder="Street" />
+                                    <span id="oAddressError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Owner.City" id="ocity" placeholder="City" />
+                                    <span id="ocityError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Owner.State" id="ostate" placeholder="State" value="TX" />
+                                    <span id="ostateError" class="error text-danger"></span>
+                                </div>
+                                
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Owner.Zip" id="ozip" placeholder="Zip" />
+                                    <span id="ozipError" class="error text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">OPERATION DETAILS</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="checkbox" name="OperationDetails.WithinCityLimitChoice" id="citylimit" value="true" hidden />
+                                    <div class="form-group mt-2">
+                                        <label style="font-weight:600" class="col-form-label mr-5 ">Is your business within city limits? </label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="choice" id="ctylimitChoice1" onchange="WithinCityLimit()">
+                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox1" style="font-size: 14px" onclick="$('#ctylimitChoice1').prop('checked', true); $('#ctylimitChoice1').trigger('change')">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="choice" id="ctylimitChoice2" onchange="WithinCityLimit()">
+                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox2" style="font-size: 14px" onclick="$('#ctylimitChoice2').prop('checked', true); $('#ctylimitChoice2').trigger('change')">No</label>
+                                        </div>
+                                    </div>
+                                    <span id="emailError" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Type of Business <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <select class="custom-select rounded-1 shadow mb-3 required" id="businessId" name="OperationDetails.BusinessTypeId" asp-items="@Model.BusinessTypesEng">
+                                        <option disabled selected>---Select---</option>
+                                        @* <option value="1">Food Service Establishments</option>
+                                        <option value="2">Schools/Daycares Food Service Permit</option>
+                                        <option value="3">Food Service Establishments</option>
+                                        <option value="4">Schools/Daycares Food Service Permit</option> *@
+                                    </select>
+                                    <span id="businessIdError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Type of operation <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <select class="custom-select rounded-1 shadow mb-3 required" id="operationtypeId" name="OperationDetails.OperationTypeId" asp-items="@Model.OperationTypesEng">
+                                        <option disabled selected>---Select---</option>
+                                        @* <option value="1">Annually (12 months)</option>
+                                        <option value="2">Seasonal (4 months)</option> *@
+                                    </select>
+                                    <span id="operationtypeIdError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Current number of employees <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.NumberOfEmployees" id="empNo" placeholder="Employees (including management)" oninput="validateInput(this)" />
+                                    <span id="empNoError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">List your public water source <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.PublicWaterSouce" id="pubWatSource" placeholder="Public Water Sources"></textarea> *@
+                                    @* <input type="hidden" name="OperationDetails.PublicWaterSouce" class="required" id="pubWatSource" value="" />
+                                    <select class="select2" multiple="multiple" data-placeholder="--Select Public water source--" style="width: 100%;" onchange="$('#pubWatSource').val($(this).val());  $('#pubWatSource').trigger('change');" asp-items="@Model.PublicWaterSourceList">
+                                        
+                                    </select> *@
+                                    <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.WaterSourceId" id="pubWatSource" asp-items="@Model.PublicWaterSourceList">
+                                        <option disabled selected>---Select---</option>
+                                    </select>
+                                    <span id="pubWatSourceError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                      <div class="form-group mt-2">
+                                            <label style="font-weight:600" class="col-form-label mr-5 ">Sewage Disposal: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Sewagechoice" id="Sewagechoice1" onchange="$('#privateSewDis').val(''); $('#privateSewDis').prop('disabled', true);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'hidden');$('#pubSewDis').prop('disabled', false); $('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'visible');">
+                                                <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox1" style="font-size: 14px" onclick="$('#Sewagechoice1').prop('checked', true); $('#Sewagechoice1').trigger('change');">Public</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="Sewagechoice" id="Sewagechoice2" onchange="$('#pubSewDis').val('---Select---'); $('#pubSewDis').prop('disabled', true);$('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'hidden');$('#privateSewDis').prop('disabled', false);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'visible'); ">
+                                                <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox2" style="font-size: 14px" onclick="$('#Sewagechoice2').prop('checked', true); $('#Sewagechoice2').trigger('change'); ">Private</label>
+                                            </div>
+                                        </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">List your sewage disposal: Public <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.Publicsewage" id="pubSewDis" placeholder="Public"></textarea> *@
+                                    @* <input type="hidden" name="OperationDetails.Publicsewage" id="pubSewDis" class="required" value="" />
+                                    <select class="select2" multiple="multiple" data-placeholder="--Select Public Sewage Disposal--" style="width: 100%;" onchange="$('#pubSewDis').val($(this).val()); $('#pubSewDis').trigger('change');" asp-items="@Model.PublicSewageList">
+
+                                    </select> *@
+                                    <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.PublicSewageId" id="pubSewDis" asp-items="@Model.PublicSewageList" onchange="$('#privateSewDis').val(''); $('#privateSewDis').prop('disabled', true);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'hidden'); if($(this).val()=='---Select---'){$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'visible');$('#privateSewDis').prop('disabled', false)}">
+                                        <option disabled selected>---Select---</option>
+                                    </select>
+                                    <span id="pubSewDisError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                    <label style="font-weight:600" class="col-form-label">Private Septic/OSSF# <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @* <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.PrivateWaterSeptic" id="privateSewDis" placeholder="Private Septic/OSSF# "></textarea> *@
+                                    @* <input type="hidden" name="OperationDetails.PrivateWaterSeptic" id="privateSewDis" class="required" value="" />
+                                    <select class="select2" multiple="multiple" data-placeholder="--Select Private Septic/OSSF#--" style="width: 100%;" onchange="$('#privateSewDis').val($(this).val()); $('#privateSewDis').trigger('change');" asp-items="@Model.PrivateSeptic">
+
+                                    </select> *@
+                                    @*<select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.PrivateSepticId" id="privateSewDis" asp-items="@Model.PrivateSeptic" onchange="$('#pubSewDis').val('---Select---'); $('#pubSewDis').prop('disabled', true);$('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'hidden'); if($(this).val()=='---Select---'){ $('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'visible'); $('#pubSewDis').prop('disabled', false)}">
+                                        <option disabled selected>---Select---</option>
+                                    </select>*@
+                                    <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.PrivateSeptic" id="privateSewDis" placeholder="Private Septic/OSSF#"  onchange="$('#pubSewDis').val('---Select---'); $('#pubSewDis').prop('disabled', true);$('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'hidden'); if($(this).val()==''){ $('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'visible'); $('#pubSewDis').prop('disabled', false)}" />
+                                    <span id="privateSewDisError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Certified Food Manager <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2" name="OperationDetails.CertifiedFoodManager" id="FdManager" placeholder="Certified Food Manager" />
+                                    <span id="FdManagerError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    @*<input type="hidden" name="OperationDetails.CertificateExpirationDt" id="CertExpDate" value="" />*@
+                                    <input type="hidden" name="CertExpiryDt" id="CertExpDate" value="" />
+                                    <label style="font-weight:600" class="col-form-label">Manager’s Certification Expiration Date <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <div class="input-group shadow mb-3">
+                                        <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="certexpdT" class="form-control" @* onchange="$('#CertExpDate').val(new Date($(this).val()));" *@ @* onchange="$('#CertExpDate').val($(this).val());" *@ onchange="validateDate(this) /* $('#CertExpDate').val($(this).val()); */" onblur="validateDate(this)" readonly/>
+                                        <div class="input-group-append" style="cursor:pointer">
+                                            <div class="input-group-text" id="certexpdTDateIcon" onclick="$('#certexpdT').datepicker('show');">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                    </div>
+                                    <span id="certexpdTError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <br />
+                            <p style="text-align:center" class="mb-0 pb-0">
+                                Operating an establishment without a CURRENT permit is in violation of City or County Regulations.
+                            </p>
+                            <p style="text-align:center">
+                                Legal action or closure may be imposed against such an operation.
+                            </p>
+                            <p style="text-align:center; font-weight:bold">
+                                I HAVE READ AND AGREE TO THE CONDITIONS OF THIS APPLICATION/PERMIT.
+                            </p>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <div id="applicantSignature">
+                                        <div class="row">
+                                            <input type="hidden" class="required" name="Establishment.ApplicantSign" id="applicantSignatureBase64" value="" />
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <div class="m-signature-pad">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" >
+                                                        <canvas id="applicant" width="490" height="160" style="border:1px solid;padding:7px" @* style="width:90%;display:block" *@ @* class="w-auto h-auto" *@></canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="float-right">
+                                                        <button type="button" class="btn btn-sm btn-custom" onclick="return SaveSignature();">Save&nbsp<i class="fa-regular fa-floppy-disk"></i></button>
+                                                        <button type="button" data-action="clear" class="btn btn-sm btn-danger">Clear&nbsp<i class="fas fa-trash"></i></button>
+                                                    </span>
+                                                </div>
+                                                <label style="font-weight:600" class="col-form-label">Applicant’s Signature</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="ApplicantSignError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Date  <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @*<input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" />  onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" onchange="funSignatureDate($(this))"*@
+                                    @*<input type="hidden" class="required" name="Establishment.ApplicantSignDate" id="ApplicantsignDate" value="" />*@
+                                    <input type="hidden" class="required" name="ApplicationDt" id="ApplicantsignDate" value="" />
+                                    <div class="input-group shadow mb-3">
+                                        <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="applicantsignDt" class="form-control" onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" />
+                                        <div class="input-group-append" style="cursor:pointer">
+                                            <div class="input-group-text" onclick="$('#applicantsignDt').datepicker('show');">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                    </div>
+                                    <span id="ApplicantSignDateError" class="error text-danger"></span>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <fieldset @* style="display:none" *@ id="docsView">
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">UPLOAD RELEVANT DOCUMENTS</h5>
+                            </div>
+                            <div class="mt-2">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right mt-2  mb-4" id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Upload New Document</button>
+                                <input name="cnt" id="Cnt" value=0 hidden />
+                            </div>
+                            <div class="table-responsive">
+                                <table id="docstable" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">
+                                                Sr.No.
+                                            </th>
+                                            <th class="text-left">
+                                                File
+                                            </th>
+                                            <th class="text-left">
+                                                Description
+                                            </th>
+                                            <th class="text-left">
+                                                Associated Note
+                                            </th>
+                                            <th class="text-left">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </fieldset>
+                        
+                    </form>
+                </div>
+                <div class="card-footer">
+                     <button type="button" id="submitBtn" style="display:none" class="btn btn-sm btn-custom float-right ml-1" onclick="var applicationId = $('#encryptedApplicationId').val(); window.location.href = '/success?id=' + applicationId">Submit <i id="submiticon" class="fas fa-arrow-circle-right ml-2"></i></button>
+                     <button type="button" id="saveBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-save mr-2"></i> Save</button>
+                     <button type="button" id="editBtn" style="display:none" class="btn btn-sm btn-custom float-right" onclick="$('#submitBtn').hide();$('#saveBtn').show();$('#editBtn').css('display', 'none'); $('#info').prop('disabled', false);$('#certexpdTDateIcon').css('pointer-events', 'auto')"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                    @*<button type="button" class="btn btn-sm btn-custom float-right" onclick="var sum = parseInt($('#Cnt').val())+1; $('#Cnt').val(sum); console.log(sum); console.log($('#Cnt').val()); if(parseInt($('#Cnt').val())>4){alert('stop')}">Save <i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-arrow-circle-right ml-2"></i></button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

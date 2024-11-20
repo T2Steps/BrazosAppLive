@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosAPI", "BrazosAPI\BrazosAPI.csproj", "{8443F141-1243-4934-BDF6-BD41AA8D4D0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosApp", "BrazosApp\BrazosApp.csproj", "{132D27A1-E477-4EEA-B4D5-75C38F3BE643}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosApp.Models", "BrazosApp.Models\BrazosApp.Models.csproj", "{C1ADDBCD-49DD-411D-A565-78B9E3B083DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosApp.DataAccess", "BrazosApp.DataAccess\BrazosApp.DataAccess.csproj", "{200B77D0-E5D2-4113-86AB-26FC8C67F6D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosApp.Utility", "BrazosApp.Utility\BrazosApp.Utility.csproj", "{8ACF2FED-8041-4EE3-BEF1-DC3031F065B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrazosApp.RenewalCronApp", "BrazosApp.RenewalCronApp\BrazosApp.RenewalCronApp.csproj", "{84979FC3-E8AE-4B89-BA47-2829E8845857}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8443F141-1243-4934-BDF6-BD41AA8D4D0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8443F141-1243-4934-BDF6-BD41AA8D4D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8443F141-1243-4934-BDF6-BD41AA8D4D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8443F141-1243-4934-BDF6-BD41AA8D4D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132D27A1-E477-4EEA-B4D5-75C38F3BE643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132D27A1-E477-4EEA-B4D5-75C38F3BE643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132D27A1-E477-4EEA-B4D5-75C38F3BE643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132D27A1-E477-4EEA-B4D5-75C38F3BE643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1ADDBCD-49DD-411D-A565-78B9E3B083DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1ADDBCD-49DD-411D-A565-78B9E3B083DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1ADDBCD-49DD-411D-A565-78B9E3B083DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1ADDBCD-49DD-411D-A565-78B9E3B083DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{200B77D0-E5D2-4113-86AB-26FC8C67F6D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{200B77D0-E5D2-4113-86AB-26FC8C67F6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{200B77D0-E5D2-4113-86AB-26FC8C67F6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{200B77D0-E5D2-4113-86AB-26FC8C67F6D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ACF2FED-8041-4EE3-BEF1-DC3031F065B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ACF2FED-8041-4EE3-BEF1-DC3031F065B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ACF2FED-8041-4EE3-BEF1-DC3031F065B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ACF2FED-8041-4EE3-BEF1-DC3031F065B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84979FC3-E8AE-4B89-BA47-2829E8845857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84979FC3-E8AE-4B89-BA47-2829E8845857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84979FC3-E8AE-4B89-BA47-2829E8845857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84979FC3-E8AE-4B89-BA47-2829E8845857}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2282CDAD-B76C-403B-BEDE-2C7697B3CD5E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        table {
+            width: 1000px;
+            border-collapse: collapse;
+            font-size: 20px
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: whitesmoke;
+        }
+
+        tbody tr {
+            font-weight: 600;
+        }
+
+        th {
+            padding: 8px;
+            padding-bottom: 15px !important;
+            text-align: left;
+            font-weight: 400;
+        }
+
+        td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:100%;float:left">
+        <div style="width:1%;float:left;height:2px"></div>
+        <div style="width:20%;float:left; padding-top:40px">
+            <img src="https://stagebrazos.inspect2go44.com/Images/Logo/logoclient.png" height="155" />
+        </div>
+        <div style="width:79%;float:left;">
+            <div style="float:left; height:5px; width:100%"></div>
+            <div style="float:left">
+                <div style="font-family:Verdana">
+                    <h1 style="color:#022E5F; padding-top:0px">BRAZOS COUNTY HEALTH DISTRICT<br /></h1>
+                </div>
+                <div style="font-size:22px;font-family:Verdana">
+                    <span style="padding-left:88px;padding-top:0px"><b>A City-County Public Health District</b><br /></span>
+                </div>
+                <div style="font-size:17px;font-family:Verdana">
+                    <span style="padding-left:130px;padding-top:0px">201 N. Texas Avenue, Bryan, TX 77803<br /></span>
+                </div>
+                <div style="font-size:17px;font-family:Verdana">
+                    <span style="padding-left:226px;padding-top:0px">v. 979.361.4440<br /></span>
+                </div>
+                <div style="font-size:17px;font-family:Verdana">
+                    <span style="padding-left:226px;padding-top:0px"> f. 979.823.2275<br /></span>
+                </div>
+                <div style="font-size:17px;font-family:Verdana">
+                    <span style="padding-left:200px;padding-top:0px"> www.brazoshealth.org<br /></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%; float:left; height:70px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:19px;font-family:Verdana">
+            <span style="padding-left:25px;padding-top:0px">Invoice Number: <b>{{Invoice_Number}}</b><br /></span>
+        </div>
+        <div style="width:50%; float:left; font-size:19px;font-family:Verdana">
+            <span style="padding-left:80px;padding-top:0px">Date & Time: <b>{{InvoiceDate}}</b><br /></span>
+        </div>
+
+    </div>
+    <div style="width:100%; float:left; height:10px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+            <span style="padding-left:105px;padding-top:0px">Billed To: <b>{{Permit_Number}}</b><br /></span>
+        </div>
+        <div style="width:14.6%; float:left;height:2px"></div>
+        <div style="width:6%; float:left; font-size:17px;font-family:Verdana;padding-left:3px">
+            <span style="padding-top:0px"> Name:</span>
+        </div>
+        <div style="width:28.4%; float:left; font-size:17px;font-family:Verdana">
+            <span style="padding-top:0px"> <b>{{Est_Name}}</b><br /></span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; height:70px"></div>
+    <div style="width:1001px; float:left; height:650px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>&nbsp;Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{PaymentBreakTableBody}}
+            </tbody>
+
+        </table>
+        {{Void_Cancel_Mssge}}
+    </div>
+
+    <div style="width:100%; text-align:left; padding-top:70px; font-weight:400"><h4>Penalty when paid after 30 days</h4></div>
+    <div style="width:1000px; float:left; padding-top:18px;padding-bottom:18px; padding-left:3px; background-color:black; font-weight:bold; font-size:16px; color:white">
+        <div style="float:left; padding-right:790px; padding-left:10px">
+            <span> Total Amount Due</span>
+        </div>
+        <div style="float:left;">
+            <span>{{Payment_Amount}}</span>
+        </div>
+    </div>
+    <div style="float:left; width:100%; height:20px"></div>
+    <div style="font-family:Verdana; font-size:14px; font-weight:500">
+        <div style="float:left; padding-bottom:5px">
+            <span>You may remit payment in person by Cash, Check, Money Order, Credit Card, or Debit Card.</span><br />
+        </div>
+        <div style="float:left; padding-bottom:5px">
+            <span>You may remit payment by mail by Check. Please remove and include the bottom portion of this invoice with your payment.</span><br />
+        </div>
+    </div>
+    <div style="float:left; width:100%; height:30px"></div>
+    <div style="float:left; width:1000px; border:1.5px dashed"></div>
+    <div style="float:left; width:100%; height:30px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:19px;font-family:Verdana">
+            <span style="padding-left:25px;padding-top:0px">Invoice Number: <b>{{Invoice_Number}}</b><br /></span>
+        </div>
+        <div style="width:50%; float:left; font-size:19px;font-family:Verdana">
+            <span style="padding-left:80px;padding-top:0px">Date & Time: <b>{{InvoiceDate}}</b><br /></span>
+        </div>
+
+    </div>
+    <div style="width:100%; float:left; height:10px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+            <span style="padding-left:105px;padding-top:0px">Billed To: <b>{{Permit_Number}}</b><br /></span>
+        </div>
+        <div style="width:50%; float:left; font-size:17px;font-family:Verdana">
+            <span style="padding-left:152px;padding-top:0px"> Name: <b>{{Est_Name}}</b><br /></span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; height:10px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+            <span style="padding-left:30px;padding-top:0px">Total Amount Due: <b>{{Payment_Amount}}</b><br /></span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; height:30px"></div>
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:95%; float:left;font-size:17px;font-family:Verdana">
+            <span style="padding-top:0px"> {{Invoice_CreatedBy}}</span>
+            <span style="padding-left:85px;padding-top:0px"> {{Program}}</span>
+            <span style="padding-left:260px;padding-top:0px">{{Jurisdiction}}</span>
+        </div>
+    </div>
+</body>
+</html>

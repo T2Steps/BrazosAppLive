@@ -1,0 +1,134 @@
+﻿@model PlanReviewVM
+
+
+<form method="post" asp-action="SaveAgencyFields" enctype="multipart/form-data" id="agencyReqForm">
+      <div class="card card-outline" style="border-top:3px solid #022E5F;display:none" id="agencyReqTab">
+            <div class="card-header">
+                  <h5 style="color:#A48464">AGENCY STAFF REQUIRED FIELDS</h5>
+            </div>
+            <fieldset id="agencyRequiredinfo">
+                  <div class="card-body">
+                        <input type="hidden" asp-for="agencyStaffReqFields!.EstablishmentId" id="agencyEstablishmentId" />
+                        <input type="hidden" asp-for="agencyStaffReqFields!.Id" id="agencyStaffRequiredId" />
+                        @* <input type="hidden" asp-for="feesCount" /> *@
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                              @if (Model.Code == "RF" || Model.Code=="MF")
+                              {
+                                    <div class="row">
+                                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                                <input type="hidden" asp-for="agencyStaffReqFields!.IsPlanReview" id="isPlanReview" value="true" />
+                                                <div class="form-group mt-2">
+                                                      <label style="font-weight:600" class="col-form-label mr-5 ">Plan Review</label>
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="planchoice" id="planReviewChoice1" onchange="planReviewCh()">
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox1" style="font-size: 14px" onclick="$('#planReviewChoice1').prop('checked', true); $('#planReviewChoice1').trigger('change')">Required</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="planchoice" id="planReviewChoice2" onchange="planReviewCh()">
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox2" style="font-size: 14px" onclick="$('#planReviewChoice2').prop('checked', true); $('#planReviewChoice2').trigger('change')">Not Required</label>
+                                                      </div>
+                                                </div>
+                                                <span id="emailError" class="text-danger"></span>
+                                          </div>
+                                    </div>
+                                    <div class="row">
+
+                                          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                                @* <label style="font-weight:600" class="col-form-label">Risk Category <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <select class="custom-select rounded-1 shadow mb-3 required" id="rskcatId" name="agencyStaffReqFields.RiskCategoryId" asp-items="@Model.RiskCategory" value="@Model.agencyStaffReqFields!.RiskCategoryId">
+                                          </select>
+                                          <span id="rskcatIdError" class="error text-danger"></span> *@
+                                                <label style="font-weight:600" class="col-form-label">Risk Category <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.RiskCategoryId" asp-items="@Model.RiskCategoryList">
+                                                      @* <option disabled selected>---Select---</option> *@
+                                                </select>
+                                                <span asp-validation-for="agencyStaffReqFields!.RiskCategoryId" class="text-danger"></span>
+                                          </div>
+                                          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                                @* <label style="font-weight:600" class="col-form-label">Territory <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <select class="custom-select rounded-1 shadow mb-3 required" id="terId" name="agencyStaffReqFields.TerritoryId" asp-items="@Model.Territory" value="@Model.agencyStaffReqFields!.RiskCategoryId">
+                                          </select>
+                                          <span id="terIdError" class="error text-danger"></span> *@
+                                                <label style="font-weight:600" class="col-form-label">Area <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.AreaId" asp-items="@Model.AreaList">
+                                                      @*<option value="1" selected>0</option>*@
+                                                </select>
+                                                <span asp-validation-for="agencyStaffReqFields!.AreaId" class="text-danger"></span>
+                                          </div>
+                                          @if(Model.Code=="RF"){
+                                                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                                    @* <label style="font-weight:600" class="col-form-label">Establishment Size <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                    <select class="custom-select rounded-1 shadow mb-3 required" id="estSizeId" name="agencyStaffReqFields.EstablishmentSizeId" asp-items="@Model.EstablishmentSize" value="@Model.agencyStaffReqFields!.EstablishmentSizeId">
+
+                                                    </select>
+                                                    <span id="estSizeIdError" class="error text-danger"></span> *@
+                                                    <label style="font-weight:600" class="col-form-label">Establishment Size <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                    <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.EstablishmentSizeId" asp-items="@Model.EstablishmentSizeList">
+                                                        @* <option disabled selected>---Select---</option> *@
+                                                    </select>
+                                                    <span asp-validation-for="agencyStaffReqFields!.EstablishmentSizeId" class="text-danger"></span>
+                                                </div>
+                                          }
+                                          else if(Model.Code=="MF"){
+                                              <input type="hidden" asp-for="agencyStaffReqFields!.EstablishmentSizeId" value="1" />
+                                          }
+                                          
+                                          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                                @* <label style="font-weight:600" class="col-form-label">Jurisdiction <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <select class="custom-select rounded-1 shadow mb-3 required" id="jurId" name="" asp-items="@Model.Jurisdiction" onchange="LoadEstTypes($(this).val(), 'N')">
+                                          <option disabled selected>---Select---</option>
+                                          </select>
+                                          <span id="jurIdError" class="error text-danger"></span> *@
+                                                <label style="font-weight:600" class="col-form-label">Jurisdiction <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.EstablishmentTypes!.JurisdictionId" asp-items="@Model.JurisdictionList" onchange="LoadEstTypes($(this).val(), 'N')">
+                                                      @* <option disabled selected>---Select---</option> *@
+                                                </select>
+                                                <span asp-validation-for="agencyStaffReqFields!.EstablishmentTypes.JurisdictionId" class="text-danger"></span>
+                                          </div>
+                                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                                @* <label style="font-weight:600" class="col-form-label">Establishment Type <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <select class="custom-select rounded-1 shadow mb-3 required" id="estTpe" name="agencyStaffReqFields.EstablishmentTypeId" onchange="FeesCalc($(this).val())" value="@Model.agencyStaffReqFields!.EstablishmentTypeId">
+
+                                          </select>
+                                          <span id="estTpeError" class="error text-danger"></span> *@
+                                                <label style="font-weight:600" class="col-form-label">Establishment Type <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.EstablishmentTypeId" onchange="FeesCalc($(this).val())">
+                                                      @* <option disabled selected>---Select---</option> *@
+                                                </select>
+                                                <span asp-validation-for="agencyStaffReqFields!.EstablishmentTypeId" class="text-danger"></span>
+                                          </div>
+                                    </div>
+                              }
+                              else
+                              {
+                                    <input type="hidden" asp-for="agencyStaffReqFields!.RiskCategoryId" value="1" />
+                                    <input type="hidden" asp-for="agencyStaffReqFields!.EstablishmentSizeId" value="1" />
+                                    <input type="hidden" asp-for="agencyStaffReqFields!.AreaId" value="1" />
+                                    <input type="hidden" asp-for="agencyStaffReqFields!.IsPlanReview" value="false" />
+                                    <input type="hidden" asp-for="agencyStaffReqFields!.EstablishmentTypeId" value="0" />
+                                    <div class="row">
+                                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                                <label style="font-weight:600" class="col-form-label">Jurisdiction <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                <select class="custom-select rounded-1 shadow mb-3 required" asp-for="agencyStaffReqFields!.EstablishmentTypes!.JurisdictionId" asp-items="@Model.JurisdictionList" onchange="LoadEstTypes($(this).val(), 'N')">
+                                                      @* <option disabled selected>---Select---</option> *@
+                                                </select>
+                                                <span asp-validation-for="agencyStaffReqFields!.EstablishmentTypes.JurisdictionId" class="text-danger"></span>
+                                          </div>
+                                    </div>
+                              }
+                        </div>
+
+                  </div>
+            </fieldset>
+            <div class="card-footer" id="agencyFooter">
+                  <button type="submit" id="saveARFields" class="btn btn-sm btn-custom float-right">
+                        <i class="fa fa-save mr-2"></i>Approve Application
+                  </button>
+                  @* <a type="submit" id="saveARFields" class="btn btn-sm btn-custom float-right">
+                  <i class="fa fa-save mr-2"></i>Approve Application
+                  </a> *@
+                  <button type="button" id="editARFields" class="btn btn-sm btn-custom float-right" style="display:none" onclick="$('#agencyRequiredinfo').prop('disabled', false);$('#editARFields').css('display', 'none');$('#saveARFields').show()"><i class="fas fa-edit mr-2"></i>Edit</button>
+            </div>
+      </div>
+</form>

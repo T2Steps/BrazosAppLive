@@ -1,0 +1,215 @@
+﻿@model ApplicationVM
+@{
+    ViewData["Title"] = "Home";
+}
+<style>
+    body {
+        /*background: #1a1a1d;*/
+        background: lightgray;
+        /*background: whitesmoke*/
+    }
+
+    .container {
+        margin-top:5%
+    }
+    
+</style>
+
+
+<div class="text-center">
+    <img src="~/Images/Logo/logoclient.png" style="height:100px; width:100px">
+    <h2 style="color:#022E5F">Brazos County Health District</h2>
+    <h5 style="color:#022E5F">201 N Texas Ave, Bryan, TX 77803, United States</h5>
+</div>
+<br />
+
+<section class="content">
+    <div class="col-12">
+        <div class="card card-outline" style="border-top:3px solid #022E5F">
+            <div class="card-header">
+                <h5 style="color:#A48464" class="card-title" id="exampleModalLabel">Apply For License</h5>
+                @*<button type="button" class="btn btn-sm btn-primary" onclick="Test()">Test Pdf</button>*@
+            </div>
+            <div class="card-body">
+                <form action="/GetApplicationLink" enctype="multipart/form-data" method="post" id="ApplicationForm">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <label style="font-weight:600" class="col-form-label">Application For <span style="font-size: 20px ;color:red">&#42;</span></label>
+                            <select class="custom-select rounded-1 shadow mb-3" id="ApplicationForId" name="Application.ApplicationForId" asp-items="@Model.ApplicationForList">
+                                <option disabled selected>---Select---</option>
+                            </select>
+                            <span id="applicationError" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <label style="font-weight:600" class="col-form-label">Owner Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                            <input type="text" class="form-control shadow mb-3" name="Application.OwnerName" id="oName" placeholder="Owner Name" />
+                            <span id="onameError" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                            <input type="text" class="form-control shadow mb-3" name="Application.EmailId" id="emailId" placeholder="Email Id" />
+                            <span id="emailError" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <label style="font-weight:600" class="col-form-label">Contact Number <span style="font-size: 20px ;color:red">&#42;</span></label>
+                            <input type="text" class="form-control shadow mb-3" name="Application.ContactNumber" id="contactNo" placeholder="Contact Number"  />
+                            <span id="contactError" class="text-danger"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-sm btn-custom float-right" onclick="GetApplication()" id="applybtn"> Get Application Link</button>
+                <button type="button" style="visibility:hidden" class="float-right"> .</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts{
+    <script>
+        $(function () {
+                $('#contactNo').inputmask('(999) 999-9999');
+                
+        });
+
+        // function Check(){
+        //         var contactNumber = $('#contactNo').val().replace(/\D/g, '');
+        //         if (contactNumber.length < 10) {
+        //         $('#contactError').text('ⓘ Invalid ');
+        //             return false;
+        //         } else {
+        //             $('#contactError').text('');
+        //             return true;
+        //         }
+        // }
+    </script>
+
+    <script>
+        function validate() {
+            let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+            var flg = 0;
+            if ($('#oName').val() == "") {
+                $('#onameError').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#onameError').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#ApplicationForId').val() == null) {
+                $('#applicationError').text("ⓘ Required Field ");
+                setTimeout(() => {
+                    $('#applicationError').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#emailId').val() == "") {
+                $('#emailError').text("ⓘ Required Field ");
+                setTimeout(() => {
+                    $('#emailError').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("ⓘ Required Field ");
+                setTimeout(() => {
+                    $('#contactError').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#emailId').val() != "" && EmailPattern.test($('#emailId').val()) == false) {
+                $('#emailError').text("ⓘ Invalid Email ");
+                setTimeout(() => {
+                    $('#emailError').html("");
+                }, 5000)
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                $('#contactError').text("ⓘ Invalid Contact No. ");
+                setTimeout(() => {
+                    $('#contactError').html("");
+                }, 5000)
+                flg = 1;
+            }
+
+            if (flg == 1) { return "Invalid" }
+            else { return "Valid" }
+        }
+
+        function GetApplication(){
+            var str = validate();
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/GetApplicationLink",
+                    data: $('#ApplicationForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        $('#applybtn').attr('disabled', true);
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.info(data.msg);
+                            }, 500)
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(data.msg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    },
+                    complete: function (data) {
+                        $('div#loading-wrapper').hide();
+                        $('#applybtn').attr('disabled', false);
+                        $('#ApplicationForm').trigger('reset');
+                    }
+                });
+            }
+        }
+
+
+        function Test(){
+            $.ajax({
+                type: "GET",
+                url: "/TestPdf",
+                success: function(data){
+                        debugger;
+                        const byteCharacters = atob(data.pdfData);
+                        const byteNumbers = new Array(byteCharacters.length);
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                        }
+                        const byteArray = new Uint8Array(byteNumbers);
+                        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+
+                        const pdfUrl = URL.createObjectURL(blob);
+                        window.open(pdfUrl);
+                }
+            })
+        }
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

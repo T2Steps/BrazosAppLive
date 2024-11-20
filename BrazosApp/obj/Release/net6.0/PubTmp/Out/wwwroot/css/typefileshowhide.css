@@ -1,0 +1,29 @@
+﻿@media screen and (max-width: 1537px) {
+    .image-upload > input {
+        display: none;
+    }
+
+    .input-group-append{
+        display:none;
+    }
+
+    
+    
+    /*.image-upload > label {
+        display: block;
+    }*/
+
+    /*.camera-icbutton {
+        display: unset;
+    }*/
+    
+
+}
+
+@media screen and (min-width: 1538px) {
+    .image-upload > label {
+        display: none;
+    }
+
+
+}

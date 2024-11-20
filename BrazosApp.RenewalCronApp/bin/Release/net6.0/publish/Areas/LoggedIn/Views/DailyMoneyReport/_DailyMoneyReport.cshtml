@@ -1,0 +1,217 @@
+﻿@model DailyMoneyReportVM
+
+@{
+    var userId = 0;
+    var ReceiptNo = "";
+    var ReceiptMoneyNo = "";
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    tbody tr:nth-child(even) {
+        background-color: whitesmoke;
+    }
+    tbody tr {
+        font-weight: normal;
+        font-size: 14px
+    }
+    th {
+        padding: 8px;
+        padding-bottom: 15px !important;
+        text-align: left;
+        font-weight: bold;
+        font-size: 16px;
+        background-color: #abaaaa;
+    }
+    td {
+        padding: 8px;
+    }
+</style>
+
+<div class="card card-outline" style="border-top:3px solid #022E5F;">
+    <div class="card-header">
+        <div style="text-align:right">
+            <form method="post" action="/GetDailyMoneyReportPdf" target="_blank">
+                <input type="hidden" asp-for="dailyMoneyReport.strFromDate" />
+                <input type="hidden" asp-for="dailyMoneyReport.strToDate" />
+                <input type="hidden" asp-for="dailyMoneyReport.strPrograms" />
+                <input type="hidden" asp-for="dailyMoneyReport.strJurisdictions" />
+                <input type="hidden" asp-for="dailyMoneyReport.strAccountDescriptions" />
+                <input type="hidden" asp-for="dailyMoneyReport.strUserIds" />
+                <input type="hidden" asp-for="dailyMoneyReport.strUserNames" />
+                <input type="hidden" asp-for="dailyMoneyReport.strPaymentModes" />
+                <button id="exportBtn" type="submit" class="btn btn-sm btn-custom"><i class="fa-solid fa-file-excel" title="Export To Pdf"></i> Export To PDF</button>
+            </form>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12"><h5>Summary</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cash</th>
+                            <th>Check</th>
+                            <th>Money Order</th>
+                            <th>Credit Cards</th>
+                            <th>Voids</th>
+                            <th>Refunds</th>
+                            <th>Final Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.dailyMoneyReport.dailyMoneySummaries!.Any())
+                        {
+                            foreach (var summary in Model.dailyMoneyReport.dailyMoneySummaries!)
+                            {
+                                <tr>
+                                    <td>@((summary.TotalCashAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalCashAmount).ToString("N2") : "$ " + summary.TotalCashAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalChequeAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalChequeAmount).ToString("N2") : "$ " + summary.TotalChequeAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalMoneyOrderAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalMoneyOrderAmount).ToString("N2") : "$ " + summary.TotalMoneyOrderAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalCardAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalCardAmount).ToString("N2") : "$ " + summary.TotalCardAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalVoidAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalVoidAmount).ToString("N2") : "$ " + summary.TotalVoidAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalRefundAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalRefundAmount).ToString("N2") : "$ " + summary.TotalRefundAmount.ToString("N2")))</td>
+                                    <td>@((summary.TotalFinalAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalFinalAmount).ToString("N2") : "$ " + summary.TotalFinalAmount.ToString("N2")))</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="row" style=" padding-top: 10px; padding-bottom: 10px;">
+            <div class="col-md-12"><h5>User Wise Summary</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Cash</th>
+                            <th>Check</th>
+                            <th>Money Order</th>
+                            <th>Credit Cards</th>
+                            <th>Voids</th>
+                            <th>Refunds</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.dailyMoneyReport.dailyMoneyUserWiseSummaries!.Any())
+                        {
+                            foreach (var userSummary in Model.dailyMoneyReport.dailyMoneyUserWiseSummaries!)
+                            {
+                                <tr>
+                                    <td>@userSummary.UserAlias</td>
+                                    <td>@((userSummary.CashAmount < 0 ? "- $ " + System.Math.Abs(userSummary.CashAmount).ToString("N2") : "$ " + userSummary.CashAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.ChequeAmount < 0 ? "- $ " + System.Math.Abs(userSummary.ChequeAmount).ToString("N2") : "$ " + userSummary.ChequeAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.MoneyOrderAmount < 0 ? "- $ " + System.Math.Abs(userSummary.MoneyOrderAmount).ToString("N2") : "$ " + userSummary.MoneyOrderAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.CardAmount < 0 ? "- $ " + System.Math.Abs(userSummary.CardAmount).ToString("N2") : "$ " + userSummary.CardAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.VoidAmount < 0 ? "- $ " + System.Math.Abs(userSummary.VoidAmount).ToString("N2") : "$ " + userSummary.VoidAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.RefundAmount < 0 ? "- $ " + System.Math.Abs(userSummary.RefundAmount).ToString("N2") : "$ " + userSummary.RefundAmount.ToString("N2")))</td>
+                                    <td>@((userSummary.TotalAmount < 0 ? "- $ " + System.Math.Abs(userSummary.TotalAmount).ToString("N2") : "$ " + userSummary.TotalAmount.ToString("N2")))</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>         
+        
+        @if (Model.dailyMoneyReport.dailyMoneyUserWises.Any())
+        {
+            <div class="row" style=" padding-top: 10px; padding-bottom: 10px;">
+                <div class="col-md-12"><h5>By Users</h5></div>
+            </div>
+
+            var groupedUserList = (from user in Model.dailyMoneyReport.dailyMoneyUserWises select new { Id = user.Id, Name = user.UserAlias }).GroupBy(x => new
+            {
+                x.Id,
+                x.Name
+            }).ToList();
+
+            foreach (var user in groupedUserList)
+            {
+                <div class="row" style="background-color: #abaaaa; font-weight: bold; padding-top: 10px; padding-bottom: 10px;">
+                    <div class="col-md-12">@user.Key.Name</div>
+                </div>
+
+                var groupedReceiptList = (from receipt in Model.dailyMoneyReport.dailyMoneyUserWises.Where(x => x.Id == user.Key.Id) select new {
+                                              UserId = receipt.Id,
+                                              ReceiptNo = receipt.ReceiptNo,
+                                              InvoiceNo = receipt.InvoiceNo,
+                                              PaymentOn = receipt.PaymentOn,
+                                              TotalAmount = receipt.TotalAmount,
+                                              Program = receipt.Program,
+                                              Jurisdiction = receipt.Jurisdiction
+                                          }).GroupBy(x => new
+                                          {
+                                              x.UserId,
+                                              x.ReceiptNo,
+                                              x.InvoiceNo,
+                                              x.PaymentOn,
+                                              x.TotalAmount,
+                                              x.Program,
+                                              x.Jurisdiction
+                                          }).ToList();
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-md-12">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Receipt</td>
+                                    <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Date & Time</td>
+                                    <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Program</td>
+                                    <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Jurisdiction</td>
+                                    <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Total</td>
+                                </tr>
+                                @foreach (var receipt in groupedReceiptList)
+                                {
+                                    var groupedPaymentMethod = (from paymentMethod in Model.dailyMoneyReport.dailyMoneyUserWises.Where(x => x.Id == user.Key.Id && x.ReceiptNo == receipt.Key.ReceiptNo)
+                                                              select new
+                                                              {
+                                                                    PaymentMethod = paymentMethod.PaymentMethod,
+                                                                    AmountReceived = paymentMethod.AmountReceived
+                                                              }).ToList();
+
+                                    <tr>
+                                        <td style="width: 20%;">@receipt.Key.ReceiptNo</td>
+                                        <td style="width: 20%;">@receipt.Key.PaymentOn.Value.ToString()</td>
+                                        <td style="width: 20%;">@receipt.Key.Program</td>
+                                        <td style="width: 20%;">@receipt.Key.Jurisdiction</td>
+                                        <td style="width: 20%;">@((receipt.Key.TotalAmount < 0 ? "- $ " + System.Math.Abs(receipt.Key.TotalAmount).ToString("N2") : "$ " + receipt.Key.TotalAmount.ToString("N2")))</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Mode of Payment</td>
+                                        <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Amount Received</td>
+                                    </tr>
+                                    @if (groupedPaymentMethod.Any())
+                                    {
+                                        @foreach (var paymentMethod in groupedPaymentMethod)
+                                        {
+                                            <tr>
+                                                <td style="width: 20%; padding-top: 5px; padding-bottom: 5px;">@paymentMethod.PaymentMethod</td>
+                                                <td style="width: 20%; padding-top: 5px; padding-bottom: 5px;">@((paymentMethod.AmountReceived < 0 ? "- $ " + System.Math.Abs(paymentMethod.AmountReceived).ToString("N2") : "$ " + paymentMethod.AmountReceived.ToString("N2")))</td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr>
+                                        <td colspan="5"><hr /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+    </div>    
+</div>

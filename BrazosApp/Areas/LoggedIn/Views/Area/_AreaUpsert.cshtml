@@ -1,0 +1,47 @@
+﻿@model Area
+
+<div class="modal fade" id="areaUpsertModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Area</h5>
+                @* <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> *@
+            </div>
+            <div class="modal-body">
+                <form action="/AreaUpsert" enctype="multipart/form-data" id="AreaUpsertForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input name="Id" id="areaId" value="0" hidden />
+                        <input name="IsActive" id="isActive" value="true" hidden />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Area Number <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="AreaNumber" id="areaNumber" placeholder="Area Number..." oninput="$(this).val($(this).val().replace(/\D/g, ''))" />
+                                        <span id="areaNumberErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Description <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <textarea class="form-control shadow mb-3" name="Description" id="description" placeholder="Description.."></textarea>
+                                        <span id="descriptionErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lg btn-outline-secondary float-right" onclick="Modalert()"> Cancel</button>
+                        <button type="button" class="btn btn-lg btn-custom float-right" id="areasaveBtn" onclick="return saveArea()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

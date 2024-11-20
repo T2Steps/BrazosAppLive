@@ -1,0 +1,904 @@
+﻿@using System.Security.Claims;
+@model OpeningInspectionCreateVM
+
+@{
+      var code = Model.Response!.Code;
+      var apiUrl = ViewBag.apiUrl;
+      var baseUrl = ViewBag.baseurl;
+      var Dashboard = ViewBag.Dashboard.ToString();
+      var backurl = "";
+      if (code == "RF")
+      {
+            ViewData["Title"] = "Retail Food Inspection";
+            backurl = "/Schedules?code=RF";
+
+      }
+      else if (code == "MF")
+      {
+            ViewData["Title"] = "Mobile Food Inspection";
+            backurl = "/Schedules?code=MF";
+      }
+      var Address = Model.Response!.Address!.Split(',');
+}
+
+
+<style>
+
+      #top {
+          float: right;
+          width: 39px;
+          margin-top: -35px;
+      }
+
+      #top {
+          transition: all 0.5s ease 0s;
+          -moz-transition: all 0.5s ease 0s;
+          -webkit-transition: all 0.5s ease 0s;
+          -o-transition: all 0.5s ease 0s;
+          opacity: 0.5;
+          display: none;
+          cursor: pointer;
+      }
+
+          #top:hover {
+              opacity: 1;
+          }
+
+      input[type=radio] {
+          display: none;
+      }
+
+      input[type="radio"][id^="out"]:checked + label {
+          background-color: red;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id^="in"]:checked + label {
+          background-color: green;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id^="na"]:checked + label {
+          background-color: blue;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id^="na"]:disabled + label {
+          display: none;
+      }
+
+
+
+      [type="radio"]:checked + label:after {
+          background-color: red;
+          border: 2px solid red;
+          color: #fff;
+      }
+
+      .btn-check[disabled] + .btn {
+          pointer-events: none;
+          filter: none;
+          opacity: 0.65;
+          background-color: none;
+      }
+
+      input[type="radio"][id="followyesChoice"]:checked + label {
+          background-color: red;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id="follownoChoice"]:checked + label {
+          background-color: green;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id="permityesChoice"]:checked + label {
+          background-color: green;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id="permitnoChoice"]:checked + label {
+          background-color: red;
+          font-weight: bold;
+          color: #fff;
+      }
+
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+<section class="content-header">
+      <div class="container-fluid">
+            <div class="row mb-2">
+                  <div class="col-sm-6">
+                        <h1 style="color:#A48464">@ViewData["Title"]</h1>
+                  </div>
+                  <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                              <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                              <li class="breadcrumb-item active">Inspection</li>
+                              <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                        </ol>
+                  </div>
+            </div>
+      </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+      <div class="row m-2">
+            <div class="col-md-12">
+                  <form method="post" enctype="multipart/form-data">
+
+                        <div class="card card-outline" style="border-top:3px solid #022E5F">
+                              <div class="card-header">
+                                    <h5 style="color:#A48464">Establishment Information</h5>
+                              </div>
+                              <div class="card-body">
+                                    <input type="hidden" name="EstId" id="estId" value="@Model.Response.EstablishmentId" />
+                                    <input type="hidden" name="PurposeId" id="purposeId" value="@Model.Response.PurposeId" />
+                                    <input type="hidden" name="RiskId" id="riskId" value="@Model.Response.RiskId" />
+                                    <input type="hidden" name="SchedulerId" id="schId" value="@Model.Response.SId" />
+                                    <input type="hidden" name="InTime" id="timeIn" value="@Model.Response!.InTime" />
+
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                          <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                      <label style="font-weight:600">Inspection Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                      @* <input class="form-control required" type="text" id="inspectionDt" name="InspectionDate" value="@Model.Response!.InTime!.Value.Date.ToShortDateString()"> *@
+                                                      <input class="form-control required" type="date" id="inspectionDt" name="InspectionDate" />
+                                                      <span id="inspectdatecontrolErr" class="error text-danger"></span>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                      <label style="font-weight:600">Purpose of Inspection <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                                      <input class="form-control required" type="text" id="purpose" name="Purpose" value="Opening Inspection" disabled>
+                                                      <span id="inspectdatecontrolErr" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                      <label style="font-weight:600">Establishment Name <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                                      <input name="Name" id="estName" type="text" class="form-control required" value="@Model.Response.EstName" disabled />
+                                                      <span id="estTypeErr" class="text-danger"></span>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                      <label style="font-weight:600">Permit Number <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                                      <input name="permit" id="estPermit" type="text" class="form-control required" value="@Model.Response.Permit" disabled />
+                                                      <span id="estTypeErr" class="text-danger"></span>
+                                                </div>
+                                          </div>
+                                          <fieldset disabled>
+                                                <div class="row">
+                                                      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                            <label style="font-weight:600">Address</label>
+                                                            <input class="form-control required" type="text" id="estAddr" name="address" value="@Address[0]">
+                                                            <span id="inspectdatecontrolErr" class="text-danger"></span>
+                                                      </div>
+                                                      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                            <label style="font-weight:600">State</label>
+                                                            <input class="form-control required" type="text" id="estState" name="state" value="@Address[1]">
+                                                            <span id="inspectdatecontrolErr" class="text-danger"></span>
+                                                      </div>
+                                                      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                            <label style="font-weight:600">City</label>
+                                                            <input name="city" id="estCity" type="text" class="form-control required" value="@Address[2]" />
+                                                            <span id="estTypeErr" class="text-danger"></span>
+                                                      </div>
+                                                      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                                            <label style="font-weight:600">Zip</label>
+                                                            <input name="zip" id="estZip" type="text" class="form-control required" value="@Address[3]" />
+                                                            <span id="estTypeErr" class="text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </fieldset>
+
+                                    </div>
+                              </div>
+
+                              <div id="inspectionPanel">
+                                    <div class="card-header">
+                                          <h5 style="color:#A48464">Inspection Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                          <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                      <div class="radioPanel row g-3 table-responsive-xl">
+                                                            <table class="table table-bordered">
+                                                                  @{
+                                                                        //int i = 1;
+                                                                        int itemCounter = 0;
+                                                                        <tr style="text-align:center;">
+                                                                              <th style="width: 5px">#</th>
+                                                                              <th style="width: 300px">Item</th>
+                                                                              <th style="width: 10px">IN</th>
+                                                                              <th style="width: 10px">OUT</th>
+                                                                              <th style="width: 10px">NA</th>
+
+                                                                        </tr>
+                                                                        @if (Model.Response.FinalItemList!.Count() > 0)
+                                                                        {
+                                                                              var totalcnt = Model.Response.FinalItemList!.Count();
+                                                                              <input type="hidden" id="TotalItemctn" name="totalcnt" value="@totalcnt" />
+                                                                              <input type="hidden" name="OutFlag" id="outflg" value="0" />
+                                                                              var j = 0;
+                                                                              @for (var i = 0; i < Model.Response.FinalItemList!.Count(); i++)
+                                                                              {
+                                                                                    j = i + 1;
+                                                                                    <tr>
+                                                                                          <td>
+                                                                                                <input type="hidden" name="FinalItemList[@i].Id" value="@Model.Response.FinalItemList!.ToArray()[i].Id" />
+                                                                                                <input type="hidden" name="FinalItemList[@i].Name" value="@Model.Response.FinalItemList.ToArray()[i].Name" />
+                                                                                                <input type="hidden" name="FinalItemList[@i].Status" id="FI[@i]" value="IN" />
+                                                                                                @j
+                                                                                          </td>
+                                                                                          <td style="text-align:left!important;">
+                                                                                                @Model.Response.FinalItemList.ToArray()[i].Name
+                                                                                          </td>
+                                                                                          <td width="15%" style="text-align:center">
+                                                                                                <input type="radio" class="btn-check" id="in@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'IN')" />
+                                                                                                <label id="chkIN_lbl" for="in@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">IN</label>
+                                                                                          </td>
+                                                                                          <td width="15%" style="text-align:center">
+                                                                                                <input type="radio" class="btn-check" id="out@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'OUT')" />
+                                                                                                <label id="chkOUT_lbl" for="out@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">OUT</label>
+                                                                                          </td>
+                                                                                          <td width="15%" style="text-align:center">
+                                                                                                <input type="radio" class="btn-check" id="na@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NA')" />
+                                                                                                <label id="chkNA_lbl" for="na@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">NA</label>
+                                                                                          </td>
+
+                                                                                    </tr>
+                                                                                    <div style="display:none">@(itemCounter += 1)</div>
+
+                                                                              }
+
+                                                                        }
+                                                                  }
+                                                            </table>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                                    <div class="card-body">
+                                          <div class="row p-1">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                                      <textarea name="inspection.Comment" id="generalComments" class="form-control shadow mb-3" placeholder="Comment...."></textarea>
+                                                </div>
+                                          </div>
+                                          <div class="row p-3">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group ">
+                                                      <div id="receiverSignature">
+                                                            <div class="row">
+                                                                  <input type="hidden" name="inspection.PersonInChargeSign" id="receiverSignatureBase64" value="" />
+                                                                  <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                                                        <div class="m-signature-pad">
+                                                                              <div>
+                                                                                    <canvas id="receiver" max-width="600px" style="border:1px solid;padding:7px"></canvas>
+                                                                              </div>
+                                                                        </div>
+                                                                        <div class="pt-2">
+                                                                              <span class="pull-right">
+                                                                                    <button type="button" data-action="clear" class="btn btn-sm btn-outline-danger">Clear&nbsp<i class="fas fa-trash"></i></button>
+                                                                              </span>
+                                                                        </div>
+                                                                        <div class="row pt-4">
+                                                                              <label style="font-weight:600" class="control-label">Received By: (signature)</label>
+                                                                        </div>
+                                                                        <span id="receiverSignError" class="error text-danger"></span>
+                                                                  </div>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                                      <label style="font-weight:600">Full Name: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                      <input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" />
+                                                      <span id="personInChargeErr" class="error text-danger"></span>
+                                                </div>
+                                          </div>
+                                          <div class="row p-3">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                                      <div id="inspectorSignature">
+                                                            <div class="row">
+                                                                  @{
+                                                                        if (Model.Response.InspectedBySignFileName != null)
+                                                                        {
+                                                                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <img src="~/Images/UsersSignature/@ViewBag.userId/@Model.Response.InspectedBySignFileName" height="200" width="320" style="border:1px solid" title="Signature File" />
+                                                                              </div>
+
+                                                                              <div class="row pt-4">
+                                                                                    <label style="font-weight:600" class="control-label">Inspected By: (signature)</label>
+                                                                              </div>
+
+                                                                              <input name="inspection.InspectorSignFile" id="insSignFile" hidden value="@Model.Response.InspectedBySignFileName">
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                              <input type="hidden" name="inspection.InspectorSign" id="healthInspectorSignatureBase64" value="" />
+                                                                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                    <div class="m-signature-pad">
+                                                                                          <div>
+                                                                                                <canvas id="receiver" max-width="600px" style="border:1px solid;padding:7px"></canvas>
+                                                                                          </div>
+                                                                                    </div>
+                                                                                    <div class="pt-2">
+                                                                                          <span class="pull-right">
+                                                                                                <button type="button" id="clean" class="btn btn-sm btn-outline-danger">Clear&nbsp;<i class="fas fa-trash"></i></button>
+                                                                                          </span>
+                                                                                    </div>
+                                                                                    <div class="row pt-4">
+                                                                                          <label style="font-weight:600" class="control-label">Inspected By: (signature)</label>
+                                                                                    </div>
+
+                                                                              </div>
+                                                                        }
+                                                                  }
+
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group pr-2">
+                                                      <label style="font-weight:600">Full Name:</label>
+                                                      <input type="text" name="InspectedByName" disabled value="@Model.Response.InspectedBy" class="form-control" />
+
+                                                </div>
+                                          </div>
+                                        <div class="row p-3">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <div id="secondInspectorSignature">
+                                                    <div class="row">
+                                                        <input type="hidden" name="inspection.SecondInspectorSign" id="secondInspectorSignatureBase64" value="" />
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="m-signature-pad">
+                                                                <div>
+                                                                    <canvas id="secondInspector" max-width="600px" style="border:1px solid;padding:7px"></canvas>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="pt-2 text-left">
+                                                            <button type="button" data-action="clear" class="btn btn-sm btn-outline-danger">Clear <i class="fas fa-trash"></i></button>
+                                                        </div>
+                                                        <div class="row pt-4">
+                                                            <label class="control-label" style="font-weight:600">Inspected By: (signature)</label>
+                                                        </div>
+                                                        <span id="secondInspectorSignError" class="error text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div id="secondInspectorSignFileSection" style="display:none">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <img src="" height="200" width="320" style="border:1px solid" title="Signature File" id="secondInspectorSignImage" onerror="$('#secondInspectorSignature').show(); $('#secondInspectorSignFileSection').hide();$('#secondInspectorSignFile').val('')" />
+                                                        </div>
+
+                                                        <div class="row pt-4">
+                                                            <label style="font-weight:600" class="control-label">Inspected By: (signature)</label>
+                                                        </div>
+
+                                                        <input type="hidden" name="inspection.InspectorSignFile" id="secondInspectorSignFile" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label class="font-weight-bold">Full Name: </label>
+                                                @* <input type="text" name="inspection.SecondInspector" id="secondInspectorName" class="form-control required" /> *@
+                                                <select name="inspection.SecondInspector" id="secondInspectorName" class="form-control required" asp-items="@Model.Response.UserList" onchange="PopulateSign($(this).val()); ">
+                                                    <option disabled selected>--Select Inspector--</option>
+                                                </select>
+                                                <span id="secondInspectorNameErr" class="error text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="card-header">
+                                    <h5 style="color:#A48464">Feedback</h5>
+                              </div>
+                              <div class="card-body">
+                                    <div class="row">
+                                          <div class="col-sm-12">
+                                                <div class="form-group mt-2 ml-2">
+                                                      <label style="font-weight:600" class="col-form-label mr-5 ">Permit Approval</label>
+                                                      <input type="checkbox" name="PermitApproval" id="permitApproval" hidden />
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="permitApprovalChoice" id="permityesChoice" @*onchange="followUpChange()"*@>
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox1" style="font-size: 14px" onclick="$('#permityesChoice').prop('checked', true); $('#permityesChoice').trigger('change')">Pass</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="permitApprovalChoice" id="permitnoChoice" @*onchange="followUpChange()"*@>
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox2" style="font-size: 14px" onclick="$('#permitnoChoice').prop('checked', true); $('#permitnoChoice').trigger('change')">Fail</label>
+                                                      </div>
+                                                </div>
+                                                <div class="form-group mt-2 ml-2">
+                                                      <label style="font-weight:600" class="col-form-label mr-5 ">Follow Up</label>
+                                                      <input type="checkbox" name="FollowUp" id="flwUpBool" hidden />
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="followUpChoice" id="followyesChoice" onchange="followUpChange()">
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="finlineCheckbox1" style="font-size: 14px" onclick="$('#followyesChoice').prop('checked', true); $('#followyesChoice').trigger('change')">Yes</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="followUpChoice" id="follownoChoice" onchange="followUpChange()">
+                                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="finlineCheckbox2" style="font-size: 14px" onclick="$('#follownoChoice').prop('checked', true); $('#follownoChoice').trigger('change')">No</label>
+                                                      </div>
+                                                </div>
+                                                <div id="flwUpDtHide" class="col-lg-2 col-md-2 col-sm-12 col-xs-12 pb-3">
+                                                      <label style="font-weight:600">Date</label>
+                                                      <input type="date" id="flwUpDt" disabled name="inspection.FollowUpDate" value="" class="form-control" />
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-12 pt-2 text-right p-3">
+                                          <button id="FinalSubmitBtn" type="button" class="btn btn-sm btn-custom float-right ml-3" onclick="FinalSubmit()">
+                                                <i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i>Submit<i id="arrowicon" class="fas fa-arrow-circle-right ml-2"></i>
+                                          </button>
+                                          <button id="BackBtn" type="button" class="btn btn-sm btn-custom float-left mr-3" onclick="window.location.href = '@backurl'">
+                                                Back To List
+                                          </button>
+                                          @*<button type="button" id="create" class="btn btn-lg btn-slateblue float-right ml-3" onclick="ShowRest(event)"><i class="fa fa-save mr-2"></i>Create</button>*@
+                                    </div>
+                              </div>
+                        </div>
+                  </form>
+            </div>
+      </div>
+
+</section>
+
+
+@section Scripts {
+      <partial name="_ValidationScriptsPartial.cshtml" />
+      <script src="~/signature_pad/signature_pad.umd.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+      <script>
+        function PopulateSign(id) {
+            $.ajax({
+                type: "GET",
+                url: "/GetSecondInsSignFile?id=" + id,
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                    var canvas = document.getElementById("secondInspector");
+                    var ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    $('#secondInspectorSignFile').val('')
+                    //secondInspectorclearButton.trigger('clear');
+                },
+                success: function (data) {
+                    //console.log(data);
+                    if (data.success) {
+                        if (data.isSignFilePresent == "Present") {
+                            //console.log('~/Images/UsersSignature/' + id + '/' + data.signFile);
+                            $('#secondInspectorSignature').hide();
+                            $('#secondInspectorSignFileSection').show();
+                            $('#secondInspectorSignFile').val('@baseUrl/Images/UsersSignature/' + id + '/' + data.signFile)
+                            //console.log($('#secondInspectorSignFile').val())
+                            $('#secondInspectorSignImage').prop('src', '@baseUrl/Images/UsersSignature/' + id + '/' + data.signFile)
+                        }
+                        else if (data.isSignFilePresent == "Absent") {
+                            $('#secondInspectorSignature').show();
+                            $('#secondInspectorSignFileSection').hide();
+                        }
+                    }
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                }
+
+            })
+
+        }
+
+            function followUpChange() {
+                var yes = $('#followyesChoice');
+                var no = $('#follownoChoice');
+
+                var dtToday = new Date();
+                var month = dtToday.getMonth() + 1;
+                var dt = dtToday.getDate();
+                var year = dtToday.getFullYear();
+
+                if (month < 10) { month = '0' + month.toString() };
+                if (dt < 10) { dt = '0' + dt.toString(); }
+                var maxdt = year + '-' + month + '-' + dt;
+
+                //$('#inspectionDt').attr('max', maxdt);
+
+                if (yes.is(":checked")) {
+                    $('#flwUpBool').prop("checked", true);
+                    $('#flwUpBool').prop("value", "true");
+                    $('#flwUpDt').removeAttr('disabled');
+                    //$('#flwUpDt').val(sevendt);
+                }
+                else if (no.is(":checked")) {
+                    $('#flwUpBool').prop("checked", false);
+                    $('#flwUpBool').prop("value", "false");
+                    $('#flwUpDt').attr('disabled', true);
+                    $('#flwUpDt').val("");
+                }
+            }
+      </script>
+
+      <script>
+            function onStatusChange(index, value) {
+                $('input[type="hidden"][name="FinalItemList[' + index + '].Status"]').val(value);
+
+
+            }
+      </script>
+
+      <script>
+            function FinalSubmit() {
+                $('#FinalSubmitBtn').prop('disabled', true);
+                var validationFlg = 0;
+                var url = '/SaveAdminPanelOpeningInspection'
+                
+                var signatureString = signaturePadReceiver.toDataURL();
+
+                $('#receiverSignatureBase64').val(signatureString);
+
+                var secondInssignatureString = secondInssignaturePadReceiver.toDataURL();
+                $('#secondInspectorSignatureBase64').val(secondInssignatureString);
+
+                if ('@Model.Response.InspectedBySignFileName' == null) {
+                    var signString = signaturePadInspector.toDataURL();
+                    $('#healthInspectorSignatureBase64').val(signString);
+                }
+
+                if ($('#inspectionDt').val() == "") {
+                    $('#inspectdatecontrolErr').text("\u24d8 Required Field");
+                    validationFlg = 1
+                }
+
+                if ($('#personInCharge').val() == "") {
+                    $('#personInChargeErr').text("\u24d8 Required Field");
+                    validationFlg = 1
+                }
+
+                if (signaturePadReceiver.isEmpty()) {
+                    $('#receiverSignError').text("\u24d8 Required Field")
+                    validationFlg = 1
+                    setTimeout(function () { $('#receiverSignError').text(''); }, 4000)
+                }
+
+                if (validationFlg == 1) 
+                {
+                      $('#FinalSubmitBtn').prop('disabled', false);
+                      return false 
+                }
+                var flg = 1;
+                var outflag = 0;
+                var totalItems = $('#TotalItemctn').val();
+                for (let i = 0; i < totalItems; i++) {
+                    if ($('input[type="hidden"][name="FinalItemList[' + i + '].Status"]').val() == "OUT") {
+                        outflag = 1;
+                    }
+                }
+
+                var formData = new FormData();
+                //formData.append('InspectionDate', $('#inspectdatecontrol').val());
+                formData.append('InspectionDate', $('#inspectionDt').val())
+                formData.append('TimeIn', $('#timeIn').val());
+                formData.append('ScheduleId', $('#schId').val());
+                formData.append('EstablishmentId', $('#estId').val());
+                formData.append('RiskId', $('#riskId').val());
+                formData.append('PurposeId', $('#purposeId').val());
+                formData.append('FollowUp', $('#flwUpBool').val());
+                formData.append('FollowUpDate', $('#flwUpDt').val());
+                //formData.append('Comment', $('#generalComments').val());
+                if (!$('#generalComments').summernote('isEmpty')) {
+                    //console.log()
+                    formData.append('Comment', $("#generalComments").summernote('code'));
+                }
+
+                console.log(outflag);
+                if (outflag == 0 && $('#permitApproval').val() == 'true') {
+                    formData.append('PermitApproval', true);
+
+                }
+                else {
+                    formData.append('PermitApproval', false);
+                }
+
+                formData.append('PersonInCharge', $('#personInCharge').val());
+                formData.append('PersonInChargeSign', $('#receiverSignatureBase64').val());
+                if ('@Model.Response.InspectedBySignFileName' == null) {
+                    formData.append('InspectedBySign', $('#healthInspectorSignatureBase64').val());
+                }
+                else {
+                    formData.append('InspectorSignFile', $('#insSignFile').val());
+                }
+
+                if ($("#secondInspectorName option:selected").text() != "--Select Inspector--"){
+                    formData.append('SecondInspector', /* $('#secondInspectorName').text() */ $("#secondInspectorName option:selected").text());
+                }
+                
+
+                if ($('#secondInspectorSignFile').val() != '' && $('#secondInspectorSignFile').val() != null){
+                    formData.append('SecondInspectorSignFile', $('#secondInspectorSignFile').val());
+                }
+                else{
+                    formData.append('SecondInspectorSigns', $('#secondInspectorSignatureBase64').val());
+                }
+
+
+                submitFormData(url, formData).then(data => {
+                    if (data.success) {
+                        var InspectionId = data.inspectionid;
+
+                        InspectionItemsSave(InspectionId)
+                            .then(() => {
+                                window.scrollTo(0, 0);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success("Inspection Completed Successfully");
+                                }, 500);
+                                setTimeout(() => {
+                                    location.href = '/Inspections?code=' + '@code';
+                                }, 1500);
+                            });
+                    }
+                }).finally(() => {
+                    $('div#loading-wrapper').hide();
+                    $('#arrowicon').show();
+                    $('#spin').hide();
+                });
+
+
+                // $.ajax({
+                //     type: "POST",
+                //     url: url,
+                //     headers: {
+                //         'Authorization': `Bearer ${Tok}`,
+                //         //'Content-Type': 'application/json'
+                //     },
+                //     data: formData,
+                //     contentType: false,
+                //     processData: false,
+                //     beforeSend: function () {
+                //         $('div#loading-wrapper').show();
+                //         $('#arrowicon').hide();
+                //         $('#spin').show();
+                //         $('#FinalSubmitBtn').prop('disabled', true);
+                //     },
+                //     success: function (data) {
+                //         console.log(data);
+                //         //alert(11);
+                //         if (data.success) {
+                //             var InspectionId = data.response.result;
+                //             let str = InspectionItemsSave(InspectionId);
+                //             //console.log(str);
+                //             if (str == "Success") {
+                //                 window.scrollTo(0, 0);
+                //                 $('audio#success_sound')[0].play();
+                //                 setTimeout(() => {
+                //                     toastr.success("Inspection Completed Successfully");
+                //                 }, 500)
+                //                 setTimeout(() => {
+                //                     location.href = '/Inspection?code=' + '@code';
+                //                 }, 1500)
+                //             }
+                //         }
+                //     },
+                //     complete: function () {
+                //         $('div#loading-wrapper').hide();
+                //         $('#arrowicon').show();
+                //         $('#spin').hide();
+                //         $('#FinalSubmitBtn').prop('disabled', false);
+                //     }
+
+                // });
+            }
+
+
+            function submitFormData(url, formData) {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('div#loading-wrapper').show();
+                            $('#arrowicon').hide();
+                            $('#spin').show();
+                            $('#FinalSubmitBtn').prop('disabled', true);
+                        },
+                        success: function (data) {
+                            //console.log(data);
+                            resolve(data);
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                });
+            }
+
+            function InspectionItemsSave(InspectionId) {
+                var totalItems = $('#TotalItemctn').val();
+            var url = '/SaveAdminPanelOpeningInspectionItems'
+                var cnt = 0;
+                return new Promise((resolve, reject) => {
+                    let cnt = 0;
+
+                    for (let i = 0; i < totalItems; i++) {
+                        var statusValue = $('input[type="hidden"][name="FinalItemList[' + i + '].Status"]').val();
+                        //console.log("Status Value: ", statusValue);
+                        var itemformData = new FormData();
+                        itemformData.append('InspectionId', InspectionId);
+                        itemformData.append('ItemId', $('input[type="hidden"][name="FinalItemList[' + i + '].Id"]').val());
+                        itemformData.append('Status', statusValue);
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: itemformData,
+                            contentType: false,
+                            processData: false,
+                            async: false,
+                            success: function (data) {
+                                cnt = i;
+                            },
+                            error: function (error) {
+                                reject(error);
+                            }
+                        });
+                    }
+                    if (cnt == totalItems - 1) {
+                        resolve("Success");
+                    } else {
+                        reject("Error");
+                    }
+                });
+            }
+
+
+            // function InspectionItemsSave(InspectionId) {
+            //     var totalItems = $('#TotalItemctn').val();
+            //     var url = '@apiUrl' + '/SaveOpeningInspectionItems'
+            //     var Tok = '@User.FindFirstValue("Token")'
+            //     //var statusValue = $('input[type="hidden"][name="FinalItemList[2].Status"]').val();
+            //     //console.log(statusValue);
+            //     var cnt = 0;
+            //     //console.log(totalItems);
+            //     for (let i = 0; i < totalItems; i++) {
+            //         var statusValue = $('input[type="hidden"][name="FinalItemList[' + i + '].Status"]').val();
+            //         //console.log("Status Value: ", statusValue);
+            //         var itemformData = new FormData();
+            //         itemformData.append('InspectionId', InspectionId);
+            //         itemformData.append('ItemId', $('input[type="hidden"][name="FinalItemList[' + i + '].Id"]').val());
+            //         itemformData.append('Status', statusValue);
+
+            //         //console.log(itemformData);
+
+            //         $.ajax({
+            //             type: "POST",
+            //             url: url,
+            //             headers: {
+            //                 'Authorization': `Bearer ${Tok}`,
+            //                 //'Content-Type': 'application/json'
+            //             },
+            //             data: itemformData,
+            //             contentType: false,
+            //             processData: false,
+            //             async: false,
+            //             success: function (data) {
+            //                 //console.log(data);
+            //                 if (data.success) {
+
+            //                 }
+            //                 else {
+
+            //                 }
+
+            //             }
+
+            //         });
+
+            //         cnt = i
+            //     }
+            //     console.log(cnt);
+            //     if (cnt == totalItems - 1) {
+            //         return "Success"
+            //     }
+            //     else {
+            //         return "Error";
+            //     }
+            // }
+      </script>
+
+      <script>
+            var signaturePadReceiver;
+
+            $(document).ready(function () {
+
+                var dtToday = new Date();
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var prevdt = dtToday.getDate() - 1;
+
+                var year = dtToday.getFullYear();
+                var maxyear = dtToday.getFullYear() + 1;
+                if (month < 10) { month = '0' + month.toString() };
+                if (day < 10) { day = '0' + day.toString(); }
+                if (prevdt < 10) { prevdt = '0' + prevdt.toString(); }
+
+                var mindate = year + '-' + month + '-' + day;
+                var maxdate = maxyear + '-' + month + '-' + day;
+                var prevdt = year + '-' + month + '-' + prevdt;
+
+                $('#inspectionDt').attr('max', mindate);
+                $('#inspectionDt').val(mindate);
+
+                $('#flwUpDt').attr('max', maxdate);
+                $('#flwUpDt').attr('min', mindate);
+                $('#flwUpBool').val(false);
+                $('#permitApproval').val(true);
+
+                $('#permityesChoice').prop("checked", true);
+                $('#follownoChoice').prop("checked", true);
+                $('#flwUpBool').prop("checked", true);
+                $('#flwUpBool').prop("value", "true");
+                $('#flwUpBool').prop("checked", false);
+                $('#flwUpBool').prop("value", "false");
+
+                $('#generalComments').summernote({
+                    toolbar: [
+                        ['style', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'ol']],
+                    ],
+                    placeholder: 'Write Your Comments here...',
+                    spellCheck: false
+                });
+
+                $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                    if ($(this).val().trim() !== "") {
+                        $(this).parents("div.form-group").find("span.error").text("");
+                    }
+                });
+
+                for (let i = 0; i < @Model.Response!.FinalItemList!.Count(); i++) {
+                    //$('#in(' + i + ')radio').prop('checked', true);
+                    $("#in" + i + "radio").attr('checked', true);
+                }
+
+                var receiver = document.getElementById("receiverSignature");
+                var receiverclearButton = receiver.querySelector("[data-action=clear]");
+                var receiverCanvas = receiver.querySelector("canvas");
+
+                signaturePadReceiver = new SignaturePad(receiverCanvas);
+                receiverclearButton.addEventListener("click", function (event) {
+                    signaturePadReceiver.clear();
+                });
+
+                var secondInspector = document.getElementById("secondInspectorSignature");
+                var secondInspectorclearButton = secondInspector.querySelector("[data-action=clear]");
+                var secondInspectorCanvas = secondInspector.querySelector("canvas");
+
+                secondInssignaturePadReceiver = new SignaturePad(secondInspectorCanvas);
+                secondInspectorclearButton.addEventListener("click", function (event) {
+                    secondInssignaturePadReceiver.clear();
+                });
+
+                if ('@Model.Response.InspectedBySignFileName' == null) {
+
+                    var inspector = document.getElementById("inspectorSignature");
+                    var inspectorclearButton = document.getElementById("clean");
+                    var inspectorCanvas = document.getElementById("inspector");
+                    var signaturePadInspector = new SignaturePad(inspectorCanvas);
+                    inspectorclearButton.addEventListener("click", function (event) {
+                        signaturePadInspector.clear();
+                    });
+                }
+
+
+            });
+      </script>
+}

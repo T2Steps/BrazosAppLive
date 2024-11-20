@@ -1,0 +1,61 @@
+﻿
+<div class="modal fade" id="paymailSend" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Share Payment Documents Via Email</h5>
+            </div>
+            <div class="modal-body">
+                <form id="paySendMail">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input type="hidden" name="PaymentId" id="payMailId" />
+                            <input type="hidden" name="PaymentStatus" id="paymentMailStatus" />
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Mail To: (Multiple MailIds must be separated by ',') <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="toEmail" id="PayToMail" class="form-control shadow mb-2" />
+                                        <span id="paytoEmailError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">CC: </label>
+                                        <input type="text" name="ccEmail" id="PayCCmail" class="form-control shadow mb-2" />
+                                        <span id="payccEmailError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Subject: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Subject" id="Paysub" class="form-control shadow mb-2" placeholder="Subject..." />
+                                        <span id="paysubError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Body:</label>
+                                        <textarea name="Body" id="Paybdy" class="form-control shadow mb-2" placeholder="Body..."></textarea>
+                                        @*<span id="descriptionError" class="text-danger"></span>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="payMailModalert()"> Cancel</button>
+                        <button type="button" @* onsubmit="$(this).prop('disabled', true); return true;" *@ id="sendPayMailBtn" class="btn btn-sm btn-custom float-right ml-3" onclick="SendPayMail()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa-regular fa-paper-plane mr-2"></i> Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

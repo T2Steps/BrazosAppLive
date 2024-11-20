@@ -1,0 +1,1709 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\BrazosApp.bundle.scp.css",
+      "PackagePath": "staticwebassets\\BrazosApp.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Audio\\error-126627.mp3",
+      "PackagePath": "staticwebassets\\Audio\\error-126627.mp3"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Audio\\short-success-sound-glockenspiel-treasure-video-game-6346.mp3",
+      "PackagePath": "staticwebassets\\Audio\\short-success-sound-glockenspiel-treasure-video-game-6346.mp3"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Audio\\the-notification-email-143029.mp3",
+      "PackagePath": "staticwebassets\\Audio\\the-notification-email-143029.mp3"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\EmailPayment.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\EmailPayment.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\EmailVerification.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\EmailVerification.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\English\\ApplicationSubmittedSuccessMail.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\English\\ApplicationSubmittedSuccessMail.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\ForgotPasswordEmail.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\ForgotPasswordEmail.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\Spanish\\ApplicationSubmittedSuccessMail.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\Spanish\\ApplicationSubmittedSuccessMail.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\TestRenewal\\RenewalInvoice.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\TestRenewal\\RenewalInvoice.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\TestRenewal\\htmlpage.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\TestRenewal\\htmlpage.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\EmailTemplates\\UserCreatedAlertEmail.html",
+      "PackagePath": "staticwebassets\\EmailTemplates\\UserCreatedAlertEmail.html"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\avatar.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\avatar.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\avatar2.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\avatar2.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\avatar3.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\avatar3.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\avatar4.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\avatar4.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\avatar5.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\avatar5.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\default-150x150.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\default-150x150.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\AdminLte\\preview.png",
+      "PackagePath": "staticwebassets\\Images\\AdminLte\\preview.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\Logo\\iAomlSJH_400x400.png",
+      "PackagePath": "staticwebassets\\Images\\Logo\\iAomlSJH_400x400.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\Logo\\logoclient.png",
+      "PackagePath": "staticwebassets\\Images\\Logo\\logoclient.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\Ticks\\bluetick.png",
+      "PackagePath": "staticwebassets\\Images\\Ticks\\bluetick.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\Ticks\\greentick.png",
+      "PackagePath": "staticwebassets\\Images\\Ticks\\greentick.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\Ticks\\redtick.png",
+      "PackagePath": "staticwebassets\\Images\\Ticks\\redtick.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\UsersSignature\\1\\1-sign.png",
+      "PackagePath": "staticwebassets\\Images\\UsersSignature\\1\\1-sign.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\UsersSignature\\6\\6-sign.png",
+      "PackagePath": "staticwebassets\\Images\\UsersSignature\\6\\6-sign.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Images\\UsersSignature\\7\\7-sign.png",
+      "PackagePath": "staticwebassets\\Images\\UsersSignature\\7\\7-sign.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1011\\1011-1015.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1011\\1011-1015.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1019\\1019-1016.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1019\\1019-1016.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1025\\1025-1020.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1025\\1025-1020.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1029\\1029-1017.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1029\\1029-1017.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1029\\1029-1018.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1029\\1029-1018.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1029\\1029-1019.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1029\\1029-1019.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1032\\1032-2017.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1032\\1032-2017.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1032\\1032-2018.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1032\\1032-2018.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1035\\1035-2019.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1035\\1035-2019.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1041\\1041-2020.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1041\\1041-2020.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1041\\1041-2021.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1041\\1041-2021.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1041\\1041-2022.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1041\\1041-2022.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1041\\1041-2023.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1041\\1041-2023.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1041\\1041-2025.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1041\\1041-2025.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1042\\1042-2026.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1042\\1042-2026.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1042\\1042-2027.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1042\\1042-2027.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1049\\1049-2029.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1049\\1049-2029.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1049\\1049-2030.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1049\\1049-2030.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1049\\1049-2031.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1049\\1049-2031.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1049\\1049-2032.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1049\\1049-2032.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1049\\1049-2033.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1049\\1049-2033.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1050\\1050-2034.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1050\\1050-2034.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-13.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-13.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-14.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-14.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-24.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-24.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-25.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-25.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-26.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-26.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-27.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-27.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\10\\10-29.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\10\\10-29.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\11\\11-15.png",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\11\\11-15.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\11\\11-16.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\11\\11-16.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\11\\11-17.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\11\\11-17.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\11\\11-18.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\11\\11-18.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\12\\12-20.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\12\\12-20.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\12\\12-21.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\12\\12-21.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\12\\12-31.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\12\\12-31.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\12\\12-47.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\12\\12-47.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\12\\12-48.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\12\\12-48.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\13\\13-32.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\13\\13-32.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\13\\13-33.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\13\\13-33.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\13\\13-34.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\13\\13-34.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\13\\13-35.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\13\\13-35.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-22.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-22.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-23.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-23.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-24.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-24.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-25.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-25.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-26.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-26.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-27.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-27.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\14\\14-38.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\14\\14-38.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\19\\19-39.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\19\\19-39.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\19\\19-40.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\19\\19-40.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\19\\19-41.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\19\\19-41.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\19\\19-42.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\19\\19-42.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\19\\19-43.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\19\\19-43.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1\\1-1.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1\\1-1.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1\\1-2.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1\\1-2.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1\\1-3.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1\\1-3.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1\\1-4.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1\\1-4.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\1\\1-5.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\1\\1-5.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\20\\20-45.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\20\\20-45.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\5\\5-6.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\5\\5-6.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\6\\6-7.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\6\\6-7.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\6\\6-8.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\6\\6-8.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\6\\6-9.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\6\\6-9.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\7\\7-10.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\7\\7-10.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\8\\8-11.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\8\\8-11.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\9\\9-12.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\9\\9-12.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\9\\9-15.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\9\\9-15.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\9\\9-30.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\9\\9-30.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\PermitDocuments\\Food\\RF-000009\\9-23.pdf",
+      "PackagePath": "staticwebassets\\PermitDocuments\\Food\\RF-000009\\9-23.pdf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Reports\\DailyMoney.rdl",
+      "PackagePath": "staticwebassets\\Reports\\DailyMoney.rdl"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\Reports\\DailyMoneyReport.rdl",
+      "PackagePath": "staticwebassets\\Reports\\DailyMoneyReport.rdl"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\css\\progress-wizard.min.css",
+      "PackagePath": "staticwebassets\\css\\progress-wizard.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\css\\status_bar.css",
+      "PackagePath": "staticwebassets\\css\\status_bar.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\css\\typefileshowhide.css",
+      "PackagePath": "staticwebassets\\css\\typefileshowhide.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Application\\DocumentsTable.js",
+      "PackagePath": "staticwebassets\\js\\Application\\DocumentsTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\Inspector\\inspectionTableIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\Inspector\\inspectionTableIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\Inspector\\schedulerTableIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\Inspector\\schedulerTableIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\AreaWisePendingInspectionReport.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\AreaWisePendingInspectionReport.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\Areas.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\Areas.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\DashboardFunctions.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\DashboardFunctions.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\Event.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\Event.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\FeesTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\FeesTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\InspectionReport.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\InspectionReport.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\NotesTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\NotesTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\PaymentIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\PaymentIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\PaymentTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\PaymentTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\PermitIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\PermitIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\PermitInspectionTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\PermitInspectionTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\PermitScheduleTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\PermitScheduleTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\TerritoryTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\TerritoryTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\Transactions.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\Transactions.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\UserManageTable.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\UserManageTable.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\inspectionTableIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\inspectionTableIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\Areas\\LoggedIn\\schedulerTableIndex.js",
+      "PackagePath": "staticwebassets\\js\\Areas\\LoggedIn\\schedulerTableIndex.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\CertificateDate.js",
+      "PackagePath": "staticwebassets\\js\\CertificateDate.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\datepicker-es.js",
+      "PackagePath": "staticwebassets\\js\\datepicker-es.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap2\\bootstrap-switch.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap2\\bootstrap-switch.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap2\\bootstrap-switch.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap2\\bootstrap-switch.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap3\\bootstrap-switch.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap3\\bootstrap-switch.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap3\\bootstrap-switch.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\css\\bootstrap3\\bootstrap-switch.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\js\\bootstrap-switch.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\js\\bootstrap-switch.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\bootstrap-switch\\js\\bootstrap-switch.min.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\bootstrap-switch\\js\\bootstrap-switch.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\icheck-bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\icheck-bootstrap"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\icheck-bootstrap\\icheck-bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\icheck-bootstrap\\icheck-bootstrap.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\icheck-bootstrap\\icheck-bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\icheck-bootstrap\\icheck-bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_444444_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_444444_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_555555_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_555555_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_777620_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_777620_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_777777_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_777777_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_cc0000_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_cc0000_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_ffffff_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\images\\ui-icons_ffffff_256x240.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.structure.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.structure.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.structure.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.structure.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.theme.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.theme.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.theme.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\jquery-ui\\jquery-ui.theme.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\css\\select2.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\css\\select2.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\css\\select2.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\css\\select2.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\af.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\af.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ar.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ar.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\az.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\az.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bg.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bg.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bn.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bn.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bs.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\bs.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\build.txt",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\build.txt"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ca.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ca.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\cs.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\cs.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\da.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\da.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\de.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\de.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\dsb.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\dsb.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\el.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\el.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\en.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\en.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\es.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\es.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\et.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\et.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\eu.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\eu.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fa.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fa.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fi.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fi.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fr.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\fr.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\gl.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\gl.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\he.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\he.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hi.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hi.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hr.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hr.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hsb.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hsb.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hu.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hu.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hy.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\hy.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\id.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\id.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\is.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\is.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\it.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\it.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ja.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ja.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ka.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ka.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\km.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\km.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ko.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ko.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\lt.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\lt.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\lv.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\lv.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\mk.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\mk.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ms.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ms.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\nb.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\nb.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ne.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ne.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\nl.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\nl.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pl.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pl.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ps.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ps.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pt-BR.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pt-BR.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pt.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\pt.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ro.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ro.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ru.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\ru.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sk.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sk.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sl.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sl.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sq.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sq.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sr-Cyrl.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sr-Cyrl.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sr.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sr.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sv.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\sv.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\th.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\th.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\tk.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\tk.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\tr.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\tr.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\uk.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\uk.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\vi.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\vi.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\zh-CN.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\zh-CN.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\zh-TW.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\i18n\\zh-TW.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\select2.full.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\select2.full.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\select2.full.min.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\select2.full.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\select2.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\select2.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\Plugins\\select2\\js\\select2.min.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\Plugins\\select2\\js\\select2.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\adminlte.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\adminlte.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\adminlte.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\adminlte.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\adminlte.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\adminlte.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\adminlte.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\adminlte.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.components.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.core.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.extra-components.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.light.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.pages.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.min.css",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\css\\alt\\adminlte.plugins.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\AdminLTELogo.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\AdminLTELogo.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\avatar.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\avatar.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\avatar2.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\avatar2.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\avatar3.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\avatar3.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\avatar4.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\avatar4.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\avatar5.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\avatar5.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\boxed-bg.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\boxed-bg.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\boxed-bg.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\boxed-bg.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\american-express.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\american-express.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\cirrus.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\cirrus.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\mastercard.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\mastercard.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\paypal.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\paypal.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\paypal2.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\paypal2.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\credit\\visa.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\credit\\visa.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\default-150x150.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\default-150x150.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\icons.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\icons.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\photo1.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\photo1.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\photo2.png",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\photo2.png"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\photo3.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\photo3.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\photo4.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\photo4.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\prod-1.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\prod-1.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\prod-2.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\prod-2.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\prod-3.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\prod-3.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\prod-4.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\prod-4.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\prod-5.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\prod-5.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user1-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user1-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user2-160x160.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user2-160x160.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user3-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user3-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user4-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user4-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user5-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user5-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user6-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user6-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user7-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user7-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\img\\user8-128x128.jpg",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\img\\user8-128x128.jpg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\.eslintrc.json",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\.eslintrc.json"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\adminlte.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\adminlte.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\adminlte.js.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\adminlte.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\adminlte.min.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\adminlte.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\adminlte.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\adminlte.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\demo.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\demo.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\pages\\dashboard.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\pages\\dashboard.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\pages\\dashboard2.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\pages\\dashboard2.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\AdminLte\\dist\\js\\pages\\dashboard3.js",
+      "PackagePath": "staticwebassets\\lib\\AdminLte\\dist\\js\\pages\\dashboard3.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\css\\bootstrap-colorpicker.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap-colorpicker\\js\\bootstrap-colorpicker.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bs-custom-file-input\\bs-custom-file-input.js",
+      "PackagePath": "staticwebassets\\lib\\bs-custom-file-input\\bs-custom-file-input.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bs-custom-file-input\\bs-custom-file-input.js.map",
+      "PackagePath": "staticwebassets\\lib\\bs-custom-file-input\\bs-custom-file-input.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bs-custom-file-input\\bs-custom-file-input.min.js",
+      "PackagePath": "staticwebassets\\lib\\bs-custom-file-input\\bs-custom-file-input.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\bs-custom-file-input\\bs-custom-file-input.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bs-custom-file-input\\bs-custom-file-input.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\daterangepicker\\daterangepicker.css",
+      "PackagePath": "staticwebassets\\lib\\daterangepicker\\daterangepicker.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\daterangepicker\\daterangepicker.js",
+      "PackagePath": "staticwebassets\\lib\\daterangepicker\\daterangepicker.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\all.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\all.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\all.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\all.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\brands.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\brands.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\brands.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\brands.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\fontawesome.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\fontawesome.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\fontawesome.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\fontawesome.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\regular.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\regular.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\regular.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\regular.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\solid.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\solid.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\solid.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\solid.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\svg-with-js.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\svg-with-js.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\svg-with-js.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\svg-with-js.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v4-font-face.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-font-face.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v4-font-face.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-font-face.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v4-shims.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-shims.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v4-shims.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v4-shims.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v5-font-face.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v5-font-face.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\css\\v5-font-face.min.css",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\css\\v5-font-face.min.css"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\all.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\all.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\all.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\all.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\brands.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\brands.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\brands.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\brands.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\conflict-detection.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\conflict-detection.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\conflict-detection.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\conflict-detection.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\fontawesome.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\fontawesome.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\fontawesome.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\fontawesome.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\regular.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\regular.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\regular.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\regular.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\solid.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\solid.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\solid.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\solid.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\v4-shims.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\v4-shims.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\js\\v4-shims.min.js",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\js\\v4-shims.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\sprites\\brands.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\brands.svg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\sprites\\regular.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\regular.svg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\sprites\\solid.svg",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\sprites\\solid.svg"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-v4compatibility.ttf",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-v4compatibility.ttf"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\font-awesome\\webfonts\\fa-v4compatibility.woff2",
+      "PackagePath": "staticwebassets\\lib\\font-awesome\\webfonts\\fa-v4compatibility.woff2"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\inputmask\\inputmask.es6.js",
+      "PackagePath": "staticwebassets\\lib\\inputmask\\inputmask.es6.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\inputmask\\inputmask.js",
+      "PackagePath": "staticwebassets\\lib\\inputmask\\inputmask.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\inputmask\\inputmask.min.js",
+      "PackagePath": "staticwebassets\\lib\\inputmask\\inputmask.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\inputmask\\jquery.inputmask.js",
+      "PackagePath": "staticwebassets\\lib\\inputmask\\jquery.inputmask.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\inputmask\\jquery.inputmask.min.js",
+      "PackagePath": "staticwebassets\\lib\\inputmask\\jquery.inputmask.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.js",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.js.map",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.min.js",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.umd.js",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.umd.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.umd.js.map",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.umd.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.umd.min.js",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.umd.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\lib\\signature_pad\\signature_pad.umd.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\signature_pad\\signature_pad.umd.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.js",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.js.map",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.min.js",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.min.js.map",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.min.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.umd.js",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.umd.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.umd.js.map",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.umd.js.map"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.umd.min.js",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.umd.min.js"
+    },
+    {
+      "Id": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosApp\\BrazosApp\\wwwroot\\signature_pad\\signature_pad.umd.min.js.map",
+      "PackagePath": "staticwebassets\\signature_pad\\signature_pad.umd.min.js.map"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.BrazosApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.build.BrazosApp.props",
+      "PackagePath": "build\\BrazosApp.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.BrazosApp.props",
+      "PackagePath": "buildMultiTargeting\\BrazosApp.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildTransitive.BrazosApp.props",
+      "PackagePath": "buildTransitive\\BrazosApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

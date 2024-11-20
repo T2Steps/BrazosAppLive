@@ -1,0 +1,1843 @@
+﻿@using System.Security.Claims;
+@model InspectionEditSaveDTO
+
+@{
+    var code = Model.Request.Code;
+    var apiUrl = ViewBag.apiUrl;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var Address = new string[4];
+    var backurl = "";
+    if (code == "RF")
+    {
+        ViewData["Title"] = "Retail Food Inspection";
+        backurl = "/Inspections?code=RF";
+
+    }
+    else if (code == "MF")
+    {
+        ViewData["Title"] = "Mobile Food Inspection";
+        backurl = "/Inspections?code=MF";
+    }
+    // if (Model.Inspection!.Id != 0)
+    // {
+    //     Address = Model.Inspection!.Establishment!.Address!.Split(',');
+    // }
+    int k = 0;
+}
+
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<link rel="stylesheet" href="~/css/typefileshowhide.css" type="text/css" />
+
+<style>
+
+    #top {
+        float: right;
+        width: 39px;
+        margin-top: -35px;
+    }
+
+    #top {
+        transition: all 0.5s ease 0s;
+        -moz-transition: all 0.5s ease 0s;
+        -webkit-transition: all 0.5s ease 0s;
+        -o-transition: all 0.5s ease 0s;
+        opacity: 0.5;
+        display: none;
+        cursor: pointer;
+    }
+
+        #top:hover {
+            opacity: 1;
+        }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    input[type="radio"][id^="out"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id^="in"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id^="na"]:checked + label {
+        background-color: blue;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id^="na"]:disabled + label {
+        display: none;
+    }
+
+
+
+    [type="radio"]:checked + label:after {
+        background-color: red;
+        border: 2px solid red;
+        color: #fff;
+    }
+
+    .btn-check[disabled] + .btn {
+        pointer-events: none;
+        filter: none;
+        opacity: 0.65;
+        background-color: none;
+    }
+
+    input[type="radio"][id="SuspendChoice1"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="SuspendChoice2"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="sampleChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="sampleChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="sampleChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="sampleChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="yesChoice"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="nnChoice"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="yesChoice"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="nnChoice"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id^="cdi"]:checked + label {
+        background-color: yellow;
+        font-weight: bold;
+        /*color: #fff;*/
+    }
+
+    input[type="radio"][id^="cdi"]:disabled + label {
+        font-weight: bold;
+        background-color: #f8f9fa;
+        /*color: #fff;*/
+    }
+
+    input[type="radio"][id^="r"]:checked + label {
+        background-color: orange;
+        font-weight: bold;
+        /*color: #fff;*/
+    }
+
+    input[type="radio"][id^="r"]:not(:checked) + label {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        /*color: #fff;*/
+    }
+
+
+    input[type="radio"][id^="r"]:disabled + label {
+        font-weight: bold;
+        background-color: #f8f9fa;
+        /*color: #fff;*/
+    }
+
+    input[type="radio"][id^="no"]:checked + label {
+        background-color: grey;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id^="no"]:disabled + label {
+        display: none;
+    }
+
+    div.scroll {
+        /* margin: 20px auto; */
+        padding: 15px;
+        width: 80%;
+        max-width: 600px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Inspection</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Establishment Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" name="EstId" id="estId" value="@Model.Request.Inspection!.EstablishmentId" />
+                        <input type="hidden" name="PurposeId" id="purposeId" value="@Model.Request.Inspection!.PurposeId" />
+                        <input type="hidden" name="RiskId" id="riskId" value="@Model.Request.Inspection!.RiskId" />
+                        <input type="hidden" name="SchedulerId" id="schId" value="@Model.Request.Inspection!.ScheduleId" />
+                        @* <input type="hidden" name="InTime" id="timeIn" value="@Model.Request.Inspection!.TimeIn" /> *@
+                        <input type="hidden" name="InspectionId" id="inspectionId" value="@Model.Request.Inspection.Id" />
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Inspection Date <span style="font-size: 20px ;color:red;">&#42;</span></label>
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="inspectionDt" name="InspectionDate" value="@Model.Response!.InTime!.Value.Date.ToShortDateString()"> *@
+                                    <input class="form-control  shadow mb-3 required" type="date" id="inspectionDt" name="InspectionDate" @* value="@Model.Response!.InTime!.Value.Date.ToShortDateString()" *@>
+                                    <span id="inspectdatecontrolErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Time In <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="inspectionDt" name="InspectionDate" value="@Model.Response!.InTime!.Value.Date.ToShortDateString()"> *@
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="displaytimeIn" name="TimeIn" value="@Model.Request.TimeIn" readonly * value="@Model.Response!.InTime!.Value.Date.ToShortDateString()" *> *@
+                                    <input class="form-control  shadow mb-3 required" type="time" id="displaytimeIn" name="TimeIn" value="@Model.Request.TimeIn" />
+                                    <span id="inspectdatecontrolErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Time Out <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="inspectionDt" name="InspectionDate" value="@Model.Response!.InTime!.Value.Date.ToShortDateString()"> *@
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="displaytimeOut" name="TimeIn" value="@Model.Request.TimeOut" readonly  *value="@Model.Response!.InTime!.Value.Date.ToShortDateString()"* > *@
+                                    <input class="form-control  shadow mb-3 required" type="time" id="displaytimeOut" name="TimeOut" value="@Model.Request.TimeOut" />
+                                    <span id="inspectdatecontrolErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Purpose of Inspection <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @* <input class="form-control  shadow mb-3 required" type="text" id="purpose" name="Purpose" value="Opening Inspection"> *@
+                                    <select class="custom-select rounded-1 shadow mb-3 required" name="Purpose" id="purpose" asp-for="@Model.Request.Inspection!.PurposeId" asp-items="@Model.Request.Purposes" onchange="$('#purposeId').val($(this).val())">
+                                        <option disabled selected>--Select--</option>
+                                    </select>
+                                    <span id="purposeErr" class="error text-danger"></span>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input name="Name" id="estName" type="text" class="form-control shadow mb-3 required" value="@Model.Request.Inspection.Establishment!.Name" placeholder="Establishment Name" onkeyup="nullAll()" readonly />
+                                    <span id="estNameErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Permit Number <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input name="permit" id="estPermit" type="text" class="form-control shadow mb-3 required" placeholder="Permit #" value="@Model.Request.Inspection.Establishment!.PermitNumber" onkeyup="nullPermitAll()" readonly />
+                                    <span id="estTypeErr" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Address</label>
+                                    <input class="form-control shadow mb-3 required" type="text" id="estAddr" name="address" placeholder="Address" value="@Model.Request.Inspection.Establishment!.Address" onkeyup="nullAddrAll()" readonly />
+                                    <span id="inspectdatecontrolErr" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <fieldset id="inspectionPrimaryData">
+                                <div class="row">
+                                    
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">State</label>
+                                        <input class="form-control  shadow mb-3 required" type="text" id="estState" name="state" placeholder="State" value="@Model.Request.Inspection.Establishment!.State" readonly />
+                                        <span id="inspectdatecontrolErr" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">City</label>
+                                        <input name="city" id="estCity" type="text" class="form-control  shadow mb-3 required" placeholder="City" value="@Model.Request.Inspection.Establishment!.City" readonly />
+                                        <span id="estTypeErr" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">Zip</label>
+                                        <input name="zip" id="estZip" type="text" class="form-control  shadow mb-3 required" placeholder="Zip" value="@Model.Request.Inspection.Establishment!.Zip" readonly />
+                                        <span id="estTypeErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">Risk Category</label>
+                                        @* <input type="text"  value="0" class="form-control  shadow mb-3" readonly> *@
+                                        <select class="custom-select rounded-1 shadow mb-3" name="RiskCategory" id="riskCategory" asp-for="@Model.Request.Inspection!.RiskId" onchange="$('#riskId').val($(this).val())" disabled>
+                                            <option disabled selected>--Select--</option>
+                                            <option value="1">Low</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">High</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">Repeat Violations</label>
+                                        <input type="text" id="R" name="inspection.NumberOfRepeatedVio" value="@Model.Request.InspectionData!.NumberOfRepeatedVio" class="form-control  shadow mb-3" readonly>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">COS Violations</label>
+                                        <input type="text" name="inspection.NumberOfVioCos" id="COS" value="@Model.Request.InspectionData!.NumberOfVioCos" class="form-control  shadow mb-3" readonly>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600">Score</label>
+                                        <input type="text" name="inspection.Score" id="Score" value="@Model.Request.InspectionData!.Score" class="form-control  shadow mb-3" readonly>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">CFM <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input type="text" id="cfm" name="Inspection.CFM" class="form-control  shadow mb-3 required" value="@Model.Request.InspectionData.CFM">
+                                    <span id="cfmErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">CFM Expiry Date <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input type="date" name="Inspection.CFMExpiryDate" id="cfmexpDt" class="form-control  shadow mb-3 required" value="@Model.Request.InspectionData.CFMExpiryDate!.Value.Date">
+                                    <span id="cfmexpDtErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">FHC <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input type="text" name="Inspection.FHC" id="fhc" class="form-control  shadow mb-3 required" value="@Model.Request.InspectionData.FHC">
+                                    <span id="fhcErr" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600">Number of Employees <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                    <input type="text" name="Inspection.NumberOfEmployees" id="numberofEmployees" class="form-control  shadow mb-3 required" maxlength="5" placeholder="Number of Employees" oninput="$(this).val($(this).val().replace(/\D/g, ''))" value="@Model.Request.InspectionData.NumberOfEmployees">
+                                    <span id="numberofEmployeesErr" class="error text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                <textarea name="inspection.Comment" id="generalComments" class="form-control shadow mb-3" placeholder="Comment....">@Model.Request.Inspection.Comment</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Temperature Observations</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table id="tblCustomers" class="table table-bordered" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 80%">Item Location</th>
+                                            <th style="width: 15%">Temperature</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Request.FinalTemperatureList!.Any())
+                                        {
+                                            for (@*var items in Model.MFOperationLocationsList!*@ int i = 0; i < Model.Request.FinalTemperatureList!.Count(); i++)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Model.Request.FinalTemperatureList![i].ItemName
+                                                        <input type="hidden" id="FinalTemperatureList_ItemName" name="FinalTemperatureList[@i].ItemName" value="@Model.Request.FinalTemperatureList![i].ItemName" />
+                                                    </td>
+                                                    <td>
+                                                        @Model.Request.FinalTemperatureList![i].Temperature
+                                                        <input type="hidden" id="FinalTemperatureList_Temperature" name="FinalTemperatureList[@i].Temperature" value="@Model.Request.FinalTemperatureList![i].Temperature" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="button" onclick="Remove(this);" class="btn btn-lg btn-danger remove valid" value="Remove">
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" id="txtCount" value="@Model.Request.FinalTemperatureList!.Count()" />
+                                                <input class="form-control" type="text" id="txtName" />
+                                            </td>
+                                            <td><input class="form-control" type="text" id="txtCountry" onkeyup="$(this).val($(this).val().replace(/[^0-9-.]/g, ''))" /></td>
+                                            <td><input type="button" class="btn btn-lg btn-custom" style="padding-left:25px;padding-right:25px;" id="btnAdd" value="Add" /></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="inspectionPanel">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">Inspection Details</h5>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <div class="radioPanel row g-3 table-responsive-xl">
+                                        <table class="table table-bordered">
+                                            @* @{
+                                            //int i = 1;
+                                            int itemCounter = 0;
+                                            <tr style="text-align:center;">
+                                            <th style="width: 5px">#</th>
+                                            <th style="width: 300px">Item</th>
+                                            <th style="width: 10px">IN</th>
+                                            <th style="width: 10px">OUT</th>
+                                            <th style="width: 10px">NA</th>
+
+                                            </tr>
+                                            @if (Model.Response.FinalItemList!.Count() > 0)
+                                            {
+                                            var totalcnt = Model.Response.FinalItemList!.Count();
+                                            <input type="hidden" id="TotalItemctn" name="totalcnt" value="@totalcnt" />
+                                            var j = 0;
+                                            @for (var i = 0; i < Model.Response.FinalItemList!.Count(); i++)
+                                            {
+                                            j = i + 1;
+                                            <tr>
+                                            <td>
+                                            <input type="hidden" name="FinalItemList[@i].Id" value="@Model.Response.FinalItemList!.ToArray()[i].Id" />
+                                            <input type="hidden" name="FinalItemList[@i].Name" value="@Model.Response.FinalItemList.ToArray()[i].Name" />
+                                            <input type="hidden" name="FinalItemList[@i].Status" id="FI[@i]" value="" />
+                                            @j
+                                            </td>
+                                            <td style="text-align:left!important;">
+                                            @Model.Response.FinalItemList.ToArray()[i].Name
+                                            </td>
+                                            <td width="15%" style="text-align:center">
+                                            <input type="radio" class="btn-check" id="in@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'IN')" />
+                                            <label id="chkIN_lbl" for="in@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">IN</label>
+                                            </td>
+                                            <td width="15%" style="text-align:center">
+                                            <input type="radio" class="btn-check" id="out@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'OUT')" />
+                                            <label id="chkOUT_lbl" for="out@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">OUT</label>
+                                            </td>
+                                            <td width="15%" style="text-align:center">
+                                            <input type="radio" class="btn-check" id="na@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NA')" />
+                                            <label id="chkNA_lbl" for="na@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px;width:70%" class="btn btn-light">NA</label>
+                                            </td>
+
+                                            </tr>
+                                            <div style="display:none">@(itemCounter += 1)</div>
+
+                                            }
+
+                                            }
+                                            } *@
+                                            @{
+                                                //int i = 1;
+                                                var itemCounter = 0;
+                                                foreach (var Sections in Model!.Request.Sections!)
+                                                {
+                                                    var subsectionlist = Model.Request.Subsections!.Where(i => i.SectionId == Sections.Id).ToList();
+
+                                                    <tr style="background-color:#A4E3D6;">
+                                                        <td colspan="12" style="text-align:center;font-size: 1.3em;margin-top: 1.67em;margin-bottom: 1.67em;margin-left: 0;margin-right: 0;font-weight: bold;" color: #325d88">
+                                                            @Sections.Name
+                                                        </td>
+                                                    </tr>
+                                                    foreach (var SubSections in subsectionlist)
+                                                    {
+                                                        var totalcnt = Model.Request.FinalItemList!.Count();
+                                                        <input type="hidden" id="TotalItemctn" name="totalcnt" value="@totalcnt" />
+                                                        var itemlist = Model.Request.FinalItemList!.Where(i => i.SubSectionId == SubSections.Id).ToList();
+                                                        <tr style="background-color: #C1C8D1">
+                                                            <td colspan="12">
+                                                                <h6 class="card-title" style="text-align: center; color: #3e3f3a; font-weight: 700; ">
+                                                                    @SubSections.Name
+                                                                </h6>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="text-align:center;">
+                                                            <th style="width: 5px">#</th>
+                                                            <th style="width: 10px">IN</th>
+                                                            <th style="width: 10px">OUT</th>
+                                                            <th style="width: 10px">NO</th>
+                                                            <th style="width: 10px">NA</th>
+                                                            <th style="width: 10px">COS</th>
+                                                            <th style="width: 300px">Item</th>
+                                                            <th style="width: 10px">Pts</th>
+                                                            <th style="width: 10px">R</th>
+                                                            <th style="width: 300px">Image</th>
+                                                            <th>Preview</th>
+                                                        </tr>
+                                                        @if (itemlist.Count() > 0)
+                                                        {
+
+                                                            @for (var i = 0; i < itemlist.Count(); i++)
+                                                            {
+                                                                <tr style="text-align:center;">
+                                                                    <td>
+                                                                        @(itemCounter + 1)
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].Id" value="@Model.Request.FinalItemList![@itemCounter].Id" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].Status" value="@Model.Request.FinalItemList![@itemCounter].Status" />
+
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].CDI" value="@Model.Request.FinalItemList![@itemCounter].CDI" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].R" value="@Model.Request.FinalItemList![@itemCounter].IsRepeat" />
+
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].Name" value="@itemlist.ToArray()[i].Name" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].Points" value="@itemlist.ToArray()[i].Points" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].COS" value="1" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].rep" value="1" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].inCOS" value="1" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].inrep" value="1" />
+                                                                        <input type="hidden" name="FinalItemList[@itemCounter].Image" value="" />
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <input type="radio" class="btn-check" id="in@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'IN')" />
+                                                                        <label id="chkIN_lbl" for="in@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">IN</label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="radio" class="btn-check" id="out@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'OUT')" />
+                                                                        <label id="chkOUT_lbl" for="out@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">OUT</label>
+                                                                    </td>
+                                                                    @{
+                                                                        if (Model.Request.FinalItemList![itemCounter].IsNO == false)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" disabled class="btn-check" id="no@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NO')" />
+                                                                                <label id="chkNO_lbl" for="no@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">NO</label>
+                                                                            </td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" class="btn-check" id="no@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NO')" />
+                                                                                <label id="chkNO_lbl" for="no@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">NO</label>
+                                                                            </td>
+                                                                        }
+                                                                    }
+                                                                    @{
+                                                                        if (Model.Request.FinalItemList[itemCounter].IsNA == false)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" disabled class="btn-check" id="na@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NA')" />
+                                                                                <label id="chkNA_lbl" for="na@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">NA</label>
+                                                                            </td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" class="btn-check" id="na@(itemCounter)radio" name="@(itemCounter)" onchange="onStatusChange('@(itemCounter)', 'NA')" />
+                                                                                <label id="chkNA_lbl" for="na@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">NA</label>
+                                                                            </td>
+                                                                        }
+                                                                    }
+                                                                    <td>
+                                                                        <input type="radio" disabled class="btn-check" id="cdi@(itemCounter)radio" name="FinalItemList[@(itemCounter)].CDI" onchange="onStatusChange('@(itemCounter)', 'CDI')" onclick="Deselect('@(itemCounter)', 'CDI')" />
+                                                                        <label id="chkCOS_lbl" for="cdi@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">COS</label>
+                                                                    </td>
+                                                                    <td style="text-align:left!important;">
+                                                                        @itemlist.ToArray()[i].Name
+                                                                    </td>
+                                                                    <td style="text-align:center">
+                                                                        @itemlist.ToArray()[i].Points
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <input type="radio" disabled class="btn-check" id="r@(itemCounter)radio" name="FinalItemList[@(itemCounter)].IsRepeat" onchange="onStatusChange('@(itemCounter)', 'on'); " onclick="Deselect('@(itemCounter)', 'on')" />
+                                                                        <label id="chkR_lbl" for="r@(itemCounter)radio" style="font-size: 11px;padding-left:12px;padding-right:12px" class="btn btn-light">R</label>
+                                                                    </td>
+                                                                    <td class="image-column">
+                                                                        <div class="image-upload input-group">
+                                                                            <label for="file-input[@itemCounter]" class="camera-icbutton">
+                                                                                <span class="badge-primary px-2 py-2" style="display:inline-block"><i style="color:white" class="fa-solid fa-camera fa-xl"></i></span>
+                                                                            </label>
+                                                                            <label for="imgClear@(itemCounter)" class="camera-icbutton">
+                                                                                <span class="badge-danger px-2 py-2" style="display:inline-block"><i style="color:white" class="fas fa-trash fa-xl"></i></span>
+                                                                            </label>
+                                                                            <input type="file" id="file-input[@itemCounter]" class="form-control" name="FinalItemList[@(itemCounter)].ImageFile"
+                                                                                   accept="image/gif, image/jpeg, image/png" onchange="selectImage($(this), @(itemCounter))">
+                                                                            <div class="input-group-append">
+                                                                                <button type="button" disabled id="imgClear@(itemCounter)" class="btn btn-sm btn-danger" onclick="$('input[type=\'file\'][name=\'FinalItemList[@(itemCounter)].ImageFile\']').val('');$('input[type=\'hidden\'][name=\'FinalItemList[@(itemCounter)].Image\']').val(''); $('input[type=\'file\'][name=\'FinalItemList[@(itemCounter)].ImageFile\']').trigger('change'); $('#imgClear@(itemCounter)').prop('disabled', true)"><i class="fas fa-trash"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    
+                                                                    <td width="5%">
+                                                                        <div class="col-sm-12">
+                                                                            <img id="image@(itemCounter)" src="~/Images/AdminLte/preview.png" height="80" width="90" />
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="12">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="form-group">
+                                                                                    <label style="font-weight:normal">Comments</label>
+                                                                                    <textarea class="form-control" rows="1" maxlength="1500" id="FinalItemList[@(itemCounter)].Comm" name="FinalItemList[@itemCounter].Comments">@Model.Request.FinalItemList[@itemCounter].Comments</textarea>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                itemCounter++;
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row p-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <div id="receiverSignature">
+                                        <div class="row">
+                                            <input type="hidden" name="inspection.PersonInChargeSign" id="receiverSignatureBase64" value="" />
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <img src="@Model.Request.InspectionData.PersonInChargeSign" height="200" width="320" style="border:1px solid" title="Signature File" />
+                                                </div>
+                                                <div class="row pt-4">
+                                                    <label style="font-weight:600" class="control-label">Received By: (signature)</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <label style="font-weight:600">Full Name: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" value="@Model.Request.InspectionData.PersonInCharge" readonly />
+                                    <span id="personInChargeErr" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <div id="inspectorSignature">
+                                        <div class="row">
+                                            @{
+                                                if (Model.Request.Inspection.InspectorSignFile != null)
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <img src="~/Images/UsersSignature/@Model.Request.Inspection.InspectedBy/@Model.Request.Inspection.InspectorSignFile" height="200" width="320" style="border:1px solid" title="Signature File" />
+                                                    </div>
+
+                                                    <div class="row pt-4">
+                                                        <label style="font-weight:600" class="control-label">Inspected By: (signature)</label>
+                                                    </div>
+
+                                                    <input name="inspection.InspectorSignFile" id="insSignFile" hidden value="@Model.Request.Inspection.InspectorSignFile">
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group pr-2">
+                                    <label style="font-weight:600">Full Name:</label>
+                                    <input type="text" name="InspectedByName" disabled value="@Model.Request.InspectedBy" class="form-control" />
+
+                                </div>
+                                @* <div class="col-3 form-group pr-2">
+                                <label style="font-weight:600">Email:</label>
+                                <input type="text" name="InspectedByName" disabled value="@Model.Inspection.InspectorEmailId" class="form-control" />
+
+                                </div> *@
+
+                            </div>
+                            <div class="row p-3">
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <div id="receiverSignature">
+                                        <div class="row">
+                                            <input type="hidden" name="inspection.PersonInChargeSign" id="receiverSignatureBase64" value="" />
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <img src="@Model.Request.InspectionData.SecondaryInspectorSign" height="200" width="320" style="border:1px solid" title="Signature File" />
+                                                </div>
+                                                <div class="row pt-4">
+                                                    <label style="font-weight:600" class="control-label">Inspected By: (signature)</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <label style="font-weight:600">Full Name: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" value="@Model.Request.InspectionData.SecondaryInspector" readonly />
+                                    <span id="personInChargeErr" class="error text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Feedback</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                <div class="form-group mt-2 ml-2">
+                                    <label style="font-weight:600" class="col-form-label mr-5 ">Permit Suspend</label>
+                                    <input type="checkbox" name="PermitSuspend" id="permitSuspend" hidden />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="SuspendChoice" id="SuspendChoice1" onchange="$('#permitSuspend').prop('checked', true); $('#permitSuspend').val('true');">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="SuspendChoice1" style="font-size: 14px">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="SuspendChoice" id="SuspendChoice2" onchange="$('#permitSuspend').prop('checked', false); $('#permitSuspend').val('false');">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="SuspendChoice2" style="font-size: 14px">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                <div class="form-group mt-2 ml-2">
+                                    <label style="font-weight:600" class="col-form-label mr-5 ">Follow Up</label>
+                                    <input type="checkbox" name="FollowUp" id="flwUpBool" hidden />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="followUpChoice" id="yesChoice" onchange="followUpChange()">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox1" style="font-size: 14px" onclick="$('#yesChoice').prop('checked', true); $('#yesChoice').trigger('change')">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="followUpChoice" id="nnChoice" onchange="followUpChange()">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="pinlineCheckbox2" style="font-size: 14px" onclick="$('#nnChoice').prop('checked', true); $('#nnChoice').trigger('change')">No</label>
+                                    </div>
+                                </div>
+                                <div id="flwUpDtHide" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pb-3">
+                                    <label style="font-weight:600">Date</label>
+                                    <input type="date" id="flwUpDt" disabled name="inspection.FollowUpDate" value="" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" style="display:none">
+                                <div class="form-group mt-2 ml-2">
+                                    <label style="font-weight:600" class="col-form-label mr-5 ">Sample Collected</label>
+                                    <input type="checkbox" name="SampleCollected" id="sampleCollected" hidden />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sampleCollectionStatus" id="sampleChoice1" onchange="sampleCollectinStat()">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="sinlineCheckbox1" style="font-size: 14px" onclick="$('#sampleChoice1').prop('checked', true); $('#sampleChoice1').trigger('change')">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sampleCollectionStatus" id="sampleChoice2" onchange="sampleCollectinStat()">
+                                        <label class="form-check-label btn btn-light shadow mb-3 px-3" for="sinlineCheckbox2" style="font-size: 14px" onclick="$('#sampleChoice2').prop('checked', true); $('#sampleChoice2').trigger('change')">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-2 text-right p-3">
+                            <button id="FinalSubmitBtn" type="button" class="btn btn-sm btn-custom float-right ml-3" onclick="FinalSubmit()" @*onclick="InspectionItemsSave(1002)"*@>
+                                <i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i>Submit<i id="arrowicon" class="fas fa-arrow-circle-right ml-2"></i>
+                            </button>
+                            <button id="BackBtn" type="button" class="btn btn-sm btn-custom float-left mr-3" onclick="window.location.href = '@backurl'">
+                                Back To List
+                            </button>
+                            @*<button type="button" id="create" class="btn btn-lg btn-slateblue float-right ml-3" onclick="ShowRest(event)"><i class="fa fa-save mr-2"></i>Create</button>*@
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/signature_pad/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <script>
+        function nullAll() {
+            if ($('#estName').val() == "") {
+                $('#estPermit').val("");
+                //$('#estName').val("");
+                $('#estId').val("");
+                $('#estAddr').val("");
+                $('#estState').val("");
+                $('#estCity').val("");
+                $('#estZip').val("");
+                $('#riskCategory').val("");
+                $('#riskCategory').val("--Select--");
+                $('#riskId').val("");
+
+                $('#estPermit').prop('readonly', false);
+                $('#estAddr').prop('readonly', false);
+                //alert($('#flwUpchk').val());
+            }
+            else {
+                $('#estNameErr').text("");
+            }
+        }
+
+        function nullPermitAll() {
+            if ($('#estPermit').val() == "") {
+                //$('#estPermit').val("");
+                $('#estName').val("");
+                $('#estId').val("");
+                $('#estAddr').val("");
+                $('#estState').val("");
+                $('#estCity').val("");
+                $('#estZip').val("");
+                $('#riskCategory').val("");
+                $('#riskCategory').val("--Select--");
+                $('#riskId').val("");
+
+                $('#estName').prop('readonly', false);
+                $('#estAddr').prop('readonly', false);
+                //alert($('#flwUpchk').val());
+            }
+            else {
+                $('#estNameErr').text("");
+            }
+        }
+
+        function nullAddrAll() {
+            if ($('#estAddr').val() == "") {
+                $('#estPermit').val("");
+                $('#estName').val("");
+                $('#estId').val("");
+                //$('#estAddr').val("");
+                $('#estState').val("");
+                $('#estCity').val("");
+                $('#estZip').val("");
+                $('#riskCategory').val("");
+                $('#riskCategory').val("--Select--");
+                $('#riskId').val("");
+
+                $('#estPermit').prop('readonly', false);
+                $('#estName').prop('readonly', false);
+                //alert($('#flwUpchk').val());
+            }
+            else {
+                $('#estNameErr').text("");
+            }
+        }
+
+        function followUpChange() {
+            var yes = $('#yesChoice');
+            var no = $('#nnChoice');
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var sevendt = dtToday.getDate() + 7;
+            var year = dtToday.getFullYear();
+
+            if (month < 10) { month = '0' + month.toString() };
+            if (sevendt < 10) { sevendt = '0' + sevendt.toString(); }
+            var sevendt = year + '-' + month + '-' + sevendt;
+
+            if (yes.is(":checked")) {
+                $('#flwUpBool').prop("checked", true);
+                $('#flwUpBool').prop("value", "true");
+                $('#flwUpDt').removeAttr('disabled');
+                $('#flwUpDt').val(sevendt);
+            }
+            else if (no.is(":checked")) {
+                $('#flwUpBool').prop("checked", false);
+                $('#flwUpBool').prop("value", "false");
+                $('#flwUpDt').attr('disabled', true);
+                $('#flwUpDt').val("");
+            }
+        }
+
+        function sampleCollectinStat() {
+            var yes = $('#sampleChoice1');
+            var no = $('#sampleChoice2');
+
+            if (yes.is(":checked")) {
+                $('#sampleCollected').prop("checked", true);
+                $('#sampleCollected').prop("value", "true");
+
+            }
+            else if (no.is(":checked")) {
+                $('#sampleCollected').prop("checked", false);
+                $('#sampleCollected').prop("value", "false");
+
+            }
+        }
+    </script>
+
+    <script>
+        function Deselect(index, value) {
+
+            if (value == "CDI") {
+                var val = $('input[type="hidden"][name="FinalItemList[' + index + '].CDI"]').val();
+                if (val == "CDI") {
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].CDI"]').val('')
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val(1);
+                    $("#cdi" + index + "radio").prop('checked', false);
+                    $("#COS").val(parseInt($("#COS").val()) - 1);
+                }
+            }
+            else if (value == "on") {
+                var val = $('input[type="hidden"][name="FinalItemList[' + index + '].R"]').val();
+                if (val == "on") {
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].R"]').val('')
+                    $("#r" + index + "radio").prop('checked', false);
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val(1);
+                    $("#R").val(parseInt($("#R").val()) - 1);
+                }
+            }
+        }
+
+        function onStatusChange(index, value) {
+            if (value == 'CDI') {
+                var inCos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inCOS"]').val());
+                var inRep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inrep"]').val());
+                var currentRep;
+                var rep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val());
+                var totalrep = parseInt($("#R").val());
+
+                $('input[type="hidden"][name="FinalItemList[' + index + '].CDI"]').val(value);
+
+                var cos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val());
+                var totalCos = parseInt($("#COS").val());
+                var currentCos = totalCos + cos;
+                $('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val(0);
+                $("#COS").val(currentCos);
+
+                // if (rep == 0) {
+                //     currentRep = totalrep - 1;
+                //     $('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val(1);
+                // }
+                // else {
+                //     currentRep = totalrep;
+                // }
+                // if (inRep == 0) {
+                //     var inRep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inrep"]').val(1));
+                // }
+                // $("#R").val(currentRep);
+
+                // $('input[type="hidden"][name="FinalItemList[' + index + '].R"]').val('');
+                // $("#r" + index + "radio").prop('checked', false);
+            }
+            else if (value == 'on') {
+                var currentCos;
+                var inCos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inCOS"]').val());
+                var inRep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inrep"]').val());
+                var cos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val());
+                var totalCos = parseInt($("#COS").val());
+                $('input[type="hidden"][name="FinalItemList[' + index + '].R"]').val(value);
+
+                var rep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val());
+                var totalrep = parseInt($("#R").val());
+                var currentrep = totalrep + rep;
+                $('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val(0);
+                $("#R").val(currentrep);
+
+                // if (cos == 0) {
+                //     currentCos = totalCos - 1;
+                //     $('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val(1);
+                // }
+                // else {
+                //     currentCos = totalCos;
+                // }
+
+                // $("#COS").val(currentCos);
+                // if (inCos == 0) {
+                //     var inCos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].inCOS"]').val(1));
+                // }
+
+                // $('input[type="hidden"][name="FinalItemList[' + index + '].CDI"]').val('');
+                // $("#cdi" + index + "radio").prop('checked', false);
+            }
+            else {
+                if (value == "OUT") {
+
+                    $("#cdi" + index + "radio").removeAttr("disabled");
+                    $("#r" + index + "radio").removeAttr("disabled");
+                    $("#cdi" + index + "radio").prop('checked', false);
+                    $("#r" + index + "radio").prop('checked', false);
+                    $("#out" + index + "radio").attr('checked', true);
+                    $("#r" + index + "radio").checked = false;
+                    var score = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].Points"]').val());
+                    var total_score = $("#Score").val();
+                    var current_score = total_score - score;
+
+                    $("#Score").val(current_score);
+
+                }
+                else {
+                    var currentCos;
+                    var currentRep;
+                    var isChecked = $("#out" + index + "radio").attr('checked') ? true : false;
+                    if (isChecked) {
+                        var score = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].Points"]').val());
+
+                        var total_score = parseInt($("#Score").val());
+                        var current_score = total_score + score;
+
+                        $("#Score").val(current_score);
+
+                        var cos = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val());
+                        var totalCos = parseInt($("#COS").val());
+                        var rep = parseInt($('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val());
+                        var totalrep = parseInt($("#R").val());
+
+                        if (cos == 0) {
+                            currentCos = totalCos - 1;
+                            $('input[type="hidden"][name="FinalItemList[' + index + '].COS"]').val(1);
+                        }
+                        else {
+                            currentCos = totalCos;
+                        }
+
+                        $("#COS").val(currentCos);
+
+                        if (rep == 0) {
+                            currentRep = totalrep - 1;
+                            $('input[type="hidden"][name="FinalItemList[' + index + '].rep"]').val(1);
+                        }
+                        else {
+                            currentRep = totalrep;
+                        }
+
+
+                        $("#R").val(currentRep);
+
+                    }
+
+                    $("#cdi" + index + "radio").attr("disabled", "disabled");
+                    $("#r" + index + "radio").attr("disabled", "disabled");
+
+                    $("#cdi" + index + "radio").checked = false;
+                    $("#r" + index + "radio").checked = false;
+
+                    $("#out" + index + "radio").attr('checked', false);
+
+
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].CDI"]').val('');
+                    $('input[type="hidden"][name="FinalItemList[' + index + '].R"]').val('');
+                }
+                $('input[type="hidden"][name="FinalItemList[' + index + '].Status"]').val(value);
+            }
+        }
+    </script>
+
+    <script>
+        function Validate() {
+            var flg = 0;
+
+            var flagg = $('input[type="hidden"][name="flag"]').val();
+            if (flagg == 0) {
+                var hdnEiD = $('#hdnestablishment').val();
+                var txtEstablishment = $('#txtEstablishment').val();
+                if (txtEstablishment == "" || txtEstablishment == null) {
+                    $('#estError').text("\u24d8 This Field is required");
+                    flg = 1;
+                }
+                else {
+                    if (hdnEiD == 0 || hdnEiD == "") {
+                        $('#estError').text("\u24d8 No Record Found");
+                        flg = 1;
+                    }
+                }
+            }
+
+            if ($('#purpose').val() == null) {
+                $('#purposeErr').text("\u24d8 This Field is Required");
+                flg = 1;
+            }
+
+
+            if ($('#personInCharge').val() == "") {
+                $('#personInChargeErr').text("\u24d8 This Field is Required");
+                flg = 1;
+            }
+
+            if ($('#inspectionDt').val() == "") {
+                $('#inspectdatecontrolErr').text("\u24d8 This Field is Required");
+                flg = 1;
+            }
+
+            if (flg == 1) {
+                return "Error";
+            }
+            else { return "Success"; }
+        }
+
+
+        function FinalSubmit() {
+            var url = '@apiUrl' + '/SaveInspectionEdit'
+            var Tok = '@User.FindFirstValue("Token")'
+            //var url = '/SaveInspectionEdit';
+
+            var reqTxt = " Required Field ";
+            var flg = 0;
+            if ($('#estName').val() == null || $('#estName').val() == "") {
+                $('#estNameErr').text("\u24d8" + reqTxt);
+                flg = 1;
+            } else {
+                if ($('#estId').val() == 0 || $('#estId').val() == "") {
+                    $('#estNameErr').text("\u24d8 No Record Found");
+                    flg = 1;
+                }
+            }
+            if ($('#purpose').val() == null) {
+                $('#purposeErr').text("\u24d8" + reqTxt);
+                flg = 1;
+            }
+            if ($('#personInCharge').val() == "") {
+                $('#personInChargeErr').text("\u24d8" + reqTxt);
+                flg = 1;
+            }
+            // if ($('#cfm').val() == "") {
+            //     $('#cfmErr').text("\u24d8" + reqTxt);
+            //     flg = 1;
+            // }
+            // if ($('#fhc').val() == "") {
+            //     $('#fhcErr').text("\u24d8" + reqTxt);
+            //     flg = 1;
+            // }
+            // if ($('#cfmexpDt').val() == "") {
+            //     $('#cfmexpDtErr').text("\u24d8" + reqTxt);
+            //     flg = 1;
+            // }
+            if ($('#inspectionDt').val() == "") {
+                $('#inspectdatecontrolErr').text("\u24d8 This Field is Required");
+                flg = 1;
+            }
+            if (flg == 1) {
+                return false;
+            } else {
+                var formData = new FormData();
+                formData.append('InspectionId', $('#inspectionId').val());
+                formData.append('InspectionDate', $('#inspectionDt').val());
+                //formData.append('TimeIn', $('#timeIn').val());
+                formData.append('TimeIn', $('#displaytimeIn').val());
+                formData.append('TimeOut', $('#displaytimeOut').val());
+                formData.append('ScheduleId', $('#schId').val());
+                formData.append('EstablishmentId', $('#estId').val());
+                formData.append('RiskId', $('#riskId').val());
+                formData.append('PurposeId', $('#purposeId').val());
+                formData.append('Score', $('#Score').val());
+                formData.append('NumberOfRepeatedVio', $('#R').val());
+                formData.append('NumberOfVioCos', $('#COS').val());
+                formData.append('SampleCollected', $('#sampleCollected').val());
+                //formData.append('Comment', $('#generalComments').val());
+                if (!$('#generalComments').summernote('isEmpty')) {
+                    //console.log()
+                    formData.append('Comment', $("#generalComments").summernote('code'));
+                }
+                formData.append('CFM', $('#cfm').val());
+                formData.append('FHC', $('#fhc').val());
+                formData.append('CFMExpDate', $('#cfmexpDt').val());
+                formData.append('NumberOfEmployees', $('#numberofEmployees').val());
+                formData.append('PermitSuspend', $('#permitSuspend').val());
+                formData.append('FollowUp', $('#flwUpBool').val());
+                formData.append('FollowUpDate', $('#flwUpDt').val());
+                formData.append('PersonInCharge', $('#personInCharge').val());
+                formData.append('PersonInChargeSign', $('#receiverSignatureBase64').val());
+                if ('@Model.Request.Inspection.InspectorSignFile' == null) {
+                    formData.append('InspectedBySign', $('#healthInspectorSignatureBase64').val());
+                } else {
+                    formData.append('InspectorSignFile', $('#insSignFile').val());
+                }
+
+                submitFormData(url, Tok, formData).then(data => {
+                    console.log(data);
+                    console.log(data.response.isSuccess);
+                    console.log(data.response.result);
+                    if (data.response.isSuccess) {
+
+                        //var InspectionId = data.inspectionId;
+                        var InspectionId = data.response.result;
+
+                        RemoveItems(Tok, InspectionId)
+                            .then(() => RemoveTemps(Tok, InspectionId))
+                            .then(() => InspectionItemsSave(Tok, InspectionId))
+                            .then(() => TemperatureObsSave(Tok, InspectionId))
+                            .then(() => {
+                                window.scrollTo(0, 0);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success("Inspection Completed Successfully");
+                                }, 500);
+                                setTimeout(() => {
+                                    location.href = '/Inspection?code=' + '@code';
+                                }, 1500);
+                            });
+                    }
+                }).finally(() => {
+                    $('div#loading-wrapper').hide();
+                    $('#arrowicon').show();
+                    $('#spin').hide();
+                });
+            }
+        }
+
+        function submitFormData(url, Tok, formData) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {
+                        'Authorization': `Bearer ${Tok}`,
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        $('#arrowicon').hide();
+                        $('#spin').show();
+                        $('#FinalSubmitBtn').prop('disabled', true);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        resolve(data);
+                    },
+                    error: function (error) {
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        function RemoveItems(Tok, InspectionId) {
+            var url = '@apiUrl' + '/RemoveAllItems';
+            console.log("RemoveItems");
+            console.log(InspectionId);
+            var formData = new FormData();
+            formData.append('InspectionId', InspectionId);
+
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {
+                        'Authorization': `Bearer ${Tok}`,
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (error) {
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        function RemoveTemps(Tok, InspectionId) {
+            var url = '@apiUrl' + '/RemoveAllTemps';
+            console.log("RemoveTemps");
+            console.log(InspectionId);
+            var formData = new FormData();
+            formData.append('InspectionId', InspectionId);
+
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {
+                        'Authorization': `Bearer ${Tok}`,
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (error) {
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+        function InspectionItemsSave(Tok, InspectionId) {
+            var totalItems = $('#TotalItemctn').val();
+            var url = '@apiUrl' + '/SaveEditInspectionItems';
+            console.log(totalItems);
+            return new Promise((resolve, reject) => {
+                let cnt = 0;
+
+                for (let i = 0; i < totalItems; i++) {
+                    var statusValue = $('input[type="hidden"][name="FinalItemList[' + i + '].Status"]').val();
+                    var Cos = $('input[type="hidden"][name="FinalItemList[' + i + '].CDI"]').val();
+                    var R = $('input[type="hidden"][name="FinalItemList[' + i + '].R"]').val();
+                    var itemformData = new FormData();
+                    itemformData.append('InspectionId', InspectionId);
+                    itemformData.append('ItemId', $('input[type="hidden"][name="FinalItemList[' + i + '].Id"]').val());
+                    itemformData.append('Status', statusValue);
+                    itemformData.append('Comment', $('textarea[name="FinalItemList[' + i + '].Comments"]').val());
+                    //itemformData.append('Comment', $('input[name="FinalItemList[' + i + '].Comments"]').val());
+                    itemformData.append('Cos', Cos);
+                    itemformData.append('R', R);
+                    if ($('input[type="hidden"][name="FinalItemList[' + i + '].Image"]').val() != '') {
+                        var image = $('input[type="hidden"][name="FinalItemList[' + i + '].Image"]').val();
+                        image = image.replace('data:image/jpeg;base64,', '')
+                        image = image.replace('data:image/png;base64,', '')
+                        image = image.replace('data:image/gif;base64,', '')
+                        //console.log(image)
+                        itemformData.append('Image', image);
+                    }
+
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers: {
+                            'Authorization': `Bearer ${Tok}`,
+                        },
+                        data: itemformData,
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        success: function (data) {
+                            cnt = i;
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                }
+                if (cnt == totalItems - 1) {
+                    resolve("Success");
+                } else {
+                    reject("Error");
+                }
+            });
+        }
+
+        function TemperatureObsSave(Tok, InspectionId) {
+            var TotalTemperatureData = $('#txtCount').val();
+            var url = '@apiUrl' + '/SaveTemperatureObs';
+
+            return new Promise((resolve, reject) => {
+                let cnt = 0;
+                for (let i = 0; i < TotalTemperatureData; i++) {
+                    var TempFormData = new FormData();
+                    TempFormData.append('InspectionId', InspectionId);
+                    TempFormData.append('ItemName', $('input[type="hidden"][name="FinalTemperatureList[' + i + '].ItemName"]').val());
+                    TempFormData.append('Temperature', $('input[type="hidden"][name="FinalTemperatureList[' + i + '].Temperature"]').val());
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers: {
+                            'Authorization': `Bearer ${Tok}`,
+                        },
+                        data: TempFormData,
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        success: function (data) {
+                            cnt = i;
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                }
+                if (TotalTemperatureData != 0) {
+                    if (cnt == TotalTemperatureData - 1) {
+                        resolve("Success");
+                    } else {
+                        reject("Error");
+                    }
+                } else {
+                    resolve("Success");
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        var signaturePadReceiver;
+
+        function applyAutocomplete(selector) {
+            var Tok = '@User.FindFirstValue("Token")'
+            var Role = '@User.FindFirstValue(ClaimTypes.Role)'
+
+            $(selector).autocomplete({
+                autoFocus: true,
+                source: function (request, response) {
+                    var url = '@apiUrl' + '/ScheduleAutoComplete?code=code';
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers: {
+                            'Authorization': `Bearer ${Tok}`,
+                            'Role': Role,
+                        },
+                        data: { "prefix": request.term, "Selector": selector },
+                        success: function (data) {
+                            response($.map(data.response.result, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            console.error(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    console.log(selector);
+                    console.log(e);
+                    console.log(i);
+                    if (selector == "#estName") {
+                        $("#estName").val(i.item.name);
+                        $("#estId").val(i.item.val);
+                        $("#estPermit").val(i.item.permit);
+                        $("#estAddr").val(i.item.address);
+                        $("#estState").val(i.item.state);
+                        $("#estCity").val(i.item.city);
+                        $("#estZip").val(i.item.zip);
+                        $("#riskCategory").val(i.item.risk);
+                        $("#riskId").val(i.item.risk);
+
+                        $("#estPermit").prop('readonly', true);
+                        $("#estAddr").prop('readonly', true);
+                    }
+                    else if (selector == "#estPermit") {
+                        $("#estName").val(i.item.name);
+                        $("#estId").val(i.item.val);
+                        $("#estPermit").val(i.item.permit);
+                        $("#estAddr").val(i.item.address);
+                        $("#estState").val(i.item.state);
+                        $("#estCity").val(i.item.city);
+                        $("#estZip").val(i.item.zip);
+                        $("#riskCategory").val(i.item.risk);
+                        $("#riskId").val(i.item.risk);
+
+                        //$("#estPermit").prop('readonly', true);
+                        $("#estName").prop('readonly', true);
+                        $("#estAddr").prop('readonly', true);
+                    }
+                    else if (selector == "#estAddr") {
+                        $("#estName").val(i.item.name);
+                        $("#estId").val(i.item.val);
+                        $("#estPermit").val(i.item.permit);
+                        $("#estAddr").val(i.item.address);
+                        $("#estState").val(i.item.state);
+                        $("#estCity").val(i.item.city);
+                        $("#estZip").val(i.item.zip);
+                        $("#riskCategory").val(i.item.risk);
+                        $("#riskId").val(i.item.risk);
+
+                        $("#estPermit").prop('readonly', true);
+                        $("#estName").prop('readonly', true);
+                    }
+
+                },
+                minLength: 1
+            });
+        }
+
+        $(document).ready(function () {
+
+            //console.log($('input[type="hidden"][name="FinalItemList[0].Image"]'))
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var prevdt = dtToday.getDate() - 1;
+            var sevendt = dtToday.getDate() + 7;
+            var year = dtToday.getFullYear();
+            var maxyear = dtToday.getFullYear() + 1;
+            if (sevendt < 10) { sevendt = '0' + sevendt.toString(); }
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+            if (prevdt < 10) { prevdt = '0' + prevdt.toString(); }
+            var sevendt = year + '-' + month + '-' + sevendt;
+            var mindate = year + '-' + month + '-' + day;
+            var maxdate = maxyear + '-' + month + '-' + day;
+            var prevdt = year + '-' + month + '-' + prevdt;
+
+            //$('#inspectionDt').attr('min', mindate);
+            $('#inspectionDt').attr('max', mindate);
+            //$('#inspectionDt').val(mindate);
+
+            $('#flwUpDt').attr('max', maxdate);
+            $('#flwUpDt').attr('min', mindate);
+            $('#flwUpBool').val(false);
+
+            $('#nnChoice').prop("checked", true);
+            $('#flwUpBool').prop("checked", false);
+            $('#flwUpBool').prop("value", "false");
+
+            $('#sampleCollected').val(true);
+
+            $('#sampleChoice1').prop("checked", true);
+            $('#sampleCollected').prop("checked", true);
+            $('#sampleCollected').prop("value", "true");
+
+
+            var inspectionDay = '@Model.Request.Inspection.InspectionDate.Day';
+            var inspectionMonth = '@Model.Request.Inspection.InspectionDate.Month';
+            var inspectionYear = '@Model.Request.Inspection.InspectionDate.Year';
+            if (inspectionMonth < 10) { inspectionMonth = '0' + inspectionMonth; }
+            if (inspectionDay < 10) { inspectionDay = '0' + inspectionDay; }
+            $('#inspectionDt').val(inspectionYear + '-' + inspectionMonth + '-' + inspectionDay)
+
+            if ('@Model.Request.InspectionData.CFMExpiryDate' != '01-01-0001 00:00:00') {
+                var cfmyear = '@Model.Request.InspectionData.CFMExpiryDate!.Value.Year'
+                var cfmonth = '@Model.Request.InspectionData.CFMExpiryDate.Value.Month'
+                var cfmday = '@Model.Request.InspectionData.CFMExpiryDate.Value.Day'
+                if (cfmonth < 10) { cfmonth = '0' + cfmonth; }
+                if (cfmday < 10) { cfmday = '0' + cfmday; }
+                var cfmday = cfmyear + '-' + cfmonth + '-' + cfmday
+                $('#cfmexpDt').val(cfmday)
+            }
+
+
+            if ('@Model.Request.Inspection.FollowUp' == 'True') {
+                $('#yesChoice').prop('checked', true);
+                $('#flwUpBool').prop("checked", true);
+                $('#flwUpBool').prop("value", "true");
+                $('#flwUpDt').removeAttr('disabled');
+                $('#flwUpDt').val(sevendt);
+            }
+            else {
+                $('#noChoice').prop('checked', true);
+                $('#flwUpBool').prop("checked", false);
+                $('#flwUpBool').prop("value", "false");
+                $('#flwUpDt').attr('disabled', true);
+                $('#flwUpDt').val("");
+            }
+
+            if ('@Model.Request.Inspection.IsPermitSuspended' == 'True') {
+                $('#SuspendChoice1').prop('checked', true);
+                $('#SuspendChoice1').trigger('change');
+            }
+            else {
+                $('#SuspendChoice2').prop('checked', true);
+                $('#SuspendChoice2').trigger('change');
+            }
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            //$("#applicantsignDt").change(function () {
+            //    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            //});
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span").text("");
+                }
+            });
+
+            if (@Model.Request.Inspection.Id!= 0) {
+                $('#inspectionPrimaryData').prop('disabled', true);
+                $('#purpose').prop('disabled', true);
+                $('#estName').prop('disabled', true);
+                $('#estPermit').prop('disabled', true);
+                $('#estAddr').prop('disabled', true);
+            }
+
+            var finalItemList = @Html.Raw(Json.Serialize(@Model.Request.FinalItemList));
+            for (let i = 0; i < finalItemList.length; i++) {
+                //console.log(finalItemList[i]);
+
+                if (finalItemList[i].status == "IN") {
+                    $("#in" + i + "radio").attr('checked', true);
+                }
+                if (finalItemList[i].status == "OUT") {
+                    $("#out" + i + "radio").attr('checked', true);
+                    $("#cdi" + i + "radio").removeAttr("disabled");
+                    $("#r" + i + "radio").removeAttr("disabled");
+                    if (finalItemList[i].cdi == "CDI") {
+                        $("#cdi" + i + "radio").prop('checked', true);
+                        $('input[type="hidden"][name="FinalItemList[' + i + '].COS"]').val(0)
+                    }
+                    if (finalItemList[i].isRepeat == "on") {
+                        $("#r" + i + "radio").prop('checked', true);
+                        $('input[type="hidden"][name="FinalItemList[' + i + '].rep"]').val(0)
+                    }
+                }
+                if (finalItemList[i].status == "NA") {
+                    $("#na" + i + "radio").attr('checked', true);
+                }
+                if (finalItemList[i].status == "NO") {
+                    $("#no" + i + "radio").attr('checked', true);
+                }
+
+                if (finalItemList[i].image != null) {
+                    finalItemList[i].image = finalItemList[i].image.replace('data:image/jpeg;base64,', '')
+                    //console.log(finalItemList[i].image)
+                    $('#imgClear' + i).prop('disabled', false);
+                    $('#image' + i).attr('src', 'data:image/png;base64,' + finalItemList[i].image);
+                    $('input[type="hidden"][name="FinalItemList[' + i + '].Image"]').val(finalItemList[i].image);
+                    //$('input[type="file"][name="FinalItemList[' + i + '].ImageFile"]').val("Test.jpg");
+                }
+
+            }
+
+            var finalTempList = @Html.Raw(Json.Serialize(@Model.Request.FinalTemperatureList));
+            // if(finalTempList.length>0){
+            //       for (let i = 0; i < finalTempList.length; i++) {
+            //         console.log(finalTempList[i]);
+            //       }
+            // }
+            //$('#txtCount').val(finalTempList.length);
+
+
+
+            applyAutocomplete("#estName");
+            applyAutocomplete("#estPermit");
+            applyAutocomplete("#estAddr");
+
+            $('#generalComments').summernote({
+                toolbar: [
+                    ['style', ['bold', 'underline', 'clear']],
+                    ['para', ['ul', 'ol']],
+                ],
+                placeholder: 'Write Your Comments here...',
+                spellCheck: false
+            });
+
+            //$("#in(1)radio").prop('checked', true);
+
+            //var Tok = '@User.FindFirstValue("Token")'
+            //var Role = '@User.FindFirstValue(ClaimTypes.Role)'
+            //      $("#estName").autocomplete({
+            //          autoFocus: true,
+            //          source: function (request, response) {
+            //              var url = '@apiUrl' + '/ScheduleAutoComplete?code=code';
+            //              //console.log(request.term);
+            //              $.ajax({
+            //                  type: "POST",
+            //                  url: url,
+            //                  headers: {
+            //                      'Authorization': `Bearer ${Tok}`,
+            //                      'Role': Role,
+            //                      //'Content-Type': 'application/json'
+            //                  },
+            //                  data: { "prefix": request.term },
+            //                  //data: "T",
+            //                  //contentType: false,
+            //                  //processData: false,
+            //                  success: function (data) {
+            //                      //alert(3);
+            //                      //console.log(data);
+            //                      //$("#estPermit").val(data.response.result[0].permit);
+            //                      //$("#estId").val(i.item.val);
+            //                      response($.map(data.response.result, function (item) {
+            //                          //console.log(item);
+            //                          return item;
+            //                      }))
+            //                  },
+            //                  error: function (response) {
+            //                      //alert(response.responseText);
+            //                  },
+            //                  failure: function (response) {
+            //                      //alert(response.responseText);
+            //                  }
+            //              });
+            //          },
+            //          select: function (e, i) {
+
+            //              //debugger;
+            //              //alert(2);
+            //              //console.log(i.item.risk)
+            //              $("#estPermit").val(i.item.permit);
+            //              $("#estId").val(i.item.val);
+            //              $("#estAddr").val(i.item.address);
+            //              $("#estState").val(i.item.state);
+            //              $("#estCity").val(i.item.city);
+            //              $("#estZip").val(i.item.zip);
+            //              $("#riskCategory").val(i.item.risk);
+            //              $("#riskId").val(i.item.risk);
+            //              //$("#SchEstId").val(i.item.val);
+            //              //alert(1);
+            //          },
+            //          minLength: 1
+            //      });
+
+        });
+    </script>
+
+    <script>
+        $("body").on("click", "#btnAdd", function () {
+            //Reference the Name and Country TextBoxes.
+            var txtName = $("#txtName");
+            var txtCountry = $("#txtCountry");
+            var txtCount = $("#txtCount");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblCustomers > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Name cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtName.val());
+            cell.append("<input type=\"hidden\" id=\"FinalTemperatureList_ItemName\" name=\"FinalTemperatureList[" + txtCount.val() + "].ItemName\" value=\"" + txtName.val() + "\">");
+
+            //Add Country cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtCountry.val());
+            cell.append("<input type=\"hidden\" id=\"FinalTemperatureList_Temperature\" name=\"FinalTemperatureList[" + txtCount.val() + "].Temperature\" value=\"" + txtCountry.val() + "\">");
+
+            //document.getElementById("txtCount").val() = txtCount.val() + 1;
+            txtCount.val(parseInt(txtCount.val()) + 1);
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.addClass('btn btn-lg btn-danger remove valid');
+
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtName.val("");
+            txtCountry.val("");
+
+            //alert($('#txtCount').val());
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            // alert(button);
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            $('audio#warning')[0].play();
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Are you sure?',
+
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#8B9BB2',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //Get the reference of the Table.
+                        var table = $("#tblCustomers")[0];
+
+                        //Delete the Table row using it's Index.
+                        table.deleteRow(row[0].rowIndex);
+                        var cnt = $("#txtCount").val();
+                        $("#txtCount").val(parseInt(cnt) - 1);
+
+                        $("#tblCustomers > TBODY > TR").each(function (index) {
+                            var input1 = $(this).find("input[type='hidden'][id='FinalTemperatureList_ItemName']");
+                            input1.attr("name", "FinalTemperatureList[" + index + "].ItemName");
+                            var input2 = $(this).find("input[type='hidden'][id='FinalTemperatureList_Temperature']");
+                            input2.attr("name", "FinalTemperatureList[" + index + "].Temperature");
+                        });
+                    }
+
+                })
+            }, 100)
+            //if (confirm("Do you want to delete: " + name)) {
+            //    //Get the reference of the Table.
+            //    var table = $("#tblCustomers")[0];
+
+            //    //Delete the Table row using it's Index.
+            //    table.deleteRow(row[0].rowIndex);
+            //}
+        };
+    </script>
+
+    <script>
+        function selectImage(element, itemCounter) {
+            var requiredfileExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+            var file = element[0].files[0];
+
+            if (file) {
+                var fileExtension = file.name.split('.').pop().toLowerCase();
+                if ($.inArray(fileExtension, requiredfileExtensions) === -1) {
+                    $('audio#errorsound')[0].play();
+                    setTimeout(() => {
+                        toastr.error("Invalid File Format");
+                    }, 775);
+                    setTimeout(() => {
+                        toastr.warning("Allowed Formats : " + requiredfileExtensions.join(', '));
+                    }, 3000);
+                    element.val("");
+                    $('#image' + itemCounter).attr('src', '~/Images/AdminLte/preview.png');
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#image' + itemCounter).attr('src', e.target.result);
+                        $('input[type="hidden"][name="FinalItemList[' + itemCounter + '].Image"]').val(e.target.result);
+                    }
+                    reader.readAsDataURL(file);
+
+                }
+                $('#imgClear' + itemCounter).prop('disabled', false)
+            }
+            else {
+                $('#image' + itemCounter).attr('src', '/Images/AdminLte/preview.png');
+            }
+        }
+    </script>
+}

@@ -1,0 +1,60 @@
+﻿@model ScheduleVM
+
+<div class="modal fade" id="scheduleUploadModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Schedule New Inspection</h5>
+                  </div>
+                  <div class="modal-body">
+                        <form action="/ScheduleInspection" enctype="multipart/form-data" id="Schedulerform">
+                              <div class="card card-outline" style="border-top:3px solid #022E5F">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="card-body">
+                                          @*<input name="user.Id" id="userId" value="0" hidden />
+                                          <input name="Notes.NoteId" id="noteId" value="0" hidden />*@
+                                          <input asp-for="@Model.Schedule!.EstablishmentId" id="SchEstId" hidden /> 
+                                          @*<input asp-for="@Model.Schedule!.ScheduledDate" id="ScDt" hidden />*@
+                                          <input asp-for="@Model.Schedule!.Id" id="SchId" hidden />
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label en">Date <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <input type="date" class="form-control shadow mb-3" name="ScheduleDate" id="schDate" />
+                                                            <span id="schDateError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label en">Purpose <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <select class="custom-select rounded-1 shadow mb-3" asp-for="@Model.Schedule!.PurposeId" id="purpose" asp-items="@Model.InspectionPurposes">
+                                                                   <option disabled selected>--Select--</option> 
+                                                              </select>
+                                                            <span id="purposeError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="row">
+                                                <div class="col-12">
+                                                      <div class="form-group">
+                                                            <label style="font-weight:600" class="col-form-label en">Assign To <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                                            <select class="custom-select rounded-1 shadow mb-3" asp-for="@Model.Schedule!.AssignedTo" id="assignTo" asp-items="@Model.InspectorList">
+                                                                   <option disabled selected>--Select--</option> 
+                                                              </select>
+                                                            <span id="assignToError" class="error text-danger"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="SchModalCloseAlert()"> Cancel</button>
+                                    <button type="button" id="permitScheduleBtn" class="btn btn-sm btn-custom float-right" onclick="return Schedule();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                              </div>
+                        </form>
+                  </div>
+            </div>
+      </div>
+</div>

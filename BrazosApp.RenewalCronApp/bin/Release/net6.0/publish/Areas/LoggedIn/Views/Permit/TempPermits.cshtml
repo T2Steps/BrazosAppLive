@@ -1,0 +1,91 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Temp Permits";
+    var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Temp Permit List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Temp Permits</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                      <div class="card-tools">
+                        <button type="button" onclick="window.location.href='/TFNewMPermit'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Create New Permit</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tempPermitIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Sr.No.
+                                    </th>
+                                    <th class="text-left">
+                                        Application Number
+                                    </th>
+                                    <th class="text-left">
+                                        Application Date
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Number.
+                                    </th>
+                                    <th class="text-left">
+                                        Event
+                                    </th>
+                                    <th class="text-left">
+                                        Location
+                                    </th>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Status
+                                    </th>
+                                    <th class="text-left">
+                                        Purpose
+                                    </th>
+                                    <th class="text-left">
+                                        Activation Date
+                                    </th>
+                                    <th class="text-left">
+                                        Expiry Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Areas/LoggedIn/PermitIndex.js"></script>
+
+    <script>
+        $(function () {
+            loadTempDataTable('@User.FindFirstValue(ClaimTypes.Role)');
+        })
+    </script>
+}

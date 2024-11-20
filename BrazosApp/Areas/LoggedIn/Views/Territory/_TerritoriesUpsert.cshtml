@@ -1,0 +1,63 @@
+﻿@model TerritoryUpsertVM
+
+<div class="modal fade" id="territoryModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel">Territories</h5>
+                @* <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> *@
+            </div>
+            <div class="modal-body">
+                <form action="/TerritoryUpsert" enctype="multipart/form-data" id="TerritoryUpsertForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input name="TerritoryId" id="territoryId" value="0" hidden />
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Territory Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="Name" id="territoryName" placeholder="Territory Name" />
+                                        <span id="territoryNameErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Color Code <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                          <div class="input-group my-colorpicker2 colorpicker-element" data-colorpicker-id="2">
+                                                <input type="text" class="form-control" id="colordata" name="ColorCode" aria-describedby="popover590921" placeholder="Color Code" onchange="CheckForEmpty()">
+                                                <div class="input-group-append">
+                                                      <span class="input-group-text"><i class="fas fa-square" id="colorBox"></i></span>
+                                                </div>
+                                          </div>
+                                          <span id="colorErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label">Default Inspector <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3" id="defaultInspectorId" name="DefaultInspectorId" asp-items="@Model.InspectorList" >
+                                            <option disabled selected>---Select---</option>
+                                        </select>
+                                        <span id="defaultInspectorErr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lg btn-outline-secondary float-right" onclick="Modalert()"> Cancel</button>
+                        <button type="button" class="btn btn-lg btn-custom float-right" onclick="return saveTerritory()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa fa-save mr-2"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

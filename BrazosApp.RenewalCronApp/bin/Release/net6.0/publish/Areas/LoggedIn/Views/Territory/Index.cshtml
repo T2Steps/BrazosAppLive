@@ -1,0 +1,304 @@
+﻿@model TerritoryUpsertVM
+@{
+    ViewData["Title"] = "Territories";
+    var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<link rel="stylesheet" href="/lib/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" />
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Territories</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Territories</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+
+                    @* <div class="card-tools">
+                    <div class="float-right"><a asp-action="Upsert" asp-controller="UserManage" asp-area="LoggedIn" class="btn btn-block btn-outline-info float-right"><i class="fas fa-plus mr-2"></i>Register New User</a></div>
+                    </div> *@
+                    <div class="card-tools">
+                         <button type="button" data-bs-toggle="modal" data-bs-target="#territoryModal" class="btn btn-block btn-custom float-right mt-2" onclick="clrall();"><i class="fas fa-plus mr-2"></i> Add New Territory</button> 
+                        @*<button type="button" data-bs-toggle="modal" data-bs-target="#manageUserModal" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Add New Territory</button>*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="territoryIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Sr.No.
+                                    </th>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Color
+                                    </th>
+                                    <th class="text-left">
+                                        Assigned Users
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_TerritoriesUpsert.cshtml", Model)
+@await Html.PartialAsync("_ManageAssignedUser.cshtml", Model)
+
+@section Scripts {
+
+    <script src="/lib/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+    <script src="~/js/Areas/LoggedIn/TerritoryTable.js"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $('.my-colorpicker2').colorpicker();
+            $('#colorBox').css('color', '#000000');
+            $('.my-colorpicker2').colorpicker('setValue', '#000000');
+            //console.log("Color: " + $('#colordata').val());
+
+            $('.my-colorpicker2').on('colorpickerChange', function (event) {
+                //console.log(event.color.toString());
+                var color = event.color ? event.color.toString() : '#000000';
+                $('#colorBox').css('color', color);
+            });
+
+        });
+    </script>
+    <script>
+        function clrall() {
+            $('#TerritoryUpsertForm').trigger('reset');
+            $('#colorBox').css('color', '#000000');
+            $('.my-colorpicker2').colorpicker('setValue', '#000000');
+            $('#colordata').val("");
+        }
+
+            function CheckForEmpty(){
+                if ($('#colordata').val()=="")
+                {
+                    $('#colorBox').css('color', '#000000');
+                    $('.my-colorpicker2').colorpicker('setValue', '#000000');
+                    $('#colordata').val("")
+                }
+            }
+    </script>
+    <script>
+        function Modalert() {
+            //alert(1);
+            //console.log($('#territoryName').val());
+            //console.log($('#colordata').val());
+            //console.log($('#defaultInspectorId').val());
+            var flg = 0;
+            if ($('#territoryName').val() != "") {
+                flg = 1;
+            }
+            if ($('#colordata').val() != "") {
+                flg = 1;
+            }
+            if ($('#defaultInspectorId').val() != null) {
+                flg = 1;
+            }
+            if (flg == 1) {
+                if (confirm("You have some unsaved Changes. On closing, your progress will be lost")) {
+                    $('#territoryModal').modal('hide');
+                }
+            }
+            else {
+                $('#territoryModal').modal('hide');
+            }
+        }
+    </script>
+    <script>
+        // function saveSystemDefault(territoryId) {
+        //     console.log("saveSystemDefault Entry");
+        //     console.log(territoryId);
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/GetAllSystemDefinedUsers",
+        //         success: function (data) 
+        //         { 
+        //             if (data.success) 
+        //             {
+        //                 for (let i = 0; i < data.count; i++) 
+        //                 {
+        //                     var formData = new FormData();
+        //                     formData.append('TerritoryWiseInspectors.TerritoryId', territoryId);
+        //                     formData.append('TerritoryWiseInspectors.AssignedUserId', data.users[i].Id);
+        //                     formData.append('TerritoryWiseInspectors.TypeId', 1);
+        //                     $.ajax({
+        //                         type: "POST",
+        //                         url: "/AssignInspectorsToTerritory",
+        //                         data: formData,
+        //                         contentType: false,
+        //                         processData: false,
+        //                         success: function (data) {
+
+        //                         },
+        //                         error: function (data) {
+        //                             console.log(data);
+        //                         }
+        //                     })
+        //                 }
+
+        //                 var data = new FormData();
+        //                 formData.append('TerritoryWiseInspectors.TerritoryId', territoryId);
+        //                 formData.append('TerritoryWiseInspectors.AssignedUserId', $('#defaultInspectorId').val());
+        //                 formData.append('TerritoryWiseInspectors.TypeId', 2);
+        //                 $.ajax({
+        //                     type: "POST",
+        //                     url: "/AssignInspectorsToTerritory",
+        //                     data: formData,
+        //                     contentType: false,
+        //                     processData: false,
+        //                     success: function (data) {
+
+        //                     },
+        //                     error: function (data) {
+        //                         console.log(data);
+        //                     }
+        //                 })
+        //             }
+                
+        //         },
+        //         error: function (data) {
+        //             console.log(data);
+        //         },
+        //         complete: function(){
+        //             $('div#loading-wrapper').hide();
+        //             $('#spin').hide();
+        //             $('#saveicon').show();
+        //             $('#territoryModal').modal('hide');
+        //             $('audio#success_sound')[0].play();
+        //             setTimeout(() => {
+        //                 toastr.success("Territory Successfully Created");
+        //             }, 500)
+        //         }
+        //     })
+
+            
+        // }
+
+
+        function saveTerritory() {
+            var flg = 0;
+            if ($('#territoryName').val() == "") {
+                $('#territoryNameErr').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#territoryNameErr').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#colordata').val() == "") {
+                $('#colorErr').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#colorErr').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#defaultInspectorId').val() == null) {
+                $('#defaultInspectorErr').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#defaultInspectorErr').html("");
+                }, 5000)
+                flg = 1;
+            }
+
+            if (flg == 1) {
+                return false;
+            }
+            else {
+                var formData = new FormData();
+                formData.append('TerritoryId', $('#territoryId').val());
+                formData.append('Name', $('#territoryName').val());
+                formData.append('ColorCode', $('#colordata').val());
+                formData.append('DefaultInspectorId', $('#defaultInspectorId').val());
+
+                //let successCode = 0;
+                //let territoryId = 0;
+                //let code = 0;
+                $.ajax({
+                    type: "POST",
+                    url: "/TerritoryUpsert",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        $('#spin').show();
+                        $('#saveicon').hide();
+                    },
+                    success: function (data) {
+                        //console.log(data)
+                        if (data.success) {
+                            // successCode = 1;
+                            // territoryId = data.id;
+                            // code = data.code;
+                            // console.log("Territory Success Okay");
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.success(data.msg);
+                            }, 500)
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(data.msg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                        $('#territoryModal').modal('hide');
+                        dataTable.ajax.reload();
+                        // console.log("Territory Complete 1");
+                        // console.log(successCode);
+                        // console.log(code);
+                        // console.log(territoryId);
+                        // if (successCode == 1) {
+                        //     console.log("Territory Complete 2");
+                        //     if (code == "Created") {
+                        //         console.log("Territory Complete 3");
+                        //         saveSystemDefault(territoryId);
+                        //     }
+                        //     else if (code == "Updated") 
+                        //     {
+
+                        //     }
+                            
+                        // }
+                    }
+                })
+            }
+        }
+    </script>
+}

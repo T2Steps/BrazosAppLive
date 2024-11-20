@@ -1,0 +1,317 @@
+﻿@using System.Security.Claims
+@using BrazosApp.Utility
+<aside class="main-sidebar elevation-4 sidebar-light-purple">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link logo-switch">
+        <img src="~/Images/Logo/logoclient.png" alt="Brazos" class="brand-image-xl img-circle logo-xs" style="min-width:40px;min-height: 40px">
+        <img src="~/Images/Logo/logoclient.png" alt="Brazos" class="brand-image-xs img-circle logo-xl" style="min-width:40px;min-height: 40px">
+        <span class="brand-text font-weight-bold" style="padding-left:50px; color:#022E5F">Brazos County</span>
+        @* <div style="height:5px"></div> *@
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="/Dashboard" class="nav-link ">
+                        <i class="nav-icon fas fa-tachometer-alt" style="color:#A48464"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                @{
+                    if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector || User.FindFirstValue(ClaimTypes.Role) == SD.Admin)
+                    {
+                        <li class="nav-item">
+                            <a href="/Users" class="nav-link">
+                                <i class="nav-icon fa-solid fa-users" style="color:#A48464"></i>
+                                <p>
+                                    User Management
+                                </p>
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-contract" style="color:#A48464"></i>
+                            <p>
+                                Permits
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-2">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-utensils ml-2" style="color:#A48464"></i>
+                                    <p>
+                                        Food
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ml-2">
+                                    <li class="nav-item">
+                                        <a href="RetailPermits" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Retail
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="MobilePermits" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Mobile
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="TemporaryPermits" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Temporary
+                                            </p>
+                                        </a>
+                                    </li>@**@
+                                </ul>
+                            </li>
+                        </ul>
+                        @*<ul class="nav nav-treeview ml-2">
+                            <li class="nav-item">
+                                <a href="DayCarePermits" class="nav-link">
+                                    <i class="fa-solid fa-hands-holding-child nav-icon ml-2" style="color:#A48464"></i>
+                                    <p>
+                                        Day Care
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>*@
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Financials" class="nav-link">
+                            <i class="nav-icon fa-solid fa-hand-holding-dollar" style="color:#A48464"></i>
+                            <p>
+                                Financials
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-contract" style="color:#A48464"></i>
+                            <p>
+                                Scheduler
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-2">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-utensils ml-2" style="color:#A48464"></i>
+                                    <p>
+                                        Food
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ml-2">
+                                    <li class="nav-item">
+                                        <a href="/Schedules?code=RF" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Retail
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Schedules?code=MF" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Mobile
+                                            </p>
+                                        </a>
+                                    </li>@**@
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-list" style="color:#A48464"></i>
+                            <p>
+                                Inspection
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview ml-2">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-utensils ml-2" style="color:#A48464"></i>
+                                    <p>
+                                        Food
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ml-2">
+                                    <li class="nav-item">
+                                        <a href="/Inspections?code=RF" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Retail
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Inspections?code=MF" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Mobile
+                                            </p>
+                                        </a>
+                                    </li>@**@
+                                </ul>
+                            </li>
+                           
+                        </ul>
+                       
+                    </li>
+                    if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.Admin)
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-align-center" style="color:#A48464"></i>
+                                <p>
+                                    Associated Data
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview ml-2">
+                                <li class="nav-item">
+                                    <a href="/Areas" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Areas
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Fees" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Fees
+                                        </p>
+                                    </a>
+                                </li>
+                                @*<li class="nav-item">
+                                    <a href="/Events" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Events
+                                        </p>
+                                    </a>
+                                </li>*@
+                            </ul>
+                        </li>
+                    }
+                    if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector || User.FindFirstValue(ClaimTypes.Role) == SD.Admin)
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-file-contract" style="color:#A48464"></i>
+                                <p>
+                                    Reports
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview ml-2">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-utensils ml-2" style="color:#A48464"></i>
+                                        <p>
+                                            Food
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview ml-2">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon fa-solid fa-hand-holding-dollar ml-2" style="color:#A48464"></i>
+                                                <p>
+                                                    Transaction
+                                                    <i class="fas fa-angle-left right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview ml-2">
+                                                <li class="nav-item">
+                                                    <a href="/Transactions?code=RF" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>
+                                                            Retail
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="/Transactions?code=MF" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>
+                                                            Mobile
+                                                        </p>
+                                                    </a>
+                                                </li>@**@
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul class="nav nav-treeview ml-2">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon fas fa-clipboard-list ml-2" style="color:#A48464"></i>
+                                                <p>
+                                                    Pending Inspections
+                                                    <i class="fas fa-angle-left right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview ml-2">
+                                                <li class="nav-item">
+                                                    <a href="/AreaWisePendingInspections?code=RF" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>
+                                                            Retail
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="/AreaWisePendingInspections?code=MF" class="nav-link">
+                                                        <i class="far fa-circle nav-icon"></i>
+                                                        <p>
+                                                            Mobile
+                                                        </p>
+                                                    </a>
+                                                </li>@**@
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview ml-2">
+                                <li class="nav-item">
+                                    <a href="/DailyMoneyReport" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Daily Money Report
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

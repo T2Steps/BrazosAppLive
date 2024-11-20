@@ -1,0 +1,226 @@
+﻿@using System.Security.Claims
+@model InspectionSearchParamsVM
+@{
+    var code = ViewBag.Code;
+    var apiUrl = ViewBag.apiUrl;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    if (code == "RF")
+    {
+        ViewData["Title"] = "Retail Food Inspection";
+    }
+    else if (code == "MF")
+    {
+        ViewData["Title"] = "Mobile Food Inspection";
+    }
+}
+
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+    .ui-autocomplete {
+        z-index: 2147483647;
+    }
+</style>
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Inspection</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                  @if (User.FindFirstValue(ClaimTypes.Role) == SD.SuperAdmin || User.FindFirstValue(ClaimTypes.Role) == SD.AdminInspector || User.FindFirstValue(ClaimTypes.Role) == SD.Inspector)
+                  {
+                           <div class="card-header">
+                                <div class="card-tools">
+                                    <button type="button" onclick="window.location.href='/CreateInspection?code=@code'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> New Inspection</button>
+                                </div>
+                           </div>   
+                  }
+                
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>
+                                <td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name"  /></td>
+                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number"  /></td>                                
+                                <td><select name="Purpose" id="purposeidx" class="form-control shadow" asp-items="@Model.PurposeList"><option  selected>--Select Purpose--</option></select></td>
+                                @if(User.FindFirstValue(ClaimTypes.Role)!=SD.Inspector){
+                                    <td><select name="Inspector" id="insidx" class="form-control shadow" asp-items="@Model.UserList"><option  selected>--Select User--</option></select></td>
+                                }
+                                <td>
+                                      <select name="FollowUp" id="followUpidx" class="form-control shadow">
+                                            <option  selected>--Follow Up--</option>
+                                            <option  value="Yes">Yes</option>
+                                            <option  value="No">No</option>
+                                      </select>
+                                </td>
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" /></td>
+                                <td>To</td>
+                                <td><input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" /></td>                                
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#inspectionTableIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                            </tr>
+
+                            @*<tr>
+                                
+                                
+                                <td></td>
+                                
+                            </tr>*@
+                            @* <tr>
+                                <td>Date:</td>
+                                <td><input type="text" id="txtFromDate" name="min" placeholder="From:"><b>-</b><input type="text" id="txtToDate" name="max" placeholder="To:"></td>
+                            </tr> *@
+                            @* <tr>
+                                <td><button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#retailPermitIdx').DataTable().ajax.reload()">Search</button></td>
+                            </tr> *@
+                        </tbody>
+                    </table>
+                    <div class="table-responsive">
+                        <table id="inspectionTableIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            @if (@User.FindFirstValue(ClaimTypes.Role) == SD.Inspector)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Sr.No.
+                                        </th>
+                                        <th class="text-left">
+                                            Permit Number
+                                        </th>
+                                        <th class="text-left">
+                                            Establishment Name
+                                        </th>
+                                        <th class="text-left">
+                                            Purpose
+                                        </th>
+                                        <th class="text-left">
+                                            Inspection Date
+                                        </th>
+                                        <th class="text-left">
+                                            Score
+                                        </th>
+                                        <th class="text-left">
+                                            Follow Up
+                                        </th>
+                                        <th class="text-left">
+                                            Follow Up Date
+                                        </th>
+                                        <th class="text-left">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                            }
+                            else
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            Sr.No.
+                                        </th>
+                                        <th class="text-left">
+                                            Permit Number
+                                        </th>
+                                        <th class="text-left">
+                                            Establishment Name
+                                        </th>
+                                        <th class="text-left">
+                                            Purpose
+                                        </th>
+                                        <th class="text-left">
+                                            Inspection Date
+                                        </th>
+                                        <th class="text-left">
+                                            Inspected By
+                                        </th>
+                                        <th class="text-left">
+                                            Score
+                                        </th>
+                                        <th class="text-left">
+                                            Follow Up
+                                        </th>
+                                        <th class="text-left">
+                                            Follow Up Date
+                                        </th>
+                                        <th class="text-left">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_InspectionReportMailModel.cshtml")
+
+@section Scripts {
+    @* <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script> *@
+
+    <script src="~/js/Areas/LoggedIn/inspectionTableIndex.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+        $(function () {
+            //var Tok = '@User.FindFirstValue("Token")'
+            var Role = '@User.FindFirstValue(ClaimTypes.Role)';
+
+            loadDataTable('@code', Role);
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+
+            var year = dtToday.getFullYear();
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+
+            $('#lowerdaternge').prop('max', mindate);
+            $('#upperdaternge').prop('max', mindate);
+
+            $('input').bind('keypress', function (e) {
+                if (e.which === 13) {
+                    $('#inspectionTableIdx').DataTable().ajax.reload()
+                }
+
+            });
+        });
+
+        function ClearSearchPanel(){
+            $('#estName').val('')
+            $('#permitNo').val('')
+            $('#purposeidx').val('--Select Purpose--')
+            $('#insidx').val('--Select User--')
+            $('#followUpidx').val('--Follow Up--')
+            $('#lowerdaternge').val('')
+            $('#upperdaternge').val('')
+            $('#inspectionTableIdx').DataTable().ajax.reload()
+        }
+    </script>
+}

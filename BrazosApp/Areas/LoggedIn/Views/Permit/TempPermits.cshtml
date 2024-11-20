@@ -1,0 +1,174 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Temporary Permits";
+    var Dashboard = ViewBag.Dashboard.ToString();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">Temp Permit List</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Temporary Permits</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                      <div class="card-tools">
+                        <button type="button" onclick="window.location.href='/TFNewMPermit'" class="btn btn-block btn-custom float-right mt-2"><i class="fas fa-plus mr-2"></i> Create New Permit</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>
+                                <td><select name="PermitStatus" id="pStat" class="form-control shadow" asp-items="@Model.PermitStatList"><option selected>--Select Permit Status--</option></select></td>
+                                <td>
+                                    <select name="SearchBy" id="searchby" class="form-control shadow" onchange="if($(this).val()!='--Search By--'){$('#lowerdaternge').prop('disabled', false); $('#upperdaternge').prop('disabled', false);} else{$('#lowerdaternge').prop('disabled', true); $('#upperdaternge').prop('disabled', true);}">
+                                        <option selected>--Search By--</option>
+                                        <option value="Application Date">Application Date</option>
+                                    </select>
+                                </td>
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" disabled /></td>
+
+                                <td>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            To
+                                        </div>
+                                        <div class="col-10">
+                                            <input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" disabled />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><input id="estName" type="text" class="form-control shadow" placeholder="Establishment Name" /></td>
+                                <td><input id="permitNo" type="text" class="form-control shadow" placeholder="Permit Number" /></td>
+                                <td><input id="applicationNo" type="text" class="form-control shadow" placeholder="Application Number" /></td>
+                                <td><input id="owner" type="text" class="form-control shadow" placeholder="Owner Name" /></td>
+                                <td><input id="estAddress" type="text" class="form-control shadow" placeholder="Address" /></td>
+                                <td><input id="estCity" type="text" class="form-control shadow" placeholder="City" /></td>
+                                
+
+
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#tempPermitIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-responsive">
+                        <table id="tempPermitIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        Application Number
+                                    </th>
+                                    <th class="text-left">
+                                        Application Date
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Number.
+                                    </th>
+                                    <th class="text-left">
+                                        Event
+                                    </th>
+                                    <th class="text-left">
+                                        Location
+                                    </th>
+                                    <th class="text-left">
+                                        Name
+                                    </th>
+                                    <th class="text-left">
+                                        Owner
+                                    </th>
+                                    <th class="text-left">
+                                        Address
+                                    </th>
+                                    <th class="text-left">
+                                        City
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Status
+                                    </th>
+                                    <th class="text-left">
+                                        Activation Date
+                                    </th>
+                                    <th class="text-left">
+                                        Expiry Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Areas/LoggedIn/PermitIndex.js"></script>
+
+    <script>
+        $(function () {
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+
+            var year = dtToday.getFullYear();
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+
+            $('#lowerdaternge').prop('max', mindate);
+            $('#upperdaternge').prop('max', mindate);
+
+            $('input').bind('keypress', function (e) {
+                if (e.which === 13) {
+                    $('#tempPermitIdx').DataTable().ajax.reload()
+                }
+
+            });
+            loadTempDataTable('@User.FindFirstValue(ClaimTypes.Role)');
+        })
+
+        function ClearSearchPanel() {
+            $('#estName').val('')
+            $('#owner').val('')
+            $('#permitNo').val('')
+            $('#estAddress').val('')
+            $('#estCity').val('')
+            $('#estType').val('--Select Establishment Type--')
+            $('#applicationNo').val('')
+            $('#areaNo').val('--Select Area--')
+            $('#riskidx').val('--Select Risk--')
+            $('#pStat').val('--Select Permit Status--')
+            $('#searchby').val('--Search By--')
+            //$('#purposeidx').val('')
+            $('#lowerdaternge').val('')
+            $('#upperdaternge').val('')
+            $('#lowerdaternge').prop('disabled', true)
+            $('#upperdaternge').prop('disabled', true)
+            $('#tempPermitIdx').DataTable().ajax.reload()
+        }
+    </script>
+}

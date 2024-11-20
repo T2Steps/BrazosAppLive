@@ -1,0 +1,1343 @@
+﻿@model TFPermitEditVM
+@{
+    ViewData["Title"] = "Edit Permit";
+    var flg = 0;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var role = ViewBag.role.ToString();
+    var userId = Convert.ToInt32(ViewBag.userId);
+    var username = ViewBag.userName;
+    var isPlanReview = true;
+    var jurisdicId = 0;
+    if (Model.planReviewVM!.agencyStaffReqFields!.Id != 0)
+    {
+        jurisdicId = Model.planReviewVM!.agencyStaffReqFields!.EstablishmentTypes!.JurisdictionId;
+        isPlanReview = Model.planReviewVM!.agencyStaffReqFields!.IsPlanReview;
+    }
+    var reqTxt = "Required Field ";
+    var encryptId = Model.EncryptedEstId;
+    var test = Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1;
+    var btnText = SD.PermitStatName(Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1);
+
+    var permitStatusId = @Model.Establishment.PermitStatusId;
+}
+
+@* <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> *@
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<link rel="stylesheet" href="~/css/progress-wizard.min.css" />
+
+
+<style>
+
+    body {
+        background-color: whitesmoke;
+    }
+
+    input[type=radio] {
+        display: none;
+    }
+
+    .show-radio {
+        display: inline-block !important; /* display: inline !important */
+    }
+
+
+    .progress-indicator > li .bubble:before,
+    .progress-indicator > li .bubble:after {
+        display: block;
+        position: absolute;
+        top: 14px;
+        width: calc(50% - 15px);
+        height: 3px;
+        content: '';
+        background-color: #bbb;
+    }
+
+    .progress-indicator > li.completed .bubble:before,
+    .progress-indicator > li.completed .bubble:after {
+        background-color: #7aa1db;
+        border-color: #022E5F;
+    }
+
+    .progress-indicator > li .bubble:before {
+        left: 0;
+    }
+
+    .progress-indicator > li .bubble:after {
+        right: 0;
+    }
+
+    .progress-indicator > li:first-child .bubble:before,
+    .progress-indicator > li:last-child .bubble:after {
+        width: calc(45% - 15px);
+        margin-left: 50%;
+    }
+
+    .progress-indicator > li.active .bubble:before,
+    .progress-indicator > li.active .bubble:after {
+        background-color: #337AB7;
+        border-color: #122a3f;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <h1 class="d-inline" style="color:#A48464;">
+                            <span class="ml-0 badge bg-warning shadow">
+                                @(Model.Establishment!.PermitNumber == null ? "Application Number : " + Model.ApplicationNo : "Permit Number : " + Model.Establishment!.PermitNumber)
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" id="divPermitCertificate" style="@( permitStatusId < 7 ? "display: none" : "" )">
+                        <a href="/GeneratePermitCertificatePdf?id=@(Model.EncryptedEstId)" target="_blank" class="btn btn-sm btn-custom d-inline-block ml-2"><i class="fa-solid fa-download mr-2"></i> Certificate</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Dashboard" style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Permits</li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <input asp-for="Establishment.PermitStatusId" id="permitStatusId" hidden />
+        <input asp-for="Establishment.OldPermitStatusId" id="oldPermitStatusId" hidden />
+        <div id="progressBar" style="display:none" class="col-md-12">
+            <div id="reload">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Permit Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                            <div class="cardprogree ">
+
+                                <!-- progressbar -->
+                                <ul class="progress-indicator">
+                                    <li id="s2">
+                                        <span class="bubble" id="sb2"></span>
+                                        Pending Admin Review
+                                    </li>
+                                    <li id="s3">
+                                        <span class="bubble" id="sb3"></span>
+                                        Admin Review
+                                    </li>
+                                    @* <li id="s4">
+                                        <span class="bubble" id="sb4"></span>
+                                        Pending Plan Review
+                                    </li>
+                                    <li id="s5">
+                                        <span class="bubble" id="sb5"></span>
+                                        Plan Review
+                                    </li>
+                                    <li id="s6">
+                                        <span class="bubble" id="sb6"></span>
+                                        Pending Build-Out
+                                    </li> *@
+                                    <li id="s7">
+                                        <span class="bubble" id="sb7"></span>
+                                        Pending Payment
+                                    </li>
+                                    @* <li id="s8">
+                                        <span class="bubble" id="sb8"></span>
+                                        Opening Inspection
+                                    </li> *@
+                                    <li id="s9">
+                                        <span class="bubble" id="sb9"></span>
+                                        Active
+                                    </li>
+                                </ul>
+                                @* <button type="button" id="unapprove" class="btn btn-sm btn-custom float-left" onclick="Unapproved()">Place in Unapproved</button> *@
+                                @if (@Model.Establishment.PermitStatusId < 9)
+                                {
+
+                                    <button type="button" id="statusbtn" class="btn btn-sm btn-custom float-right mr-1 mt-3" onclick="if($('#permitStatusId').val()==8){ApprovalNote()} else {StatusChange()}"></button>
+                                }
+                                <br>
+
+                                <div id="upcomingtxt" class="col-md-12 mt-4" style="text-align:center; display:none">
+                                    <h5 style="color:red">*This Permit will be activated once the current active permit expires</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form action="/RFEdit" enctype="multipart/form-data" method="post" id="EditPermitDataForm">
+                <fieldset id="info">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">Event Details And Duration of Permit</h5>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" name="Establishment.Id" id="estId" value="@Model.Establishment.Id" />
+                            <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="@Model.EncryptedEstId" />
+                            <input type="hidden" name="Rl" id="rl" value="@role" />
+                            <input type="hidden" name="user" id="userId" value="@userId" />
+                            <input type="hidden" name="userName" id="username" value="@username" />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of Temporary Event <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="hidden" name="OperationDetails.EventId" id="eventId" value="@Model.OperationDetails!.EventId" />
+                                        <input type="text" name="Event" id="event" class="form-control shadow mb-2 required" placeholder="Temporary Event" onkeyup="nullAll()" value="@Model.OperationDetails!.Event!.Name" />
+                                        <span id="eventIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Location of Event (Must be Non-Residential) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="EventLocation" id="eventLocation" class="form-control shadow mb-2 required" placeholder="Location of Event" value="@Model.OperationDetails!.Event!.Location" readonly />
+                                        <span id="eventLocationError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <fieldset id="dateControl" @* style="display:none" *@>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">From <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Temporary Event" />
+                                            <span id="EstNameError" class="error text-danger"></span> *@
+                                            <input type="hidden" name="StartDate" id="startDate" value="" class="required" value="@Model.Establishment.ActivationDate" />
+                                            <div class="input-group shadow mb-3">
+                                                <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="fromDt" class="form-control" onchange="$('#startDate').val(new Date($(this).val()));$('#toDt').datepicker('setDate', null);$('#endDate').val(''); $('#toDt').datepicker('option', 'minDate' , new Date($(this).val()));$('#fromDtError').text('')" />
+                                                @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                                <div class="input-group-append" style="cursor:pointer">
+                                                    <div class="input-group-text" onclick="$('#fromDt').datepicker('show');">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="fromDtError" class="error text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">To <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Location of Event" readonly />
+                                            <span id="EstNameError" class="error text-danger"></span> *@
+                                            <input type="hidden" name="EndDate" id="endDate" value="" class="required" value="@Model.Establishment.ExpiryDate" />
+                                            <div class="input-group shadow mb-3">
+                                                <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="toDt" class="form-control" onchange="$('#endDate').val(new Date($(this).val())); $('#toDtError').text('')" />
+                                                @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                                <div class="input-group-append" style="cursor:pointer">
+                                                    <div class="input-group-text" onclick="$('#toDt').datepicker('show');">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="toDtError" class="error text-danger"></span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Establishment Name" value="@Model.Establishment.Name" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" placeholder="Address" value="@Model.Establishment.Address" />
+                                        <span id="strtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" placeholder="State" value="@Model.Establishment.State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" placeholder="City" value="@Model.Establishment.City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" placeholder="Zip" value="@Model.Establishment.Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" placeholder="Phone" value="@Model.Establishment.ContactNo" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OWNER DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Operator or Contact Person <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="required form-control shadow mb-2" placeholder="Owner Name" value="@Model.Owner!.Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Operator’s Email <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" placeholder="Email Address" value="@Model.Owner.EmailId" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" value="@Model.Owner.ContactNo" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                        </div>
+                        <fieldset id="info2">
+                            <div class="card-body">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">List of foods to be prepared or served <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.ListOfFoodToBePrepared" id="listofFoodToBePrepared" placeholder="List of foods to be prepared or served">@Model.OperationDetails.ListOfFoodToBePrepared</textarea>
+                                            <span id="listofFoodToBePreparedError" class="error text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">Start preparing at (time) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            <input type="time" name="OperationDetails.PreparingTime" id="preparingTime" class="form-control shadow mb-2 required" value="@Model.OperationDetails.PreparingTime"/>
+                                            <span id="preparingTimeError" class="error text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">Serving at (time) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            <input type="time" name="OperationDetails.ServingTime" id="servingTime" class="form-control shadow mb-2 required" value="@Model.OperationDetails.ServingTime" />
+                                            <span id="servingTimeError" class="error text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">All time and temperature control for safety food (TCS) must be purchased and/or prepared in Brazos County. Receipts need to be kept to show proof of purchase. If any food is to be prepared at another location, it must be permitted in Brazos County. List name of permit holder and when that site will be used</label>
+                                            <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.OtherPermitHolderAndSite" id="otherpermitHolderAndSite">@Model.OperationDetails.OtherPermitHolderAndSite</textarea>
+                                            <span id="otherpermitHolderAndSiteError" class="error text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                    </div>
+                </fieldset>
+            </form>
+            <partial name="_AgencyReqFieldsPartial.cshtml" model="@Model.planReviewVM" />
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Documents</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right " id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Upload New Document</button>
+                    <input name="cnt" id="Cnt" value=0 hidden />
+                </div>
+                <div class="card-body">
+                    <partial name="_AssociatedDocsTable" />
+                </div>
+            </div>
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Notes</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#notesUploadModal" class="btn btn-sm btn-custom float-right " id="notesUploadBtn" onclick="notesclrall();"><i class="fas fa-plus mr-2"></i> Add New Note</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_NotesTablePartial" />
+                </div>
+                <div id="btnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                    <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="verifyBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Submit and Proceed To Admin Review</button>
+                    <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="saveBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Update Information</button>
+                    <button type="button" id="editBtn" class="btn btn-sm btn-custom float-right" onclick="$('#saveBtn').show();$('#editBtn').css('display', 'none');$('#verifyBtn').css('display', 'none'); $('#info').prop('disabled', false);"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                </div>
+            </div>
+            <div class="card card-outline" id="paymentCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Payment Details</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#paymentAddModal" class="btn btn-sm btn-custom float-right" id="paymentAddBtn" onclick="$('#PaymentForm').trigger('reset'); $('#totalamt').val('@Model.AddPaymentDTO!.LateFine'==''? 0: '@Model.AddPaymentDTO!.LateFine')"><i class="fas fa-plus mr-2"></i> Add Payment</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_PaymentTablePartial" />
+                </div>
+                <div id="paymentFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                </div>
+            </div>
+            <div class="card card-outline" id="SchCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Scheduled Inspections</h5>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#scheduleUploadModal" class="btn btn-sm btn-custom float-right " id="scheduleUploadBtn" onclick="Scheduleclrall();"><i class="fas fa-plus mr-2"></i> Schedule New Inspection</button>
+                </div>
+                <div class="card-body">
+                    <partial name="_SchedulerTablePartial" />
+                </div>
+                @* <div id="SbtnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/RetailPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                </div> *@
+            </div>
+            <div class="card card-outline" id="InsCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Inspections</h5>
+                    @* <button type="button" data-bs-toggle="modal" data-bs-target="#scheduleUploadModal" class="btn btn-sm btn-custom float-right " id="scheduleUploadBtn" onclick="Scheduleclrall();"><i class="fas fa-plus mr-2"></i> Schedule New Inspection</button> *@
+                </div>
+                <div class="card-body">
+                    <partial name="_InspectionTablePartial" />
+                </div>
+                <div id="SbtnFooter" class="card-footer">
+                    <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn" onclick="window.location.href='/MobilePermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+@await Html.PartialAsync("_NotesUploadForm.cshtml", Model.Notes)
+@await Html.PartialAsync("_SchedulerPartial.cshtml", Model.ScheduleVM)
+@await Html.PartialAsync("_paymentDetailsPartial.cshtml", Model.AddPaymentDTO)
+@await Html.PartialAsync("_offlinePaymentPartial.cshtml", Model.OfflinePaymentVM)
+@await Html.PartialAsync("_permitApprovalModal.cshtml")
+@await Html.PartialAsync("_InspectionReportMailModel.cshtml")
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    @* <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script> *@
+    <script src="~/js/Application/DocumentsTable.js"></script>
+    <script src="~/js/Areas/LoggedIn/NotesTable.js"></script>
+    <script src="~/js/Areas/LoggedIn/PermitScheduleTable.js"></script>
+    <script src="~/js/Areas/LoggedIn/PaymentTable.js"></script>
+    <script src="~/js/Areas/LoggedIn/PermitInspectionTable.js"></script>
+
+    <script>
+        function nullAll() {
+            if ($('#event').val() == "") {
+                $('#eventId').val(0);
+                $('#eventLocation').val("");
+                $('#dateControl').hide();
+                $('#fromDt').datepicker('setDate', null);
+                $('#toDt').datepicker('setDate', null);
+                $('#startDate').val("");
+                $('#endDate').val("");
+
+            }
+            else {
+                $('#eventIdError').text("");
+            }
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            var dtToday = new Date();
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            //var prevdt = dtToday.getDate() - 1;
+
+            var year = dtToday.getFullYear();
+            var maxyear = dtToday.getFullYear() + 1;
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+            //if (prevdt < 10) { prevdt = '0' + prevdt.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+            var maxdate = maxyear + '-' + month + '-' + day;
+
+            $('#schDate').attr('min', mindate);
+            $('#schDate').attr('max', maxdate);
+
+            $('#collectionDt').attr('max', mindate)
+
+
+            $('.select2').select2()
+
+            //debugger;
+            if ($('#permitStatusId').val() == 1) {
+                $('#saveBtn').hide();
+                $('#verifyBtn').show();
+                $('#editBtn').hide();
+                $('#info').prop('disabled', false);
+            }
+            else {
+                $('#saveBtn').hide();
+                $('#verifyBtn').hide();
+                $('#editBtn').show();
+                $('#info').prop('disabled', true);
+                //$('.select2').select2("enable", false);
+            }
+
+            if ($('#permitStatusId').val() >= 7) {
+                //debugger;
+                $('#saveBtn').hide();
+                $('#verifyBtn').hide();
+                $('#editBtn').hide();
+                $('#info').prop('disabled', true);
+                $('#btnFooter').hide();
+                $('#agencyFooter').hide();
+                $('#paymentCard').show();
+                loadPaymentTable();
+                if ($('#permitStatusId').val() > 7) {
+                    loadSchedulerTable();
+                    loadInspectionTable();
+                    $('#SchCard').show();
+                    $('#InsCard').show();
+                    $('#paymentFooter').hide();
+                    //CheckOpeningInsStatus()
+                }
+            }
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+
+            if( $('#subTotal').val() == 0){
+                $(".show-radio").prop("disabled", true);
+                $('#miscelliniusfees').prop('readonly', true)
+                $('#miscelliniusfeesTitle').prop('readonly', true)
+                //$('.show-radio').prop('disabled', true)
+            }
+
+
+            loadDataTable(false, "Yes");
+            loadNotesDataTable();
+            //loadSchedulerTable();
+
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            //$("#applicantsignDt").change(function () {
+            //    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            //});
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#fromDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#toDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            var eventStartDate = '@Model.OperationDetails.Event.StartDate.ToString()'
+            var eventEndDate = '@Model.OperationDetails.Event.EndDate.ToString()'
+            var formattedeventStartDate = eventStartDate.split(' ');
+            var formattedeventEndDate = eventEndDate.split(' ');
+
+            var fromEventdate = formattedeventStartDate[0].replace(/\//g, '-');
+            var toEventdate = formattedeventEndDate[0].replace(/\//g, '-');
+
+            var eventstDt = fromEventdate.split('-');
+            var eventendDt = toEventdate.split('-');
+            var freventmonth = parseInt(eventstDt[1]) - 1;
+            var toeventmonth = parseInt(eventendDt[1]) - 1;
+
+
+            var fromdt = '@Model.Establishment.ActivationDate.ToString()';
+            var todt = '@Model.Establishment.ExpiryDate.ToString()';
+            var formattedFromDt = fromdt.split(' ');
+            var formattedtoDt = todt.split(' ');
+
+            var fromdate = formattedFromDt[0].replace(/\//g, '-');
+            var todate = formattedtoDt[0].replace(/\//g, '-');
+
+            var stDt = fromdate.split('-');
+            var endDt = todate.split('-');
+            var frmonth = parseInt(stDt[1]) - 1;
+            var tomonth = parseInt(endDt[1]) - 1;
+            //$("#fromDt").datepicker("option", "minDate", new Date(stDt[2], frmonth, stDt[0]));
+            //$("#fromDt").datepicker("option", "maxDate", new Date(endDt[2], tomonth, endDt[0]));
+            $("#fromDt").datepicker("option", "minDate", new Date(eventstDt[2], freventmonth, eventstDt[0]));
+            $("#fromDt").datepicker("option", "maxDate", new Date(eventendDt[2], toeventmonth, eventendDt[0]));
+            $("#toDt").datepicker("option", "minDate", new Date(stDt[2], frmonth, stDt[0]));
+            $("#toDt").datepicker("option", "maxDate", new Date(eventendDt[2], toeventmonth, eventendDt[0]));
+
+            // var todt = i.item.endDt.split('T');
+            // var fromdate = fromdt[0].replace(/\//g, '-');
+            // var todate = todt[0].replace(/\//g, '-');
+
+            // //console.log(fromdate)
+            // //console.log(todate)
+
+            // var stDt = fromdate.split('-');
+            // var toDt = todate.split('-');
+
+            // var frmonth = parseInt(stDt[1]) - 1;
+            // var tomonth = parseInt(toDt[1]) - 1;
+
+            // $("#fromDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+            // $("#fromDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+            // $("#toDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+            // $("#toDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+
+            
+
+            if ('@Model.Establishment!.ActivationDate' != '') {
+                var date = '@Model.Establishment!.ActivationDate';
+
+                date = date.replace(/\//g, '-');
+                //console.log("Test");
+
+                var dt = date.split(' ')
+                var s = dt[0].split('-');
+
+                var month = parseInt(s[1]) - 1;
+
+
+                $("#fromDt").datepicker("setDate", new Date(s[2], month, s[0]));
+                $('#startDate').val(new Date($(fromDt).val()));
+                console.log(date);
+            }
+
+            if ('@Model.Establishment!.ExpiryDate' != '') {
+                var date = '@Model.Establishment!.ExpiryDate';
+
+                date = date.replace(/\//g, '-');
+                //console.log("Test");
+
+                var dt = date.split(' ')
+                var s = dt[0].split('-');
+
+                var month = parseInt(s[1]) - 1;
+
+
+                $("#toDt").datepicker("setDate", new Date(s[2], month, s[0]));
+                $('#endDate').val(new Date($(toDt).val()));
+                console.log(date);
+            }
+
+            // if ('Model.OperationDetails!.CertificateExpirationDt' != '') {
+            //     var date = 'Model.OperationDetails!.CertificateExpirationDt';
+
+            //     date = date.replace(/\//g, '-');
+            //     //console.log("Test");
+
+            //     var dt = date.split(' ')
+            //     var s = dt[0].split('-');
+
+            //     var month = parseInt(s[1]) - 1;
+
+
+            //     $("#certexpdT").datepicker("setDate", new Date(s[2], month, s[0]));
+            //     $('#CertExpDate').val(new Date($(certexpdT).val()));
+            //     console.log(date);
+            // }
+
+            var permitStatus = $('#permitStatusId').val();
+            //var oldPermitStatusId = $('#oldPermitStatusId').val();
+
+            if (parseInt(permitStatus) > 1) {
+                $('#progressBar').show();
+            }
+
+            if (parseInt(permitStatus) >= 3 /*&& parseInt(permitStatus) <= 6*/) {
+                $('#agencyReqTab').show();
+            }
+
+            $('#agencyEstablishmentId').val($('#estId').val());
+
+            for (let i = parseInt(permitStatus); i >= 2; i--) {
+                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + i)
+                $('#s' + i).addClass("completed");
+            }
+
+            var butText = "";
+            if(parseInt(permitStatus) == 3){
+                  
+                  butText = 'Pending Payment';
+            }
+            else if (parseInt(permitStatus) == 7) {
+                butText = 'Active';
+            }
+            else{
+                  butText = '@SD.PermitStatName(test)';
+            }
+
+            
+            //debugger;
+            $('#statusbtn').text("Place in " + butText);
+
+            if ($('#agencyStaffRequiredId').val() == 0) {
+                $('#planReviewChoice1').prop("checked", true);
+                $('#plnR').prop("checked", true);
+                $('#plnR').prop("value", "true");
+                $('#agencyStaffReqFields_RiskCategoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_TerritoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentSizeId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypeId').prepend(`<option disabled selected>---Select---</option>`)
+                //if(parseInt(permitStatus) == 3){
+                //  $('#statusbtn').prop('disabled', true);
+                //}
+            }
+            else {
+                $('#agencyStaffReqFields_RiskCategoryId').val(@Model.planReviewVM.agencyStaffReqFields.RiskCategoryId);
+                $('#agencyStaffReqFields_TerritoryId').val(@Model.planReviewVM.agencyStaffReqFields.AreaId);
+                $('#agencyStaffReqFields_EstablishmentSizeId').val(@Model.planReviewVM.agencyStaffReqFields.EstablishmentSizeId);
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').val(@jurisdicId);
+                LoadEstTypes(@jurisdicId, @Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+
+                setTimeout(function () {
+                    FeesCalc(@Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+                }, 150)
+
+                $('#agencyRequiredinfo').prop('disabled', true);
+                $('#editARFields').show();
+                $('#saveARFields').css('display', 'none')
+
+                if ('@isPlanReview' == 'True') {
+                    $('#planReviewChoice1').prop("checked", true);
+                    $('#plnR').prop("checked", true);
+                    $('#plnR').prop("value", "true");
+                }
+                else if ('@isPlanReview' == 'False') {
+                    $('#planReviewChoice2').prop("checked", true);
+                    $('#plnR').prop("checked", false);
+                    $('#plnR').prop("value", "false");
+                }
+            }
+            if (parseInt(permitStatus) == 3) {
+                if ($('#agencyStaffRequiredId').val() == 0) {
+                    //$('#statusbtn').prop('disabled', true)
+                    $('#statusbtn').prop('disabled', true)
+                }
+                else {
+                    $('#statusbtn').prop('disabled', false)
+                }
+            }
+
+
+            CheckPendingPayment();
+
+            $("#event").autocomplete({
+                autoFocus: true,
+                source: function (request, response) {
+                    var url = '/EventAutoComplete';
+                    //console.log(request.term);
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { "prefix": request.term },
+                        success: function (data) {
+                            //console.log(data);
+                            response($.map(data, function (item) {
+                                //console.log(item);
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            console.log(response.responseText)
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    //debugger;
+                    //alert(2);
+                    $("#eventLocation").val(i.item.location);
+                    $("#eventId").val(i.item.val);
+
+                    $('#dateControl').show();
+                    //$("#SchEstId").val(i.item.val);
+                    //alert(1);
+
+                    var fromdt = i.item.startDt.split('T');
+                    var todt = i.item.endDt.split('T');
+                    var fromdate = fromdt[0].replace(/\//g, '-');
+                    var todate = todt[0].replace(/\//g, '-');
+
+                    //console.log(fromdate)
+                    //console.log(todate)
+
+                    var stDt = fromdate.split('-');
+                    var toDt = todate.split('-');
+
+                    var frmonth = parseInt(stDt[1]) - 1;
+                    var tomonth = parseInt(toDt[1]) - 1;
+
+                    $("#fromDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+                    $("#fromDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+                    $("#toDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+                    $("#toDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+
+                    // var dt = date.split(' ')
+                    // var s = dt[0].split('-');
+
+                    // $("#toDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+
+                    // $("#fromDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+
+    <script>
+        function validate() {
+            var flg = 0;
+            let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+            if ($('#eventId').val() == 0) {
+                $('#eventIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#OwnName').val() == "") {
+                $('#OwnNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() == "") {
+                $('#emailAddrError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() != "" && EmailPattern.test($('#emailAddr').val()) == false) {
+                $('#emailAddrError').text("\u24d8 Invalid Email ");
+                flg = 1;
+            }
+
+
+            if ($('#ocontactNo').val() == "") {
+                $('#ocontactNoError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#preparingTime').val() == "") {
+                $('#preparingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#servingTime').val() == "") {
+                $('#servingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#startDate').val() == "") {
+                $('#fromDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#endDate').val() == "") {
+                $('#toDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#listofFoodToBePrepared').val() == "") {
+                $('#listofFoodToBePreparedError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                $('#contactError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#ocontactNo').val() != "" && $('#ocontactNo').val().replace(/\D/g, '').length < 10) {
+                $('#ocontactNoError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                $('#zipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            //console.log($('#ApplicantsignDate').val());
+            if (flg == 1) {
+                return "Invalid"
+                //return "Valid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+
+        function Submit() {
+
+            var str = validate();
+            //console.log(str);
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+                var successmsg = "Information Saved Successfully";
+                var errormsg = "Unexpected Error Occurred";
+
+                $.ajax({
+                    type: "POST",
+                    url: "/TFEdit",
+                    data: $('#EditPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.success(successmsg);
+                            }, 500)
+                            // if (data.type == 1) {
+                            //     $('#progressBar').show();
+                            //     $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb2')
+                            //     $('#s2').addClass("completed");
+                            //     $('#statusbtn').text("Place in Admin Review");
+                            // }
+                            $('#info').prop('disabled', true);
+                            $('#saveBtn').hide();
+                            $('#verifyBtn').hide();
+                            $('#editBtn').show();
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                    }
+                })
+            }
+        }
+    </script>
+
+
+    <script>
+        function LoadEstTypes(id, tok)
+        {
+            $.ajax({
+                type:"GET",
+                url: "/LoadEstTypes?id=" + id,
+                success: function (data) {
+                    console.log(data);
+                    // $('#agencyStaffReqFields_EstablishmentTypeId').empty();
+                    // $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option disabled selected>---Select---</option>`)
+                    // $('#Quater').val("");
+                    // $('#amount').val("");
+                    if (data.success) {
+                        $('#agencyStaffReqFields_EstablishmentTypeId').val(data.estTypes[0].id);
+                        // for (let i = 0; i < data.estTypes.length;i++){
+                        //     $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option value='${data.estTypes[i].id}'>${data.estTypes[i].name}</option>`)
+                        // }
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete:function(){
+                    //console.log(tok);
+                    if (tok != "N") {
+                        $('#agencyStaffReqFields_EstablishmentTypeId').val(tok);
+                    }
+                }
+            })
+        }
+
+        function FeesCalc(id)
+        {
+            $.ajax({
+                type: "GET",
+                url: "/GetFee?id=" + id,
+                success: function(data){
+                    if(data.success){
+                        $('#Quater').val(data.quater);
+                        $('#amount').val(data.amount);
+                    }
+                }
+            })
+        }
+    </script>
+
+    <script>
+        //function ApprovalNote() {
+        //    var permitNo = $('#permitStatusId').val();
+        //    //console.log(permitNo);
+        //    if (permitNo == 8) {
+        //        CheckOpeningInsStatus()
+        //            .then(msg => {
+        //                //console.log(msg);
+        //                toastr.info("It seems that this establishment has not yet received Permit Approval. To grant Approval and Place the Establishment in Active Status, kindly provide a note.")
+        //                if (msg == "Not Pass") {
+        //                    $('audio#warning')[0].play();
+        //                    setTimeout(() => {
+        //                        Swal.fire({
+        //                            input: "textarea",
+        //                            inputLabel: "Note",
+        //                            inputPlaceholder: "Type your message here...",
+        //                            inputAttributes: {
+        //                                "aria-label": "Type your message here"
+        //                            },
+        //                            showCancelButton: true,
+        //                            confirmButtonText: 'Submit'
+        //                        }).then((result) => {
+        //                            //console.log(result);
+
+        //                            if (result.isConfirmed) {
+        //                                //Swal.fire(result.value);
+        //                                if (result.value != "") {
+        //                                    //Swal.fire(result.value);
+        //                                    var formData = new FormData();
+        //                                    formData.append('NoteId', 0);
+        //                                    formData.append('Title', "Permit Approval");
+        //                                    formData.append('Description', result.value);
+        //                                    formData.append('EstablishmentId', $('#estId').val());
+
+        //                                    $.ajax({
+        //                                        type: "POST",
+        //                                        url: '/NotesUpsert',
+        //                                        data: formData,
+        //                                        contentType: false,
+        //                                        processData: false,
+        //                                        beforeSend: function () {
+        //                                            $('div#loading-wrapper').show();
+        //                                        },
+        //                                        success: function (data) {
+        //                                            console.log(data);
+        //                                            if (data.success) {
+        //                                                $('audio#success_sound')[0].play();
+        //                                                setTimeout(() => {
+        //                                                    toastr.success(data.msg);
+        //                                                }, 500)
+        //                                                StatusChange()
+        //                                            }
+        //                                            else {
+        //                                                $('audio#errorsound')[0].play();
+        //                                                setTimeout(() => {
+        //                                                    toastr.error(data.msg);
+        //                                                }, 775)
+        //                                            }
+        //                                        },
+        //                                        error: function (data) {
+        //                                            console.log(data);
+        //                                        },
+        //                                        complete: function () {
+        //                                            $('div#loading-wrapper').hide();
+        //                                            notesdataTable.ajax.reload();
+        //                                        }
+        //                                    });
+
+        //                                }
+        //                                else {
+
+        //                                }
+        //                            }
+        //                            else {
+
+        //                            }
+        //                        })
+
+        //                    }, 150)
+
+        //                }
+        //            })
+        //            .catch(error => {
+        //                console.log("Error:", error);
+        //            });
+
+        //    }
+        //    //return false
+        //}
+
+
+
+        function ApprovalNote() {
+          var permitNo = $('#permitStatusId').val();
+          if (permitNo == 8) {
+              CheckOpeningInsStatus()
+                  .then(msg => {
+                      toastr.info("It seems that this establishment has not yet received Permit Approval. To grant Approval and Place the Establishment in Active Status, kindly provide a note.");
+                      if (msg == "Not Pass") {
+                          $('audio#warning')[0].play();
+                          setTimeout(() => {
+                              $('#noteModal').modal('show');
+                          }, 150);
+
+                          $('#submitNote').off('click').on('click', function () {
+                              var note = $('#noteTextArea').val();
+                              if (note.trim() !== "") {
+                                  var formData = new FormData();
+                                  formData.append('NoteId', 0);
+                                  formData.append('Title', "Permit Approval");
+                                  formData.append('Description', note);
+                                  formData.append('EstablishmentId', $('#estId').val());
+
+                                  $.ajax({
+                                      type: "POST",
+                                      url: '/NotesUpsert',
+                                      data: formData,
+                                      contentType: false,
+                                      processData: false,
+                                      beforeSend: function () {
+                                          $('div#loading-wrapper').show();
+                                      },
+                                      success: function (data) {
+                                          console.log(data);
+                                          if (data.success) {
+                                              // $('audio#success_sound')[0].play();
+                                              // setTimeout(() => {
+                                              //     toastr.success(data.msg);
+                                              // }, 500);
+                                              StatusChange();
+                                          } else {
+                                              $('audio#errorsound')[0].play();
+                                              setTimeout(() => {
+                                                  toastr.error(data.msg);
+                                              }, 775);
+                                          }
+                                      },
+                                      error: function (data) {
+                                          console.log(data);
+                                      },
+                                      complete: function () {
+                                          $('div#loading-wrapper').hide();
+                                          notesdataTable.ajax.reload();
+                                      }
+                                  });
+
+                                  $('#noteModal').modal('hide'); 
+                              }
+                          });
+                      }
+                  })
+                  .catch(error => {
+                      console.log("Error:", error);
+                  });
+          }
+       }
+
+
+        function StatusChange() {
+            var id = $('#encryptedEstId').val();
+            $.ajax({
+                type: "POST",
+                url: "/StepupPermit?id=" + id,
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                },
+                success: function (data) {
+                    console.log(data);
+                    debugger;
+                    if (data.success) {
+                        $('audio#success_sound')[0].play();
+                        setTimeout(() => {
+                            toastr.success(data.msg);
+                        }, 500)
+                        $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + data.permitStatusId)
+                        $('#s' + data.permitStatusId).addClass("completed");
+
+                        $('#permitStatusId').val(data.permitStatusId);
+                        $('#oldPermitStatusId').val(data.oldPermitStatusId);
+
+                        if (data.permitStatusId >= 9) {
+                            $('#statusbtn').hide();
+                            $('#paymentFooter').hide();
+                        }
+                        else {
+                            $('#statusbtn').text("Place in " + data.btnText);
+                        }
+
+                        if (data.permitStatusId >= 7) {
+                            $('#saveBtn').hide();
+                            $('#verifyBtn').hide();
+                            $('#editBtn').hide();
+                            $('#agencyFooter').hide();
+                            $('#info').prop('disabled', true);
+                            $('#btnFooter').hide();
+                            //$('#agencyReqTab').hide();
+
+                            //var permitStatus = $('#stat').val();
+                            if (data.permitStatusId == 7) {
+                                // if ($('#feesCount').val() != 0) {
+                                //     $('#statusbtn').prop('disabled', true)
+                                // }
+                                // else {
+                                //     $('#statusbtn').prop('disabled', false)
+                                // }
+
+                                $('#divPermitCertificate').show();
+                                $('#paymentCard').show();
+                                loadPaymentTable();
+                                loadSchedulerTable();
+                                loadInspectionTable();
+                                $('#SchCard').show();
+                                $('#InsCard').show();
+                                $('#paymentFooter').hide();
+                                //CreateOpeningSchedule();
+                            }
+
+                            // if (data.permitStatusId == 8) {
+
+                            // }
+                        }
+
+                        if (data.permitStatusId == 3) {
+                            $('#statusbtn').prop('disabled', true)
+                            $('#agencyReqTab').show();
+                            setTimeout(() => {
+                                toastr.info("Please Fill Out The Required Fields From Agency Staff Required Fields To Proceed Further");
+                            }, 1000)
+                        }
+                    }
+                    else {
+                        $('audio#errorsound')[0].play();
+                        setTimeout(() => {
+                            toastr.error(data.msg);
+                            if (data.info != undefined || data.info != null) {
+                                toastr.info(data.info);
+                            }
+                        }, 775)
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                }
+            })
+        }
+
+        function CreateOpeningSchedule() {
+            var id = $('#encryptedEstId').val();
+            $.ajax({
+                type: "POST",
+                url: "/CreateOpeningSchedule?id=" + id,
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        loadSchedulerTable();
+                        loadInspectionTable();
+                        $('#SchCard').show();
+                        $('#InsCard').show();
+                    }
+                    else {
+                        $('audio#errorsound')[0].play();
+                        setTimeout(() => {
+                            toastr.error(data.msg);
+                        }, 775)
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                }
+            })
+        }
+    </script>
+}

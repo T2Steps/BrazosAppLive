@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\BrazosApp.props" />
+</Project>

@@ -1,0 +1,205 @@
+﻿@using BrazosApp.Utility;
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Dashboard";
+    //var role = ViewBag.role.ToString();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#022E5F">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a style="color:#022E5F" href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+      <script>
+            //function getCookie(name) {
+            //    let cookieArr = document.cookie.split(";");
+            //    console.log(cookieArr);
+
+            //    for (let i = 0; i < cookieArr.length; i++) {
+            //        let cookiePair = cookieArr[i].split("=");
+
+            //        if (name === cookiePair[0].trim()) {
+            //            return decodeURIComponent(cookiePair[1]);
+            //        }
+            //    }
+
+            //    return null;
+            //}
+
+
+            $(function () {
+
+                //const token = getCookie('.AspNetCore.Cookies');
+                //var Tok = '@User.FindFirstValue("Token")'
+                //console.log(Tok);
+                //$.ajax({
+                //        type: "GET",
+                //        url: "https://localhost:44394/GetApiUsers",
+                //        headers: {
+                //              'Authorization': `Bearer ${Tok}`,
+                //              'Content-Type': 'application/json'
+                //        },
+                //        success: function (data) {
+                //        console.log(data);
+                //        },
+
+                //  })
+
+                  //var formData = new FormData();
+                  //formData.append('id', '1');
+                  //formData.append('str', "Test");
+
+                //$.ajax({
+                //    type: "POST",
+                //    url: "https://localhost:44394/TestPost",
+                //    headers: {
+                //        'Authorization': `Bearer ${Tok}`,
+                //        //'Content-Type': 'application/json'
+                //    },
+                //    data: formData,
+                //    contentType: false,
+                //    processData: false,
+                //    success: function (data) {
+                //        console.log(data);
+                //    },
+
+                //})
+
+                //if (Tok) {
+                //    fetch('https://localhost:44394/GetApiUsers', {
+                //        method: 'GET',
+                //        headers: {
+                //            'Authorization': `Bearer ${Tok}`,
+                //            'Content-Type': 'application/json'
+                //        }
+                //    })
+                //        .then(response => {
+                //            if (response.ok) {
+                //                return response.json();
+                //            } else {
+                //                throw new Error('Unauthorized or other error');
+                //            }
+                //        })
+                //        .then(data => {
+                //            console.log('Success:', data);
+                //        })
+                //        .catch(error => {
+                //            console.error('Error:', error);
+                //        });
+                //} else {
+                //    console.error('Token not found in cookies');
+                //}
+            });
+                //if (Tok) {
+                //    fetch('https://localhost:44394/GetApiUsers', {
+                //        method: 'GET',
+                //        headers: {
+                //            'Authorization': `Bearer ${Tok}`,
+                //            'Content-Type': 'application/json'
+                //        }
+                //    })
+                //        .then(response => {
+                //            if (response.ok) {
+                //                return response.json();
+                //            } else {
+                //                throw new Error('Unauthorized or other error');
+                //            }
+                //        })
+                //        .then(data => {
+                //            console.log('Success:', data);
+                //        })
+                //        .catch(error => {
+                //            console.error('Error:', error);
+                //        });
+                //} else {
+                //    console.error('Token not found in cookies');
+                //}
+
+            //      //$.ajax({
+            //      //      type: "GET",
+            //      //      url: "https://localhost:44394/GetApiUsers",
+
+            //      //})
+
+
+            //});
+
+            //$(document).ready(function () {
+            //    // Function to fetch claims
+            //    function fetchClaims() {
+            //        $.ajax({
+            //            url: 'https://localhost:44394/GetApiUsers', // Replace with your API endpoint
+            //            method: 'GET', // or 'POST' depending on your API
+            //            headers: {
+            //                'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Replace with your actual token
+            //            },
+            //            success: function (data) {
+            //                displayClaims(data);
+            //            },
+            //            error: function (error) {
+            //                console.error('Error fetching claims:', error);
+            //                $('#claims-container').html('<p>Error fetching claims. Please try again later.</p>');
+            //            }
+            //        });
+            //    }
+
+            //    // Function to display claims
+            //    function displayClaims(claims) {
+            //        let claimsHtml = '<ul>';
+            //        $.each(claims, function (index, claim) {
+            //            claimsHtml += `<li>${claim.type}: ${claim.value}</li>`;
+            //        });
+            //        claimsHtml += '</ul>';
+            //        $('#claims-container').html(claimsHtml);
+            //    }
+
+            //    // Fetch claims on page load
+            //    fetchClaims();
+            //});
+      </script>
+      
+}
+
+@* <section class="content">
+    <div class="row m-2">
+        @{
+            if (role == SD.SuperAdmin || role == SD.Admin || role == SD.AdminInspector)
+            {
+                <partial name="_userBoxPartial.cshtml" />
+            }
+        }
+
+    </div>
+</section> *@
+
+
+@* @section Scripts {
+    <script src="~/js/Areas/LoggedIn/DashboardFunctions.js"></script>
+    <script>
+        $(function(){
+            console.log('@role');
+            if('@role' == '@SD.SuperAdmin' || '@role' == '@SD.Admin' || '@role' == '@SD.AdminInspector'){
+                getUsers();
+            }
+        })
+
+        if('@role' == '@SD.SuperAdmin' || '@role' == '@SD.Admin' || '@role' == '@SD.AdminInspector'){
+            setInterval(getUsers, 5000);
+        }
+
+    </script>
+} *@

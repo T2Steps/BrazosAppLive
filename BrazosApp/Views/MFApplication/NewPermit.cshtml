@@ -1,0 +1,633 @@
+﻿@model OnlineMFPermitVM
+
+@{
+    var lang = Convert.ToInt32(ViewBag.Lang);
+    var owner = ViewBag.Owner.ToString();
+    var email = ViewBag.Email.ToString();
+    var contact = ViewBag.Phone.ToString();
+    var reqTxt = "";
+    var signNotSavedTxt = "";
+    //var invalidTxt = "";
+}
+
+@*<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">*@
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+<style>
+    @@media only screen and (max-width: 768px) {
+        canvas {
+            width: 300px;
+            height: 100px;
+        }
+    }
+    /*.container {
+            width: auto;
+            position: center;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border:1px solid red
+        }*/
+    body {
+        background-color: whitesmoke;
+    }
+
+    /* .sp{
+            display:none
+        } */
+</style>
+
+<input id="lang" name="Language" value="@lang" hidden />
+<input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="" />
+<input type="hidden" id="encryptedApplicationId" name="EncryptedApplicationId" value="@Model.EncryptedApplicationId" />
+@if (lang == 1)
+{
+    reqTxt = "Required Field ";
+    signNotSavedTxt = " Signature Not Saved";
+    <partial name="_MobileFoodNewPermitEng.cshtml" />
+}
+else if (lang == 2)
+{
+    reqTxt = "Campo requerido ";
+    signNotSavedTxt = " Firma no guardada";
+    <partial name="_MobileFoodNewPermitSp.cshtml" />
+}
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    @*<script src="https://code.jquery.com/ui/1.13.1/i18n/jquery-ui-i18n.min.js"></script>*@
+
+
+    @if (lang == 2)
+    {
+        <script src="~/js/datepicker-es.js"></script>
+    }
+
+    <script src="~/lib/signature_pad/signature_pad.umd.js"></script>
+    <script src="~/js/Application/DocumentsTable.js"></script>
+    <script>
+        var signaturePadApplicant;
+        var lang = $('#lang').val();
+
+        function validateDate(input) {
+            const datePattern = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/;
+            const dateValue = input.value;
+            const errorMsg = document.getElementById('certexpdTError');
+
+            if (dateValue != '' && !datePattern.test(dateValue)) {
+                if (lang == 1) {
+                    errorMsg.textContent = 'Please enter a valid date in MM-DD-YYYY format.';
+                }
+                else if (lang == 2) {
+                    errorMsg.textContent = 'Ingrese una fecha válida en formato MM-DD-AAAA.';
+                } 
+                input.value = '';
+            } else {
+                errorMsg.textContent = '';
+                $('#CertExpDate').val(dateValue);
+            }
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            $('#OwnName').val("@owner");
+            $('#emailAddr').val("@email");
+            $('#ocontactNo').val("@contact");
+            $('#OwnName').attr('readonly', true);
+            $('#ocontactNo').attr('readonly', true);
+            $('#emailAddr').attr('readonly', true);
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+            $('#cpfzip').inputmask('99999');
+            $('#vyear').inputmask('9999');
+            //$('#ozip').inputmask('99999');
+
+            $('#docsView').css('display', 'none');
+
+
+            var applicant = document.getElementById("applicantSignature");
+            var applicantclearButton = applicant.querySelector("[data-action=clear]");
+            var applicantCanvas = applicant.querySelector("canvas");
+
+            signaturePadApplicant = new SignaturePad(applicantCanvas);
+            applicantclearButton.addEventListener("click", function (event) {
+                signaturePadApplicant.clear();
+                $('#applicantSignatureBase64').val("");
+            });
+
+
+            $('.custom-file-input.sp').on('change', function () {
+                  var fileName = $(this).val().split('\\').pop();
+                  $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+                
+            $('.custom-file-input.en').on('change', function () {
+                  var fileName = $(this).val().split('\\').pop();
+                  $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#applicantsignDt").change(function () {
+                $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            });
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#certexpdT").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#applicantsignDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: false,
+                changeYear: false,
+                minDate: new Date(),
+                maxDate: new Date(),
+                yearRange: '-0:+0',
+            });
+            $("#applicantsignDt").datepicker("setDate", new Date())
+            //$('#ApplicantsignDate').val(new Date($('#applicantsignDt').val()));
+            $('#ApplicantsignDate').val($('#applicantsignDt').val());
+            $("#applicantsignDt").prop('readonly', true)
+
+
+                $("#cpf").autocomplete({
+                    autoFocus: true,
+                    source: function (request, response) {
+
+                        $.ajax({
+                            url: '/MFAutoComplete',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    console.log(item);
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                //alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                //alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+
+                        //debugger;
+                        //$("#txtEstablishment").val(i.item.label + "(" + i.item.permit + ")");
+                        //$("#permitNo").val(i.item.permit);
+                        //$("#ownerPhone").val(i.item.ownerphone);
+                        //$("#Contact").val(i.item.ownername);
+                        //$("#physicalAddress").val(i.item.address);
+                        //$("#City").val(i.item.city);
+                        //$("#zip").val(i.item.zip);
+                        //$("#inspectionPanel").show();
+                        //$("#hdnestablishment").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+
+        });
+    </script>
+
+      <script>
+            $("body").on("click", "#btnAdd", function () {
+                var txtName = $("#txtName");
+
+                if (txtName.val() == '') {
+                    txtName.css('border-color', 'red');
+                    setTimeout(() => {
+                        txtName.css('border-color', '');
+                    }, 4000)
+                    $('audio#errorsound')[0].play();
+                    setTimeout(() => {
+                        toastr.error("Please Fill Up Location Field");
+                    }, 775)
+                    return false;
+                }
+
+                //var txtCountry = $("#txtCountry");
+                var txtCount = $("#txtCount");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#tblCustomers > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add Name cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(txtName.val());
+                cell.append("<input type=\"hidden\" id=\"MFOperationLocationsList_Location\" name=\"MFOperationLocationsList[" + txtCount.val() + "].Location\" value=\"" + txtName.val() + "\">");
+
+                //Add Country cell.
+                //cell = $(row.insertCell(-1));
+                //cell.html(txtCountry.val());
+                //cell.append("<input type=\"hidden\" id=\"FinalTemperatureList_Temperature\" name=\"FinalTemperatureList[" + txtCount.val() + "].Temperature\" value=\"" + txtCountry.val() + "\">");
+
+                //document.getElementById("txtCount").val() = txtCount.val() + 1;
+                txtCount.val(parseInt(txtCount.val()) + 1);
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.addClass('btn btn-sm btn-danger remove valid');
+
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                txtName.val("");
+                txtCountry.val("");
+
+                //alert($('#txtCount').val());
+            });
+
+            function Remove(button) {
+                //Determine the reference of the Row using the Button.
+                // alert(button);
+                var row = $(button).closest("TR");
+                var name = $("TD", row).eq(0).html();
+                $('audio#warning')[0].play();
+                setTimeout(() => {
+                    Swal.fire({
+                        title: 'Are you sure?',
+
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#8B9BB2',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            //Get the reference of the Table.
+                            var table = $("#tblCustomers")[0];
+
+                            //Delete the Table row using it's Index.
+                            table.deleteRow(row[0].rowIndex);
+
+                            var cnt = $("#txtCount").val();
+                            $("#txtCount").val(parseInt(cnt) - 1);
+                        }
+
+                    })
+                }, 100)
+                //if (confirm("Do you want to delete: " + name)) {
+                //    //Get the reference of the Table.
+                //    var table = $("#tblCustomers")[0];
+
+                //    //Delete the Table row using it's Index.
+                //    table.deleteRow(row[0].rowIndex);
+                //}
+            };
+      </script>
+
+    <script>
+        function validateInput(input) {
+            input.value = input.value.replace(/\D/g, '');
+        }
+
+        function validate() {
+            var flg = 0;
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#oAddress').val() == "") {
+                $('#oAddressError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ostate').val() == "") {
+                $('#ostateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ocity').val() == "") {
+                $('#ocityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#ozip').val() == "") {
+                $('#ozipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() == "") {
+                $('#cpfzipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vMake').val() == "") {
+                $('#vMakeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vModel').val() == "") {
+                $('#vModelError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vyear').val() == "") {
+                $('#vyearError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#color').val() == "") {
+                $('#colorError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#license').val() == "") {
+                $('#licenseError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#vin').val() == "") {
+                $('#vinError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#businessId').val() == null) {
+                $('#businessIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#operationtypeId').val() == null) {
+                $('#operationtypeIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpf').val() == "") {
+                $('#cpfError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfStreet').val() == "") {
+                $('#cpfStreetError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfstate').val() == "") {
+                $('#cpfstateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#cpfcity').val() == "") {
+                $('#cpfcityError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#mobilefoodlocation').val() == "") {
+                $('#mobilefoodlocationError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#pubWatSource').val() == null) {
+                $('#pubWatSourceError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wasteWaterSite').val() == null) {
+                $('#wasteWaterSiteError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#pwTankSize').val() == "") {
+                $('#pwTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#wTankSize').val() == "") {
+                $('#wTankSizeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#applicantSignatureBase64').val() == "") {
+                if (!signaturePadApplicant.isEmpty()) {
+                    $('#ApplicantSignError').text("\u24d8 @signNotSavedTxt")
+                }
+                else {
+                    $('#ApplicantSignError').text("\u24d8 @reqTxt")
+                }
+                flg = 1;
+            }
+            if ($('#ApplicantsignDate').val() == "") {
+                $('#ApplicantSignDateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                if (@lang== 1) {
+                    $('#contactError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#contactError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                if (@lang== 1) {
+                    $('#zipError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#zipError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+                if (@lang== 1) {
+                    $('#ozipError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#ozipError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if ($('#cpfzip').val() != "" && $('#cpfzip').val().replace(/\D/g, '').length < 5) {
+                if (@lang== 1) {
+                    $('#cpfzipError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#cpfzipError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if ($('#vyear').val() != "" && $('#vyear').val().replace(/\D/g, '').length < 4) {
+                if (@lang== 1) {
+                    $('#vyearError').text("\u24d8 Invalid Input ");
+                }
+                else if (@lang == 2) {
+                    $('#vyearError').text("\u24d8 Entrada Inválida ");
+                }
+                flg = 1;
+            }
+
+            if (flg == 1) {
+                return "Invalid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+    </script>
+
+    <script>
+        function Submit() {
+
+            var str = validate();
+
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+                $('#saveBtn').prop('disabled', true);
+                var successmsg = "";
+                var infomsg = "";
+                var errormsg = "";
+
+                if (lang == 1) {
+                    successmsg = "Informations Saved Successfully";
+                    infomsg = "Please Upload Relevent Documents and Submit the Form";
+                    errormsg = "Unexpected Error Occurred"
+                }
+                else if (lang == 2) {
+                    successmsg = "Información guardada exitosamente";
+                    infomsg = "Cargue los documentos relevantes y envíe el formulario";
+                    errormsg = "Ocurrió un error inesperado"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/MFNewPermit",
+                    data: $('#NewPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.type == "Create") {
+                                $('#estId').val(data.id);
+                                $('#encryptedEstId').val(data.encryptid);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                                setTimeout(() => {
+                                    toastr.info(infomsg);
+                                }, 3000)
+                                loadDataTable(false, "No");
+                            }
+                            else if (data.type == "Update") {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#certexpdTDateIcon').css('pointer-events', 'none')
+                            $('#docsView').show();
+                            $('#submitBtn').show();
+                            $('#saveBtn').hide();
+                            $('#editBtn').show();
+                            $('#certexpdTError').text('')
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                        $('#saveBtn').prop('disabled', false);
+                    }
+                })
+            }
+        }
+    </script>
+
+    <script>
+        function SaveSignature() {
+            var alertTxt = "";
+            if (@lang== 1) {
+                alertTxt = "Please provide your signature.";
+            }
+            else if (lang == 2) {
+                alertTxt = "Por favor proporcione su firma.";
+            }
+            var applicant = $('#applicantSignature')[0];
+            var applicantCanvas = applicant.querySelector("canvas");
+            if (signaturePadApplicant.isEmpty()) {
+                alert(alertTxt);
+                return false;
+            }
+            var signatureString = applicantCanvas.toDataURL();
+            $('#applicantSignatureBase64').val(signatureString);
+
+            $('#applicantSignatureBase64').parents("div.form-group").find("span.error").text("");
+        }
+    </script>
+}

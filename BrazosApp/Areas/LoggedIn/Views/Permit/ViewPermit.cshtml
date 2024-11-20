@@ -1,0 +1,1068 @@
+﻿@using System.Security.Claims
+@model RFPermitViewVM
+
+@{
+    ViewData["Title"] = "Edit Permit";
+    var flg = 0;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var role = ViewBag.role.ToString();
+    var userId = Convert.ToInt32(ViewBag.userId);
+    var username = ViewBag.userName;
+    var citylimitChoice = Model.OperationDetails!.WithinCityLimitChoice;
+    var isPlanReview = true;
+    var jurisdicId = 0;
+    if (Model.planReviewVM!.agencyStaffReqFields!.Id != 0)
+    {
+        jurisdicId = Model.planReviewVM!.agencyStaffReqFields!.EstablishmentTypes!.JurisdictionId;
+        isPlanReview = Model.planReviewVM!.agencyStaffReqFields!.IsPlanReview;
+    }
+    var reqTxt = "Required Field ";
+    var encryptId = Model.EncryptedEstId;
+    var test = Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1;
+    var btnText = SD.PermitStatName(Convert.ToInt32(Model.Establishment!.PermitStatusId) + 1);
+
+    var permitStatusId = @Model.Establishment.PermitStatusId;
+
+    var randomNumber = (new Random()).Next(1, 999999).ToString();
+}
+
+@* <link rel="stylesheet" href="~/css/status_bar.css" /> *@
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="~/css/progress-wizard.min.css" />
+<style>
+    /*.container {
+                width: auto;
+                position: center;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border:1px solid red
+            }*/
+    body {
+        background-color: whitesmoke;
+    }
+
+    /* .sp{
+                display:none
+            } */
+
+    input[type=radio] {
+        display: none;
+    }
+
+    .show-radio {
+        display: inline-block !important; /* display: inline !important */
+    }
+
+    input[type="radio"][id="ctylimitChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="ctylimitChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="planReviewChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="planReviewChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .progress-indicator > li .bubble:before,
+    .progress-indicator > li .bubble:after {
+        display: block;
+        position: absolute;
+        top: 14px;
+        width: calc(50% - 15px);
+        height: 3px;
+        content: '';
+        background-color: #bbb;
+    }
+
+    .progress-indicator > li.completed .bubble:before,
+    .progress-indicator > li.completed .bubble:after {
+        background-color: #7aa1db;
+        border-color: #022E5F;
+    }
+
+    .progress-indicator > li .bubble:before {
+        left: 0;
+    }
+
+    .progress-indicator > li .bubble:after {
+        right: 0;
+    }
+
+    .progress-indicator > li:first-child .bubble:before,
+    .progress-indicator > li:last-child .bubble:after {
+        width: calc(45% - 15px);
+        margin-left: 50%;
+    }
+
+    .progress-indicator > li.active .bubble:before,
+    .progress-indicator > li.active .bubble:after {
+        background-color: #337AB7;
+        border-color: #122a3f;
+    }
+
+    input[type="radio"][id="Sewagechoice1"]:checked + label {
+        background-color: deepskyblue;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="Sewagechoice2"]:checked + label {
+        background-color: deepskyblue;
+        font-weight: bold;
+        color: #fff;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <h1 class="d-inline" style="color:#A48464;">
+                            <span class="ml-0 badge bg-warning shadow">
+                                @(permitStatusId <= 3 ? "Application Number : " + Model.ApplicationNo : "Permit Number : " + Model.Establishment!.PermitNumber)
+                            </span>
+                        </h1>
+                    </div>
+                    @*<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="divPermitCertificate" style="@( permitStatusId < 7 ? "display: none" : "" )">
+                    <a href="/GeneratePermitCertificatePdf?id=@(Model.EncryptedEstId)" target="_blank" class="btn btn-sm btn-custom d-inline-block ml-2"><i class="fa-solid fa-download mr-2"></i> Certificate</a>
+                    </div>*@
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Dashboard" style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Permits</li>
+                    <li class="breadcrumb-item active">Edit</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <input asp-for="Establishment!.PermitStatusId" id="permitStatusId" hidden />
+        <input asp-for="Establishment!.OldPermitStatusId" id="oldPermitStatusId" hidden />
+        <input asp-for="Establishment!.PermitStatusId" id="permitStatusflag" hidden />
+        <div id="progressBar" style="display:none" class="col-md-12">
+            <div id="reload">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">Permit Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center p-0 mt-3 mb-2">
+                            <div class="cardprogree ">
+
+                                <!-- progressbar -->
+                                <ul class="progress-indicator">
+                                    <li id="s2">
+                                        <span class="bubble" id="sb2"></span>
+                                        Pending Admin Review
+                                    </li>
+                                    <li id="s3">
+                                        <span class="bubble" id="sb3"></span>
+                                        Admin Review
+                                    </li>
+                                    <li id="s4">
+                                        <span class="bubble" id="sb4"></span>
+                                        Pending Plan Review
+                                    </li>
+                                    <li id="s5">
+                                        <span class="bubble" id="sb5"></span>
+                                        Plan Review
+                                    </li>
+                                    <li id="s6">
+                                        <span class="bubble" id="sb6"></span>
+                                        Pending Build-Out
+                                    </li>
+                                    <li id="s7">
+                                        <span class="bubble" id="sb7"></span>
+                                        Pending Payment
+                                    </li>
+                                    <li id="s8">
+                                        <span class="bubble" id="sb8"></span>
+                                        Opening Inspection
+                                    </li>
+                                    <li id="s9">
+                                        <span class="bubble" id="sb9"></span>
+                                        Active
+                                    </li>
+                                </ul>
+                                
+                                
+                                <br>
+
+                                <div id="upcomingtxt" class="col-md-12 mt-4" style="text-align:center; display:none">
+                                    <h5 style="color:red">*This Permit will be activated once the current active permit expires</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form action="/RFEdit" enctype="multipart/form-data" method="post" id="EditPermitDataForm">
+
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="display:inline-block;color:#A48464">ESTABLISHMENT DETAILS</h5>
+                        
+                        <div id="divPermitCertificate" class=" float-right" style="@( permitStatusId < 7 ? "display: none" : "" )">
+                            <a href="/GeneratePermitCertificatePdf?id=@(Model.EncryptedEstId)" target="_blank" class="btn btn-sm btn-custom d-inline-block ml-2"><i class="fa-solid fa-download mr-2"></i> Certificate</a>
+                        </div>
+                        
+                    </div>
+                    <fieldset id="info">
+                        <div class="card-body">
+                            <input type="hidden" name="Establishment.Id" id="estId" value="@Model.Establishment.Id" />
+                            <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="@Model.EncryptedEstId" />
+                            <input type="hidden" name="Rl" id="rl" value="@role" />
+                            <input type="hidden" name="user" id="userId" value="@userId" />
+                            <input type="hidden" name="userName" id="username" value="@username" />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Application Date <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" id="applicationDt" name="ApplicationDate" value="@Model.ApplicationDate!.Value.ToString("MM/dd/yyyy")" readonly />
+                                        <span id="applicationDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Activation Date <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" id="permitactivationDt" name="ActivationDate" value="@(Model.Establishment.ActivationDate==null? "" : Model.Establishment.ActivationDate.Value.ToString("MM/dd/yyyy"))" readonly />
+                                        <span id="permitactivationDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Expiry Date <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>                                        
+                                        <input type="date" class="form-control shadow mb-2 required" asp-for="@Model.Establishment.ExpiryDate" />
+                                        <span id="permitexpiryDtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Created By <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" id="createdBy" name="CreatedBy" value="@Model.CreatedBy" readonly />
+                                        <span id="createdByError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" value="@Model.Establishment.Name" placeholder="Establishment Name" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" value="@Model.Establishment.Address" placeholder="Street" />
+                                        <span id="strtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" value="@Model.Establishment.City" placeholder="City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" value="@Model.Establishment.State" placeholder="State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" value="@Model.Establishment.Zip" placeholder="Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" value="@Model.Establishment.ContactNo" placeholder="Phone" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">OWNER DETAILS</h5>
+                    </div>
+                    <fieldset id="infoOwnerEdit">
+                        <div class="card-body">
+                            <input name="EstId" id="eid" value="@Model.Establishment.Id" hidden />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="form-control shadow mb-2 required" value="@Model.Owner!.Name" placeholder="Owner Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.EmailId" id="emailAddr" value="@Model.Owner!.EmailId" placeholder="Email Id" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.MailingAddress" id="oAddress" value="@Model.Owner!.MailingAddress" placeholder="Street" />
+                                        <span id="oAddressError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.City" id="ocity" value="@Model.Owner!.City" placeholder="City" />
+                                        <span id="ocityError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.State" id="ostate" value="@Model.Owner!.State" placeholder="State" />
+                                        <span id="ostateError" class="error text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Owner.Zip" id="ozip" value="@Model.Owner!.Zip" placeholder="Zip" />
+                                        <span id="ozipError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                    </div>
+                    <fieldset id="infoOperationDetailsEdit">
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <input type="checkbox" name="OperationDetails.WithinCityLimitChoice" id="citylimit" value="@Model.OperationDetails!.WithinCityLimitChoice" hidden />
+                                        <div class="form-group mt-2">
+                                            <label style="font-weight:600" class="col-form-label mr-5 ">Is your business within city limits? </label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="choice" id="ctylimitChoice1" onchange="WithinCityLimit()">
+                                                <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox1" style="font-size: 14px" onclick="$('#ctylimitChoice1').prop('checked', true); $('#ctylimitChoice1').trigger('change')">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="choice" id="ctylimitChoice2" onchange="WithinCityLimit()">
+                                                <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox2" style="font-size: 14px" onclick="$('#ctylimitChoice2').prop('checked', true); $('#ctylimitChoice2').trigger('change')">No</label>
+                                            </div>
+                                        </div>
+                                        <span id="emailError" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of Business <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="businessId" name="OperationDetails.BusinessTypeId" asp-for="@Model.OperationDetails!.BusinessTypeId" asp-items="@Model.BusinessTypesEng">
+                                        </select>
+                                        <span id="businessIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of operation <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <select class="custom-select rounded-1 shadow mb-3 required" id="operationtypeId" name="OperationDetails.OperationTypeId" asp-for="@Model.OperationDetails!.OperationTypeId" asp-items="@Model.OperationTypesEng">
+                                        </select>
+                                        <span id="operationtypeIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Current number of employees <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="OperationDetails.NumberOfEmployees" id="empNo" value="@Model.OperationDetails!.NumberOfEmployees" placeholder="Employees (including management)" oninput="validateInput(this)" />
+                                        <span id="empNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">List your public water source <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        
+                                        <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.WaterSourceId" id="pubWatSource" asp-items="@Model.PublicWaterSourceList" asp-for="@Model.OperationDetails.WaterSourceId">
+                                        </select>
+                                        <span id="pubWatSourceError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group mt-2">
+                                        <label style="font-weight:600" class="col-form-label mr-5 ">Sewage Disposal: <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="Sewagechoice" id="Sewagechoice1" onchange="$('#privateSewDis').val(''); $('#privateSewDis').prop('disabled', true);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'hidden');$('#pubSewDis').prop('disabled', false); $('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'visible');">
+                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox1" style="font-size: 14px" onclick="$('#Sewagechoice1').prop('checked', true); $('#Sewagechoice1').trigger('change');">Public</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="Sewagechoice" id="Sewagechoice2" onchange="$('#pubSewDis').val('---Select---'); $('#pubSewDis').prop('disabled', true);$('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'hidden');$('#privateSewDis').prop('disabled', false);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'visible'); ">
+                                            <label class="form-check-label btn btn-light shadow mb-3 px-3" for="inlineCheckbox2" style="font-size: 14px" onclick="$('#Sewagechoice2').prop('checked', true); $('#Sewagechoice2').trigger('change'); ">Private</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">List your sewage disposal: Public <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        
+                                        <select class="custom-select rounded-1 shadow mb-3 required" name="OperationDetails.PublicSewageId" id="pubSewDis" asp-items="@Model.PublicSewageList" asp-for="@Model.OperationDetails.PublicSewageId" onchange="$('#privateSewDis').val(''); $('#privateSewDis').prop('disabled', true);$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'hidden'); if($(this).val()=='---Select---'){$('#privateSewDis').parents('div.form-group').find('span').css('visibility', 'visible');$('#privateSewDis').prop('disabled', false)}">
+                                            <option selected>---Select---</option>
+                                        </select>
+                                        <span id="pubSewDisError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  form-group">
+                                        <label style="font-weight:600" class="col-form-label">Private Septic/OSSF# <span style="font-size: 20px ;color:red;">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" asp-for="@Model.OperationDetails.PrivateSeptic" id="privateSewDis" placeholder="Private Septic/OSSF#" onchange="$('#pubSewDis').val('---Select---'); $('#pubSewDis').prop('disabled', true);$('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'hidden'); if($(this).val()==''){ $('#pubSewDis').parents('div.form-group').find('span').css('visibility', 'visible'); $('#pubSewDis').prop('disabled', false)}" />
+                                        
+                                        <span id="privateSewDisError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Certified Food Manager <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2" name="OperationDetails.CertifiedFoodManager" id="FdManager" value="@Model.OperationDetails!.CertifiedFoodManager" placeholder="Certified Food Manager" />
+                                        <span id="FdManagerError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        
+                                        <input type="hidden" name="CertExpiryDt" id="CertExpDate" value="" />
+                                        <label style="font-weight:600" class="col-form-label">Manager’s Certification Expiration Date <span style="font-size: 20px ;color:red;visibility:hidden">&#42;</span></label>
+                                        <div class="input-group shadow mb-3">
+                                            <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="certexpdT" class="form-control" @* onchange="$('#CertExpDate').val(new Date($(this).val()));" *@ onchange="validateDate(this) /* $('#CertExpDate').val($(this).val()); */" onblur="validateDate(this)" />
+                                            <div class="input-group-append" style="cursor:pointer">
+                                                <div id="certexpdTDateIcon" class="input-group-text" onclick="$('#certexpdT').datepicker('show');">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                            @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                        </div>
+                                        <span id="certexpdTError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                </div>
+            </form>
+            <partial name="_AgencyReqFieldsPartial.cshtml" model="@Model.planReviewVM" />
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Documents</h5>
+                    <input name="cnt" id="Cnt" value=0 hidden />
+                </div>
+                <div class="card-body">
+                    <partial name="_AssociatedDocsTable" />
+                </div>
+            </div>
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Associated Notes</h5>
+                    
+                </div>
+                <div class="card-body">
+                    <partial name="_NotesTablePartial" />
+                </div>
+            </div>
+            <div class="card card-outline" id="paymentCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Payment Details</h5>
+                </div>
+                <div class="card-body">
+                    <partial name="_PaymentTablePartial" />
+                </div>
+            </div>
+            <div class="card card-outline" id="SchCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Scheduled Inspections</h5>
+                    
+                </div>
+                <div class="card-body">
+                    <partial name="_SchedulerTablePartial" />
+                </div>
+            </div>
+            <div class="card card-outline" id="InsCard" style="border-top:3px solid #022E5F; display:none">
+                <div class="card-header">
+                    <h5 style="display:inline-block;color:#A48464">Inspections</h5>
+                </div>
+                <div class="card-body">
+                    <partial name="_InspectionTablePartial" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/CertificateDate.js?vs=@randomNumber"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="~/js/Application/DocumentsTable.js?vs=@randomNumber"></script>
+    <script src="~/js/Areas/LoggedIn/NotesTable.js?vs=@randomNumber"></script>
+    <script src="~/js/Areas/LoggedIn/PermitScheduleTable.js?vs=@randomNumber"></script>
+    <script src="~/js/Areas/LoggedIn/PaymentTable.js?vs=@randomNumber"></script>
+    <script src="~/js/Areas/LoggedIn/PermitInspectionTable.js?vs=@randomNumber"></script>
+
+    <script>
+        
+
+        function ValidateAgencyFields() {
+            var flg = 0;
+            //console.log($('#terId').val());
+            if ($('#rskcatId').val() == null) {
+                $('#rskcatIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#terId').val() == 0) {
+                $('#terIdError').text("\u24d8 Assign an area")
+                flg = 1;
+            }
+            if ($('#estSizeId').val() == null) {
+                $('#estSizeIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#jurId').val() == null) {
+                $('#jurIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#estTpe').val() == null) {
+                $('#estTpeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if (flg == 1) {
+                return "Invalid"
+                //return "Valid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+
+        function SubmiAgencyFields() {
+            debugger;
+            var str = ValidateAgencyFields();
+            if (str == "Invalid") {
+                return false;
+            }
+            else if (str == "Valid") {
+                $.ajax({
+                    type: "POST",
+                    url: '/SaveAgencyFields',
+                    data: $('#agencyReqForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            debugger;
+                            // if (data.type == "Create") {
+                            //     $('#AgentId').val(data.id);
+                            // }
+
+                            $('#agencyStaffRequiredId').val(data.id);
+                            $('#feesCount').val(data.feesCount);
+
+                            $('#statusbtn').prop('disabled', false);
+                            $('#statusbtn').text(data.btntxt);
+
+                            $('#permitStatusId').val(data.permitStatusId);
+                            $('#oldPermitStatusId').val(data.oldPermitStatusId);
+
+                            $('#s4').removeClass("completed");
+                            $('#sb4').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                            $('#s5').removeClass("completed");
+                            $('#sb5').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                            $('#s6').removeClass("completed");
+                            $('#sb6').next($(`<i class="fa fa-check-circle"></i>`)).remove();
+
+                            // if (data.tok == "N") {
+                            //     $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb4')
+                            //     $('#s4').addClass("completed");
+                            //     $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb5')
+                            //     $('#s5').addClass("completed");
+                            // }
+
+                            if (data.permitStatusId == 5) {
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb4')
+                                $('#s4').addClass("completed");
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb5')
+                                $('#s5').addClass("completed");
+                            }
+
+                            $('audio#success_sound')[0].play();
+                            setTimeout(() => {
+                                toastr.success("Information Saved Successfully");
+                            }, 500)
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error("Unexpected Error Occurred");
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#agencyRequiredinfo').prop('disabled', true);
+                        $('#editARFields').show();
+                        $('#saveARFields').css('display', 'none');
+                        location.reload();
+                    }
+                })
+            }
+        }
+    </script>
+
+    <script>
+        function LoadEstTypes(id, tok) {
+            $.ajax({
+                type: "GET",
+                url: "/LoadEstTypes?id=" + id,
+                success: function (data) {
+                    //console.log(data);
+                    $('#agencyStaffReqFields_EstablishmentTypeId').empty();
+                    $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option disabled selected>---Select---</option>`)
+                    $('#Quater').val("");
+                    $('#amount').val("");
+                    if (data.success) {
+                        for (let i = 0; i < data.estTypes.length; i++) {
+                            $('#agencyStaffReqFields_EstablishmentTypeId').append(`<option value='${data.estTypes[i].id}'>${data.estTypes[i].name}</option>`)
+                        }
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    //console.log(tok);
+                    if (tok != "N") {
+                        $('#agencyStaffReqFields_EstablishmentTypeId').val(tok);
+                    }
+                }
+            })
+        }
+
+        function FeesCalc(id) {
+            $.ajax({
+                type: "GET",
+                url: "/GetFee?id=" + id,
+                success: function (data) {
+                    if (data.success) {
+                        $('#Quater').val(data.quater);
+                        $('#amount').val(data.amount);
+                    }
+                }
+            })
+        }
+        
+    </script>
+
+    <script>
+        function WithinCityLimit() {
+            var yes = $('#ctylimitChoice1');
+            var no = $('#ctylimitChoice2');
+
+            if (yes.is(":checked")) {
+                $('#citylimit').prop("checked", true);
+                $('#citylimit').prop("value", "true");
+            }
+            else if (no.is(":checked")) {
+                $('#citylimit').prop("checked", false);
+                $('#citylimit').prop("value", "false");
+            }
+        }
+
+        function planReviewCh() {
+            var req = $('#planReviewChoice1');
+            var ntreq = $('#planReviewChoice2');
+
+            if (req.is(":checked")) {
+                $('#isPlanReview').val("true");
+                // $('#isPlanReview').prop("checked", true);
+                // $('#isPlanReview').prop("value", "true");
+            }
+            else if (ntreq.is(":checked")) {
+                $('#isPlanReview').val("false");
+                // $('#isPlanReview').prop("checked", false);
+                // $('#isPlanReview').prop("value", "false");
+            }
+        }
+
+        function validateInput(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/\D/g, '');
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            console.log('@Model.OperationDetails.PublicSewageId');
+            if ('@Model.OperationDetails.PublicSewageId' == '') {
+                //alert(1);
+                $('#pubSewDis').val(0);
+            }
+
+            var dtToday = new Date();
+
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            //var prevdt = dtToday.getDate() - 1;
+            var hours = dtToday.getHours();
+            var minutes = dtToday.getMinutes();
+            var year = dtToday.getFullYear();
+            var maxyear = dtToday.getFullYear() + 1;
+
+            if (month < 10) { month = '0' + month.toString() };
+            if (day < 10) { day = '0' + day.toString(); }
+            if (hours < 10) { hours = '0' + hours.toString(); }
+            if (minutes < 10) { minutes = '0' + minutes.toString(); }
+            //if (prevdt < 10) { prevdt = '0' + prevdt.toString(); }
+
+            var mindate = year + '-' + month + '-' + day;
+            var maxdate = maxyear + '-' + month + '-' + day;
+
+            var collectionMindate = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+            $('#schDate').attr('min', mindate);
+            $('#schDate').attr('max', maxdate);
+
+            $('#collectionDt').attr('max', collectionMindate)
+
+
+            $('.select2').select2()
+
+            //debugger;
+            if ($('#permitStatusId').val() == 1) {
+                $('#saveBtn').hide();
+                $('#sfsaveBtn').hide();
+                $('#pfsaveBtn').hide();
+                $('#verifyBtn').show();
+                $('#editBtn').hide();
+                $('#sfeditBtn').hide();
+                $('#pfeditBtn').hide();
+                $('#info').prop('disabled', false);
+                $('#infoOwnerEdit').prop('disabled', false);
+                $('#infoOperationDetailsEdit').prop('disabled', false);
+            }
+            else {
+                $('#saveBtn').hide();
+                $('#sfsaveBtn').hide();
+                $('#pfsaveBtn').hide();
+                $('#verifyBtn').hide();
+                $('#editBtn').show();
+                $('#sfeditBtn').show();
+                $('#pfeditBtn').show();
+                $('#info').prop('disabled', true);
+                $('#certexpdTDateIcon').css('pointer-events', 'none')
+                $('#infoOwnerEdit').prop('disabled', true);
+                $('#infoOperationDetailsEdit').prop('disabled', true);
+                //$('.select2').select2("enable", false);
+            }
+
+            if ($('#permitStatusId').val() >= 6) {
+                //debugger;
+                //$('#saveBtn').hide();
+                //$('#verifyBtn').hide();
+
+                $('#info').prop('disabled', true);
+                $('#infoOwnerEdit').prop('disabled', true)
+                $('#infoOperationDetailsEdit').prop('disabled', true)
+                if ('@User.FindFirstValue(ClaimTypes.Role)' == '@SD.SuperAdmin' || '@User.FindFirstValue(ClaimTypes.Role)' == '@SD.Admin' || '@User.FindFirstValue(ClaimTypes.Role)' == '@SD.AdminInspector' || '@User.FindFirstValue(ClaimTypes.Role)' == '@SD.Inspector') {
+
+                }
+                else {
+                    $('#editBtn').hide();
+                    $('#saveBtn').hide();
+                    $('#verifyBtn').hide();
+                }
+
+                //$('#agencyFooter').hide();
+                $('#paymentCard').show();
+                loadPaymentTable('@User.FindFirstValue(ClaimTypes.Role)');
+                //$('#paymentFooter').hide();
+                $('#SchCard').show();
+                $('#InsCard').show();
+                loadSchedulerTable();
+                loadInspectionTable();
+                // if ($('#permitStatusId').val() > 7) {
+                //     //CheckOpeningInsStatus()
+                // }
+            }
+
+            if ($('#permitStatusId').val() == 10) {
+                //Swal.fire("It is time to renew the permit. Please make the payment to continue using the service");
+                Swal.fire("Payment of Invoice for Renewal needed for updating Expiration Date");
+            }
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+
+            if ($('#privateSewDis').val() == '') {
+                $('#Sewagechoice1').prop('checked', true);
+                $('#Sewagechoice1').trigger('change');
+            }
+            else {
+                $('#Sewagechoice2').prop('checked', true);
+                $('#Sewagechoice2').trigger('change');
+            }
+
+
+
+            //console.log(@citylimitChoice);
+            loadDataTable(false, "Yes");
+            loadNotesDataTable();
+            //loadSchedulerTable();
+            if ('@citylimitChoice' == 'True') {
+                $('#ctylimitChoice1').prop("checked", true);
+                $('#citylimit').prop("checked", true);
+                $('#citylimit').prop("value", "true");
+            }
+            else if ('@citylimitChoice' == 'False') {
+                $('#ctylimitChoice2').prop("checked", true);
+                $('#citylimit').prop("checked", false);
+                $('#citylimit').prop("value", "false");
+            }
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+
+            $("input[type='text'].required, input[type='date'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            //$("#applicantsignDt").change(function () {
+            //    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            //});
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#certexpdT").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            if ('@Model.OperationDetails!.CertificateExpirationDt' != '') {
+                DateModifier('@Model.OperationDetails!.CertificateExpirationDt')
+                // var date = '@Model.OperationDetails!.CertificateExpirationDt';
+                // console.log(date);
+                // date = date.replace(/\//g, '-');
+                // console.log(date);
+                // //console.log("Test");
+
+                // // var formattedDt = new Date(date);
+                // // var formattedDay = formattedDt.getDate();
+                // // var formattedMonth = formattedDt.getMonth()+1;
+                // // var formattedYear = formattedDt.getFullYear();
+
+                // // console.log(formattedDt);
+                // // console.log(formattedDay);
+                // // console.log(formattedMonth);
+                // // console.log(formattedYear);
+
+                // var dt = date.split(' ')
+                // var s = dt[0].split('-');
+
+                // var month = parseInt(s[1]) - 1;
+                // console.log(s[2]);
+                // console.log(month);
+                // console.log(s[0]);
+
+
+                // $("#certexpdT").datepicker("setDate", new Date(s[2], month, s[0]));
+                // console.log($("#certexpdT").val())
+                // $('#CertExpDate').val(new Date($(certexpdT).val()));
+                // console.log(new Date($(certexpdT).val()));
+            }
+
+            var permitStatus = $('#permitStatusId').val();
+            //var oldPermitStatusId = $('#oldPermitStatusId').val();
+
+            if (permitStatus < 9) {
+                $('#Establishment_ExpiryDate').prop('readonly', true)
+            }
+
+
+
+            if (parseInt(permitStatus) > 1) {
+                $('#progressBar').show();
+            }
+
+            if (parseInt(permitStatus) >= 3 /*&& parseInt(permitStatus) <= 6*/) {
+                $('#agencyReqTab').show();
+            }
+
+            $('#agencyEstablishmentId').val($('#estId').val());
+
+            for (let i = parseInt(permitStatus); i >= 2; i--) {
+                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + i)
+                $('#s' + i).addClass("completed");
+            }
+
+            var butText = '@SD.PermitStatName(test)';
+            //debugger;
+            $('#statusbtn').text("Place in " + butText);
+
+            if ($('#agencyStaffRequiredId').val() == 0) {
+                $('#planReviewChoice1').prop("checked", true);
+                $('#plnR').prop("checked", true);
+                $('#plnR').prop("value", "true");
+                $('#agencyStaffReqFields_RiskCategoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_TerritoryId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentSizeId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').prepend(`<option disabled selected>---Select---</option>`)
+                $('#agencyStaffReqFields_EstablishmentTypeId').prepend(`<option disabled selected>---Select---</option>`)
+            }
+            else {
+                $('#agencyStaffReqFields_RiskCategoryId').val(@Model.planReviewVM.agencyStaffReqFields.RiskCategoryId);
+                $('#agencyStaffReqFields_TerritoryId').val(@Model.planReviewVM.agencyStaffReqFields.AreaId);
+                $('#agencyStaffReqFields_EstablishmentSizeId').val(@Model.planReviewVM.agencyStaffReqFields.EstablishmentSizeId);
+                $('#agencyStaffReqFields_EstablishmentTypes_JurisdictionId').val(@jurisdicId);
+                LoadEstTypes(@jurisdicId, @Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+
+                setTimeout(function () {
+                    FeesCalc(@Model.planReviewVM.agencyStaffReqFields.EstablishmentTypeId);
+                }, 150)
+
+                $('#agencyRequiredinfo').prop('disabled', true);
+                $('#editARFields').show();
+                $('#saveARFields').css('display', 'none')
+
+                if ('@isPlanReview' == 'True') {
+                    $('#planReviewChoice1').prop("checked", true);
+                    $('#plnR').prop("checked", true);
+                    $('#plnR').prop("value", "true");
+                }
+                else if ('@isPlanReview' == 'False') {
+                    $('#planReviewChoice2').prop("checked", true);
+                    $('#plnR').prop("checked", false);
+                    $('#plnR').prop("value", "false");
+                }
+            }
+            if (parseInt(permitStatus) == 3) {
+                if ($('#agencyStaffRequiredId').val() == 0) {
+                    $('#statusbtn').prop('disabled', true)
+                }
+                else {
+                    $('#statusbtn').prop('disabled', false)
+                }
+            }
+
+            if ($('#subTotal').val() == 0) {
+                $(".show-radio").prop("disabled", true);
+                $('#miscelliniusfees').prop('readonly', true)
+                $('#miscelliniusfeesTitle').prop('readonly', true)
+                //$('.show-radio').prop('disabled', true)
+            }
+
+            CheckPendingPayment();
+
+            $('#agencyFooter').css('display', 'none')
+
+            // if (parseInt(permitStatus) == 7) {
+            //     if ($('#feesCount').val() != 0) {
+            //         $('#statusbtn').prop('disabled', true)
+            //     }
+            //     else {
+            //         $('#statusbtn').prop('disabled', false)
+            //     }
+            // }
+        });
+
+        function RefreshStatus() {
+            var id = $('#encryptedEstId').val();
+            var permitStatus = $('#permitStatusId').val();
+            if (permitStatus >= 7) {
+                $.ajax({
+                    type: "GET",
+                    url: "/GetPermitStatusInfo?id=" + id,
+                    success: function (data) {
+                        console.log(data);
+
+                        var Estflg = $('#permitStatusflag').val();
+
+                        if ($('#permitStatusflag').val() == 7 && $('#permitStatusflag').val() != data.permitstat) {
+                            location.reload();
+                        }
+                        else {
+                            $('#permitStatusId').val(data.permitstat)
+                            $('#oldPermitStatusId').val(data.oldstat)
+                            //$("#reload").load(location.href + " #reload");
+                            for (let i = 7; i <= data.permitstat; i++) {
+                                $('#sb' + i).next($(`<i class="fa fa-check-circle"></i>`)).remove();
+                                $('#s' + i).removeClass("completed");
+
+                            }
+                            for (let i = 7; i <= data.permitstat; i++) {
+                                $(`<i class="fa fa-check-circle"></i>`).insertAfter('#sb' + i)
+                                $('#s' + i).addClass("completed");
+
+                            }
+                            $('#PaymentTable').DataTable().ajax.reload();
+                            $('#SchedulerTable').DataTable().ajax.reload();
+                            $('#InspectionTable').DataTable().ajax.reload();
+                        }
+
+                    },
+
+                })
+            }
+
+        }
+
+        setInterval(function () {
+            RefreshStatus()
+        }, 60000);
+    </script>
+
+    
+}

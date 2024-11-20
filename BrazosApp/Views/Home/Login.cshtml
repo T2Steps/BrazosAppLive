@@ -1,0 +1,249 @@
+﻿@model LoginVM
+
+@{
+    ViewData["Title"] = "Login";
+    string v = null;
+    if (ViewData["v"] != null)
+    {
+        v = ViewData["v"].ToString();
+    }
+}
+
+<style>
+
+      .container {
+          width: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%)
+      }
+
+     .card input[type="submit"] {
+         border: none;
+         outline: none;
+         width: 120px;
+         height: 35px;
+         background: #8B9BB2;
+         color: #fff;
+         font-size: 18px;
+         /*font-family: 'Open Sans', sans-serif;*/
+
+         border-radius: 20px;
+     }
+
+         .card input[type="submit"]:hover {
+             border: none;
+             outline: none;
+             background: #848484;
+             color: #fff;
+             font-size: 18px;
+             /*font-family: 'Open Sans', sans-serif;*/
+             border-radius: 20px;
+         }
+
+     .card a {
+         text-align: center;
+         font-size: 17px;
+         color: #7aa1db;
+     }
+
+         .card a:hover {
+            color: #022E5F;
+         }
+
+     body {
+         /*background: #1a1a1d;*/
+         background: lightgray;
+         /*background: whitesmoke*/
+     }
+
+     .container h1 {
+         /*font-family: 'Open Sans', sans-serif;*/
+         color: #8B9BB2;
+         text-align: center;
+     }
+
+
+
+     .form-group label {
+         font-weight: normal;
+         font-size: medium;
+         padding: 2px;
+     }
+
+     .form-group input {
+         font-size: medium;
+     }
+
+     .row {
+         padding-top: 8px;
+     }
+</style>
+
+
+<div class="offset-md-4 offset-lg-4 offset-sm-2 offset-xs-1 login-box mx-auto">
+      <!-- /.login-logo -->
+    <div class="card card-outline" style="border-end-start-radius:10px;border-end-end-radius:10px;border-start-start-radius:10px;border-start-end-radius:10px;border-top:3px solid #022E5F">
+            <div class="card-header text-center">
+                  <img src="~/Images/Logo/logoclient.png" alt="BrazosApp" style="height:100px; width:100px" />
+            </div>
+            <div class="card-body">
+                  <form method="post" asp-action="Login" asp-controller="Home" asp-route-returnUrl="@ViewData["ReturnUrl"]" asp-route-v ="@v">
+                        <div class="row">
+                              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                              <div class="col-12">
+                                    <div class="form-group">
+                                          <div class="input-group rounded-pill shadow mb-3">
+                                                <span style="background-color:#fff;border-right:hidden" class="input-group-text"><i class="fa fa-user"></i></span>
+                                                <input style="border-left:hidden" asp-for="LoginRequestDTO!.BHCD" placeholder="Enter your BCHD" class="form-control" onkeypress="return OnlyNumeric(evt)" />
+                                          </div>
+                                          <span asp-validation-for="LoginRequestDTO!.BHCD" class="text-danger"></span>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">                                    
+                                    <div class="input-group rounded-pill shadow mb-3">
+                                        <span style="background-color:#fff;border-right:hidden" class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <input asp-for="LoginRequestDTO!.Password" type="password" style="border-left:hidden;border-right:hidden" placeholder="Enter your Password" id="pas" class="form-control" />
+                                        <span style="background-color:#fff" class="input-group-text "><i style="cursor:pointer" id="showhideicon" onclick="showhide();" class="fas fa-eye"></i></span>
+                                    </div>
+                                    <span asp-validation-for="LoginRequestDTO!.Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                              <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
+                                    <div class="icheck-marine">
+                                          <input type="checkbox" id="remember" asp-for="IsPersistent">
+                                          <label style="font-weight:normal" for="remember">
+                                                Remember Me
+                                          </label>
+                                    </div>
+                              </div>
+                                <div class="col-md-5 col-lg-5 col-xs-12 col-sm-12 ">
+                                    @*<button type="submit" class="btn btn-block btn-outline-info btn-sm">Login</button>*@
+                                    <button type="submit" class="btn btn-block btn-custom btn-sm">Login</button>
+                                </div>
+                              <!-- /.col -->
+                              @*<div class="row">
+                                  
+                              </div>*@
+                              <!-- /.col -->
+                        </div>
+                  </form>
+
+                @*<div class="row">
+                      <div class="col-8">
+                        <div class="icheck-primary">
+                          <input type="checkbox" id="remember">
+                          <label for="remember">
+                            Remember Me
+                          </label>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                      </div>
+          <!-- /.col -->
+                </div>*@
+                  <div class="row">
+                        <div class="col-12">
+                              <div style="text-align:center;margin-top:6px">
+                                    <a asp-action="ForgetPassword" asp-controller="Home">Forgot Password?</a>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-12 mb-1">
+                              <div style="text-align:center;margin-top:6px">
+                                    <a href="/">Go To Home Page</a>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+            <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+</div>
+
+
+
+@section Scripts{
+            
+      <partial name="_ValidationScriptsPartial.cshtml" />
+
+      <script>
+            //$(function(){
+            //   alert('test');
+            //});
+            //setInterval(function(){
+            //      location.reload();
+            //},3000);
+
+            $(function () {
+                $('#head').css('display', 'none');
+                $('#foot').css('display', 'none');
+                // $('#bhcd').bind("cut copy paste drag drop", function (e) {
+                //     e.preventDefault();
+                // })
+            });
+
+            // function validate()
+            // {
+            //     var bhcdPat = new RegExp("^[0-9]{5}$");
+            //     if (lastdigpat.test($('#bhcd').val()) == false) 
+            //     {
+
+            //     }
+            // }
+
+            // function OnlyNumeric(evt) {
+            //     alert(1);
+            //     var charCode = (evt.which) ? evt.which : evt.keyCode;
+            //     if (charCode > 31 && (charCode < 48 || charCode > 57))
+            //         return false;
+            //     return true;
+            // }
+
+            // var alpha = /[ A-Za-z]/;
+            // var numeric = /[0-9]/;
+            // var alphanumeric = /[ A-Za-z0-9]/;
+
+            // function validateKeypress(validChars) {
+            //     var keyChar = String.fromCharCode(event.which || event.keyCode);
+            //     return validChars.test(keyChar) ? keyChar : false;
+            // }
+
+            function showhide() {
+                debugger;
+                var x = document.getElementById("pas");
+                var i = document.getElementById("showhideicon");
+                if (x.type === "password") {
+                    if (i.classList.contains('fa-eye')) {
+                        i.classList.remove('fa-eye')
+                        i.classList.add('fa-eye-slash')
+                    }
+                    x.type = "text";
+                }
+                else {
+                    i.classList.remove('fa-eye-slash');
+                    i.classList.add('fa-eye');
+                    x.type = "password";
+                }
+            }
+
+            var msg = "@(TempData["Error"] as string)";
+            debugger;
+            if(msg!=""){
+                $('audio#errorsound')[0].play();
+                setTimeout(() => {
+                    toastr.error(msg);
+                }, 775)
+                //toastr.error(msg);
+            }
+      </script>
+}

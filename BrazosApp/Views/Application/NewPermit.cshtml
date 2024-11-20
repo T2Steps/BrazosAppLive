@@ -1,0 +1,729 @@
+﻿@model OnlineRFNewPermitVM
+@{
+      var lang = Convert.ToInt32(ViewBag.Lang);
+      var owner = ViewBag.Owner.ToString();
+      var email = ViewBag.Email.ToString();
+      var contact = ViewBag.Phone.ToString();
+      var reqTxt = "";
+      var signNotSavedTxt = "";
+      //var invalidTxt = "";
+}
+
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/select2/css/select2.min.css" type="text/css" />
+<style>
+    /* @@media only screen and (max-width: 768px) {
+        canvas{
+            width:300px;
+            height:100px;
+        }
+    } */
+    /*.container {
+        width: auto;
+        position: center;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border:1px solid red
+    }*/
+    body{
+        background-color:whitesmoke;
+    }
+
+    /* .sp{
+        display:none
+    } */
+
+    input[type=radio] {
+        display: none;
+    }
+
+    input[type="radio"][id="ctylimitChoice2"]:checked + label {
+        background-color: red;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="radio"][id="ctylimitChoice1"]:checked + label {
+        background-color: green;
+        font-weight: bold;
+        color: #fff;
+    }
+
+      input[type="radio"][id="Sewagechoice1"]:checked + label {
+          background-color: deepskyblue;
+          font-weight: bold;
+          color: #fff;
+      }
+
+      input[type="radio"][id="Sewagechoice2"]:checked + label {
+          background-color: deepskyblue;
+          font-weight: bold;
+          color: #fff;
+      }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #007bff;
+        border: 1px solid #006fe6;
+        border-radius: 4px;
+        cursor: default;
+        float: left;
+        margin-right: 5px;
+        margin-top: 5px;
+        padding: 0 5px;
+    }
+</style>
+
+<input id="lang" name="Language" value="@lang" hidden/>
+<input type="hidden"  id="encryptedEstId" name="EncryptedEstId" value="" />
+<input type="hidden" id="encryptedApplicationId" name="EncryptedApplicationId" value="@Model.EncryptedApplicationId" />
+@if (lang == 1)
+{
+    reqTxt = "Required Field ";
+    signNotSavedTxt = " Signature Not Saved";
+    //invalidTxt = "Invalid Input ";
+    <partial name="_NewPermitEng.cshtml" />
+}
+else if(lang==2)
+{
+    reqTxt = "Campo requerido ";
+    signNotSavedTxt = " Firma no guardada";
+    //invalidTxt = "Entrada Inv" + á + "lida ";
+    <partial name="_NewPermitSp.cshtml" />
+}
+
+
+@* <section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="en" style="color:#A48464">Food Permit Application	</h1>
+                <h1 class="sp" style="color:#A48464">Solicitud de permiso	 </h1>
+            </div>
+            <div class="col-sm-3">
+                
+            </div>
+            <div class="col-sm-3" >
+                <input type="text" name="AppDt" id="Appdt" class="form-control shadow en" value="Application Date: @DateTime.Now.Date.ToShortDateString()" style="font-weight:bold" disabled />
+                <input type="text" name="AppDt" id="Appdt" class="form-control shadow sp" value="Fecha de aplicacion: @DateTime.Now.Date.ToShortDateString()" style="font-weight:bold; font-size:15px" disabled />
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline " style="border-top:3px solid #022E5F">
+               
+                <div class="card-body">
+
+                    <form action="/GetApplicationLink" enctype="multipart/form-data" method="post" id="ApplicationForm">
+                        <div class="row shadow mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                            <h5 class="pt-1 en" style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                            <h5 class="pt-1 sp" style="color:#A48464">DETALLES DEL ESTABLECIMIENTO</h5>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Establishment Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Nombre del establecimiento <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" name="establishmentname" id="EstName" class="form-control shadow mb-2" placeholder="Establishment Name" />
+                                <span id="EstNameError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Street <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Calle <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Street" id="strt" placeholder="Street" />
+                                <span id="strtError" class="text-danger"></span>
+                            </div>
+                            @* <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Risk Category <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Categoría de riesgo <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <select class="custom-select rounded-1 shadow mb-3" id="riskId" name="Risk" >
+                                    <option disabled selected>---Select---</option>
+                                </select>
+                                <span id="RiskError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Territory <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Territorio <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <select class="custom-select rounded-1 shadow mb-3" id="territoryId" name="Territory" >
+                                    <option disabled selected>---Select---</option>
+                                </select>
+                                <span id="TerritoryError" class="text-danger"></span>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Estado <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="State" id="state" placeholder="State" />
+                                <span id="stateError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Cuidad <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="City" id="cty" placeholder="City" />
+                                <span id="ctyError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Código postal <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Zip" id="zip" placeholder="Zip" />
+                                <span id="zipError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Numero de teléfono <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Contact" id="contactNo" placeholder="Phone" />
+                                <span id="contactError" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                            <h5 class="pt-1 en" style="color:#A48464">OWNER DETAILS</h5>
+                            <h5 class="pt-1 sp" style="color:#A48464">DETALLES DEL PROPIETARIO</h5>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Owner <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Dueño <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" name="OwnerName" id="OwnName" class="form-control shadow mb-2" placeholder="Owner Name" />
+                                <span id="OwnNameError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label">Email Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Application.ContactNumber" id="contactNo" placeholder="Phone" />
+                                <span id="contactError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Application.ContactNumber" id="contactNo" placeholder="Phone" />
+                                <span id="contactError" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label">Mailing Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Street" id="oName" placeholder="Street" />
+                                <span id="onameError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Application.EmailId" id="emailId" placeholder="State" />
+                                <span id="emailError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Application.ContactNumber" id="contactNo" placeholder="City" />
+                                <span id="contactError" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                <label style="font-weight:600" class="col-form-label en">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <label style="font-weight:600" class="col-form-label sp">Código postal <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                <input type="text" class="form-control shadow mb-2" name="Application.ContactNumber" id="contactNo" placeholder="Zip" />
+                                <span id="contactError" class="text-danger"></span>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+                
+                
+            </div>
+
+            
+        </div>
+    </div>
+    
+</section> *@
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+
+@section Scripts {
+    <script src="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/AdminLte/Plugins/select2/js/select2.full.min.js"></script>
+      @* <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script> *@
+      @*<script src="https://code.jquery.com/ui/1.13.1/i18n/jquery-ui-i18n.min.js"></script>*@
+
+      @if (lang == 2)
+      {
+            <script src="~/js/datepicker-es.js"></script>
+      }
+      
+      <script src="~/lib/signature_pad/signature_pad.umd.js"></script>
+      <script src="~/js/Application/DocumentsTable.js"></script>
+    <script>
+          var signaturePadApplicant;
+          var lang = $('#lang').val();
+
+        function validateDate(input) {
+            const datePattern = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/;
+            const dateValue = input.value;
+            const errorMsg = document.getElementById('certexpdTError');
+
+            if (dateValue != '' && !datePattern.test(dateValue)) {
+                if (lang == 1) {
+                    errorMsg.textContent = 'Please enter a valid date in MM-DD-YYYY format.';
+                }
+                else if (lang == 2) {
+                    errorMsg.textContent = 'Ingrese una fecha válida en formato MM-DD-AAAA.';
+                } 
+                input.value = '';
+            } else {
+                errorMsg.textContent = '';
+                $('#CertExpDate').val(dateValue);
+            }
+        }
+
+        function WithinCityLimit() 
+        {
+            var yes = $('#ctylimitChoice1');
+            var no = $('#ctylimitChoice2');
+
+            if (yes.is(":checked")) {
+                $('#citylimit').prop("checked", true);
+                $('#citylimit').prop("value", "true");
+            }
+            else if (no.is(":checked")) {
+                $('#citylimit').prop("checked", false);
+                $('#citylimit').prop("value", "false");
+            }
+        }
+
+        
+
+        $(function () {
+                bsCustomFileInput.init();
+
+                $('#OwnName').val("@owner");
+                $('#emailAddr').val("@email");
+                $('#ocontactNo').val("@contact");
+                $('#OwnName').attr('readonly', true);
+                $('#ocontactNo').attr('readonly', true);
+                $('#emailAddr').attr('readonly', true);
+                //loadDataTable(false);
+                $('#docsView').css('display', 'none');
+                $('#contactNo').inputmask('(999) 999-9999');
+                $('#ocontactNo').inputmask('(999) 999-9999');
+                $('#zip').inputmask('99999');
+                $('#ozip').inputmask('99999');
+
+                $('#ctylimitChoice1').prop("checked", true);
+                $('#citylimit').prop("checked", true);
+                $('#citylimit').prop("value", "true");
+
+                $('.select2').select2()
+
+                //console.log(1);
+                //$("#applicantsignDt").datepicker("setDate", new Date());
+                //console.log(2);
+                var applicant = document.getElementById("applicantSignature");
+                var applicantclearButton = applicant.querySelector("[data-action=clear]");
+                var applicantCanvas = applicant.querySelector("canvas");
+                
+                signaturePadApplicant = new SignaturePad(applicantCanvas);
+                applicantclearButton.addEventListener("click", function (event) {
+                    signaturePadApplicant.clear();
+                    $('#applicantSignatureBase64').val("");
+                });
+
+                // $("input[type='text'].required, input[type='date'].required").change(function() {
+                //     //alert(1);
+                //     if ($(this).val().trim() !== "") {
+                //         //alert(2);
+                //         $(this).parents("div.form-group").find("span.error").text("");
+                //     }
+                // });
+
+                
+                $('.custom-file-input.sp').on('change', function () {
+                    var fileName = $(this).val().split('\\').pop();
+                    $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+                });
+
+                
+                $('.custom-file-input.en').on('change', function () {
+                    var fileName = $(this).val().split('\\').pop();
+                    $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+                });
+
+
+                $("input[type='text'].required, input[type='date'].required, textarea.required").change(function() {
+                    if ($(this).val().trim() !== "") {
+                        $(this).parents("div.form-group").find("span.error").text("");
+                    }
+                });
+
+                //$("input[type='hidden'].required").change(function () {
+                //    alert(1);
+                //     if ($(this).val() != "") {
+                //         $(this).parents("div.form-group").find("span.error").text("");
+                //     }
+                //});
+
+                $("input[type='hidden'].required").change(function () {
+                    //alert(1);
+                    if ($(this).val() != "") {
+                        $(this).parents("div.form-group").find("span.error").text("");
+                    }
+                });
+
+                $("#applicantsignDt").change(function () {
+                    $('#ApplicantsignDate').val(new Date($(this).val())).change();
+                });
+
+                $("select.required").change(function () {
+                     if ($(this).val() != null) {
+                         $(this).parents("div.form-group").find("span.error").text("");
+                     }
+                });
+
+                $('#Sewagechoice1').prop('checked', true);
+                $('#Sewagechoice1').trigger('change');
+
+                // $("select.required").change(function () {
+                //      if ($(this).val().trim() != null) {
+                //         $(this).parents("div.form-group").find("span.error").text("");
+                //      }
+
+                //$("input[type='hidden'].required").change(function () {
+                //      if ($(this).val() != "") {
+                //          $(this).parents("div.form-group").find("span").text("");
+                //      }
+                //});
+                //$("input[type='text'].required,input[type='date'].required").change(function () {
+                //      if ($(this).val() != "" && $(this).val() != null && $(this).val() != undefined) {
+                //          $(this).parents("div.form-group").find("span").text("");
+                //      }
+                //});
+                //$("select.required").change(function () {
+                //      if ($(this).val() != null) {
+                //          $(this).parents("div.form-group").find("span").text("");
+                //      }
+                //});
+
+                $("#certexpdT").datepicker({
+                    dateFormat: 'mm-dd-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    minDate: new Date(),
+                    //maxDate: new Date(),
+                    yearRange: '-0:+10',
+                    //duration: 'slow',
+                });
+
+                $("#applicantsignDt").datepicker({
+                    dateFormat: 'mm-dd-yy',
+                    changeMonth: false,
+                    changeYear: false,
+                    minDate: new Date(),
+                    maxDate: new Date(),
+                    yearRange: '-0:+0',
+                    
+                });
+                $("#applicantsignDt").datepicker("setDate", new Date())
+                //$('#ApplicantsignDate').val(new Date($('#applicantsignDt').val()));
+                $('#ApplicantsignDate').val($('#applicantsignDt').val());
+                $("#applicantsignDt").prop('readonly', true)
+        });
+    </script>
+
+    <script>
+      function validateInput(input) {
+            // Remove any non-numeric characters
+            input.value = input.value.replace(/\D/g, '');
+      }
+
+      function validate()
+      {
+            var flg = 0;
+                if ($('#EstName').val() == "") {
+                    $('#EstNameError').text("\u24d8 @reqTxt")
+                    flg=1;
+                }
+                if ($('#strt').val() == "") {
+                    $('#strtError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#state').val() == "") {
+                    $('#stateError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#cty').val() == "") {
+                    $('#ctyError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#zip').val() == "") {
+                    $('#zipError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#contactNo').val() == "") {
+                    $('#contactError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+
+                if ($('#oAddress').val() == "") {
+                    $('#oAddressError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#ostate').val() == "") {
+                    $('#ostateError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#ocity').val() == "") {
+                    $('#ocityError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#ozip').val() == "") {
+                    $('#ozipError').text("\u24d8 @reqTxt")
+                    flg=1;
+                }
+
+                if ($('#businessId').val() == null) {
+                    $('#businessIdError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#operationtypeId').val() == null) {
+                    $('#operationtypeIdError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#empNo').val() == "") {
+                    $('#empNoError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+                if ($('#pubWatSource').val() == null) {
+                    $('#pubWatSourceError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+
+                if ($('#pubSewDis').val() == null && $('#privateSewDis').val() == "") {
+                    $('#pubSewDisError').text("\u24d8 @reqTxt")
+                    $('#privateSewDisError').text("\u24d8 @reqTxt")
+                    flg=1;
+                }
+
+                // if ($('#privateSewDis').val() == null) {
+                //     $('#privateSewDisError').text("\u24d8 @reqTxt")
+                //     flg = 1;
+                // }
+                if ($('#applicantSignatureBase64').val() == "") {
+                    if (!signaturePadApplicant.isEmpty()) {
+                        $('#ApplicantSignError').text("\u24d8 @signNotSavedTxt")
+                    }
+                    else{
+                          $('#ApplicantSignError').text("\u24d8 @reqTxt")
+                    }
+                    flg = 1;
+                }
+                if ($('#ApplicantsignDate').val() == "") {
+                    $('#ApplicantSignDateError').text("\u24d8 @reqTxt")
+                    flg = 1;
+                }
+
+                if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                    if (@lang== 1) 
+                    {
+                        $('#contactError').text("\u24d8 Invalid Input ");
+                    }
+                    else if (@lang == 2) 
+                    {
+                        $('#contactError').text("\u24d8 Entrada Inválida ");
+                    }
+                    flg = 1;
+                }
+
+                if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                    if (@lang== 1) {
+                        $('#zipError').text("\u24d8 Invalid Input ");
+                    }
+                    else if (@lang == 2) {
+                        $('#zipError').text("\u24d8 Entrada Inválida ");
+                    }
+                    flg = 1;
+                }
+
+                if ($('#ozip').val() != "" && $('#ozip').val().replace(/\D/g, '').length < 5) {
+                    if (@lang== 1) 
+                    {
+                        $('#ozipError').text("\u24d8 Invalid Input ");
+                    }
+                    else if (@lang == 2) 
+                    {
+                        $('#ozipError').text("\u24d8 Entrada Inválida ");
+                    }
+                    flg = 1;
+                }
+                //console.log($('#ApplicantsignDate').val());
+                if (flg == 1) 
+                { 
+                    return "Invalid" 
+                    //return "Valid" 
+                }
+                else 
+                { 
+                    return "Valid" 
+                }
+      }
+    </script>
+
+    <script>
+          function Submit(){
+
+                var str = validate();
+                //console.log(str);
+                if (str == "Invalid") {
+                    return false;
+                }
+
+                else if(str == "Valid")
+                {
+                    $('#saveBtn').prop('disabled', true);
+                    var successmsg = "";
+                    var infomsg = "";
+                    var errormsg = "";
+
+                    if(lang==1){
+                        successmsg = "Information Saved Successfully";
+                        infomsg = "Please Upload Relevent Documents and Submit the Form";
+                        errormsg = "Unexpected Error Occurred"
+                    }
+                    else if(lang==2){
+                        successmsg =  "Información guardada exitosamente";
+                        infomsg = "Cargue los documentos relevantes y envíe el formulario";
+                        errormsg = "Ocurrió un error inesperado"
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/RFNewPermit",
+                        data: $('#NewPermitDataForm').serialize(),
+                        beforeSend: function () {
+                            $('div#loading-wrapper').show();
+                            
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                if (data.type=="Create")
+                                {
+                                    $('#estId').val(data.id);
+                                    $('#encryptedEstId').val(data.encryptid);
+                                    $('audio#success_sound')[0].play();
+                                    setTimeout(() => {
+                                        toastr.success(successmsg);
+                                    }, 500)
+                                    setTimeout(() => {
+                                        toastr.info(infomsg);
+                                      }, 3000)
+                                    //$('#info').prop('disabled', true);
+                                    loadDataTable(false, "No");
+                                }
+                                else if (data.type == "Update"){
+                                    $('audio#success_sound')[0].play();
+                                    setTimeout(() => {
+                                        toastr.success(successmsg);
+                                    }, 500)
+                                }
+                                $('#info').prop('disabled', true);
+                                $('#certexpdTDateIcon').css('pointer-events', 'none')
+                                $('#docsView').show();
+                                $('#submitBtn').show();
+                                $('#saveBtn').hide();
+                                $('#editBtn').show();
+                                $('#certexpdTError').text('')
+                                //$('#estId').val(data.id);
+                                //$('audio#success_sound')[0].play();
+                                //setTimeout(() => {
+                                //    toastr.success(successmsg);
+                                //}, 500)
+                                //if(data.info != "") {
+                                //      setTimeout(() => {
+                                //        toastr.info(infomsg);
+                                //      }, 3000)
+                                //} 
+                            }
+                            else {
+                                $('audio#errorsound')[0].play();
+                                setTimeout(() => {
+                                    toastr.error(errormsg);
+                                }, 775)
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                        complete: function () {
+                            $('div#loading-wrapper').hide();
+                            $('#spin').hide();
+                            $('#saveicon').show();
+                            $('#saveBtn').prop('disabled', false);
+                            //dataTable.ajax.reload();
+                        }
+                    })
+                }
+            //alert(1);
+                //console.log($('#ApplicantsignDate').val())
+                //console.log(1);
+          }
+
+          //function SpSubmit(){
+          //      if ($('#EstName').val()==""){
+          //        $('#EstNameError').text("ⓘ Campo Requerido")
+          //      }
+          //      //alert(1);
+          //}
+    </script>
+
+    <script>
+        function SaveSignature() 
+        {
+              var alertTxt = "";
+              if(@lang==1){
+                  alertTxt = "Please provide your signature.";
+              }
+              else if(lang==2){
+                  alertTxt = "Por favor proporcione su firma.";
+              }
+            var applicant = $('#applicantSignature')[0];
+            var applicantCanvas = applicant.querySelector("canvas");
+            if (signaturePadApplicant.isEmpty()) {
+                    alert(alertTxt);
+                    return false;
+                }
+            var signatureString = applicantCanvas.toDataURL();
+            $('#applicantSignatureBase64').val(signatureString);
+
+            $('#applicantSignatureBase64').parents("div.form-group").find("span.error").text("");
+        }
+
+        // function funSignatureDate(e) {
+        //     //var date = new Date(e.val().toFormat("dd/MM/yyyy"));
+        //     // const formatted = date.format("mm-DD-YYYY");
+        //     //console.log(date);
+
+        //     // const date = new Date(e.val());
+        //     // const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'short' });
+        //     // const formattedDate = formatter.format(date);
+        //     // console.log(formattedDate);
+
+        //     const date = new Date(e.val());
+         
+        //     const formattedDate = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate()}`;
+        //     console.log(formattedDate);
+
+        //     //const dt = DateTime.fromFormat(date, "dd/MM/yyyy");
+        //     //const formatted = dt.toFormat("dd/MM/yyyy");
+
+        //     $('#ApplicantsignDate').val(formattedDate);
+        // }
+    </script>
+
+    
+}

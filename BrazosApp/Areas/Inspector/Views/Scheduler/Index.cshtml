@@ -1,0 +1,361 @@
+﻿@model ScheduleModalDataRequestDTO
+@using System.Security.Claims
+@{
+    var code = ViewBag.Code;
+    var apiUrl = ViewBag.apiUrl;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    if (code == "RF")
+    {
+        ViewData["Title"] = "Retail Food Scheduler";
+    }
+    else if (code == "MF")
+    {
+        ViewData["Title"] = "Mobile Food Scheduler";
+    }
+    var role = User.FindFirstValue(ClaimTypes.Role);
+}
+
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+
+<style>
+      .ui-autocomplete {
+          z-index: 2147483647;
+      }
+
+    thead input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Scheduler</li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+
+                    @* <div class="card-tools">
+                    <div class="float-right"><a asp-action="Upsert" asp-controller="UserManage" asp-area="LoggedIn" class="btn btn-block btn-outline-info float-right"><i class="fas fa-plus mr-2"></i>Register New User</a></div>
+                    </div> *@
+                     <div class="card-tools">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#scheduleModal" class="btn btn-block btn-custom float-right mt-2" onclick="clrall('@role');"><i class="fa-solid fa-calendar-days mr-2"></i> Schedule New Inspection</button>
+                    </div> 
+                </div>
+                <div class="card-body">
+                    <table border="0" cellspacing="5" cellpadding="5" class="table-responsive">
+                        <tbody>
+                            <tr>
+                                <td><input id="estNameidx" type="text" class="form-control shadow" placeholder="Establishment Name" /></td>
+                                <td><input id="permitNoidx" type="text" class="form-control shadow" placeholder="Permit Number" /></td>
+                                <td><input id="estAddressidx" type="text" class="form-control shadow" placeholder="Address" /></td>
+                                <td><select name="Purpose" id="purposeidx" class="form-control shadow" asp-items="@Model.SearchParamsVM!.PurposeList"><option selected>--Select Purpose--</option></select></td>
+                                <td><select name="AssignedTo" id="assignedidx" class="form-control shadow" asp-items="@Model.SearchParamsVM.AssignInspectorList"><option selected>--Select Assigned To--</option></select></td>
+                                <td><input name="FromDate" id="lowerdaternge" type="date" class="form-control shadow" /></td>
+                                <td>To</td>
+                                <td><input name="ToDate" id="upperdaternge" type="date" class="form-control shadow" /></td>
+                                <td>
+                                    <button type="button" id="submitBtn" class="btn btn-sm btn-custom" onclick="$('#schedulerTableIdx').DataTable().ajax.reload()"><i class="fa-solid fa-magnifying-glass" title="Search"></i> Search</button>
+                                    <button type="button" id="clrBtn" class="btn btn-sm btn-danger" onclick="ClearSearchPanel()"><i class="fas fa-trash" title="Clear"></i> Clear</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="table-responsive">
+                        <table id="schedulerTableIdx" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                                @* <tr>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"><input type="text" placeholder="Search Permit Number"></th>
+                                    <th data-dt-order="disable"><input type="text" placeholder="Search Establishment Name"></th>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"></th>
+                                    <th data-dt-order="disable"></th>
+                                </tr> *@
+                                <tr>
+                                    <th class="text-left">
+                                        Sr.No.
+                                    </th>
+                                    <th class="text-left">
+                                        Permit Number
+                                    </th>
+                                    <th class="text-left">
+                                        Establishment Name
+                                    </th>
+                                    <th class="text-left">
+                                        Address
+                                    </th>
+                                    <th class="text-left">
+                                        Assigned To
+                                    </th>
+                                    <th class="text-left">
+                                        Purpose
+                                    </th>
+                                    <th class="text-left">
+                                        Scheduled Date
+                                    </th>
+                                    <th class="text-left">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_SchedulerModal.cshtml", Model)
+
+@section Scripts {
+    <script src="~/js/Areas/Inspector/schedulerTableIndex.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+            var Tok = '@User.FindFirstValue("Token")';
+            var Role = '@User.FindFirstValue(ClaimTypes.Role)';
+
+        $(function () {
+                var dtToday = new Date();
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+
+                var year = dtToday.getFullYear();
+                var maxyear = dtToday.getFullYear() + 1;
+                if (month < 10) { month = '0' + month.toString() };
+                if (day < 10) { day = '0' + day.toString(); }
+                
+                var mindate = year + '-' + month + '-' + day;
+                var maxdate = maxyear + '-' + month + '-' + day;
+
+                $('#schdate').prop('min', mindate);
+                $('#schdate').prop('max', maxdate);
+
+
+                 $('input').bind('keypress', function (e) {
+                    if (e.which === 13) {
+                        $('#schedulerTableIdx').DataTable().ajax.reload()
+                    }
+                });
+
+
+                // $('#schedulerTableIdx thead th').each(function () {
+                //     var title = $('#schedulerTableIdx tfoot th').eq($(this).index()).text();
+                //     $(this).html('&amp;lt;input type=&amp;quot;text&amp;quot; placeholder=&amp;quot;Search ' + title + '&amp;quot; /&amp;gt;');
+                // });
+
+                // DataTable
+                // var table = $('#schedulerTableIdx').DataTable();
+
+                // // Apply the search
+                // table.columns().eq(0).each(function (colIdx) {
+                //     $('input', table.column(colIdx).header()).on('keyup change', function () {
+                //         table
+                //             .column(colIdx)
+                //             .search(this.value)
+                //             .draw();
+                //     });
+                // });
+
+
+
+            //var Tok = '@User.FindFirstValue("Token")'
+            
+            //console.log(Role);
+
+            loadDataTable('@apiUrl', '@code', Tok);
+
+            $("#estName").autocomplete({
+                autoFocus: true,
+                source: function (request, response) {
+                    var url = '@apiUrl' + '/ScheduleAutoComplete?code=@code';
+                    //console.log(request.term);
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers: {
+                            'Authorization': `Bearer ${Tok}`,
+                            'Role': Role,
+                            //'Content-Type': 'application/json'
+                        },
+                        data: { "prefix": request.term, "Selector": "#estName" },
+                        //data: "T",
+                        //contentType: false,
+                        //processData: false,
+                        success: function (data) {
+                            //alert(3);
+                            //console.log(data);
+                            response($.map(data.response.result, function (item) {
+                                console.log(item);
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            //alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    debugger;
+                    //alert(2);
+                    $("#permitNo").val(i.item.permit);
+                    $("#addrmodal").val(i.item.address);
+                    $("#hdnestablishment").val(i.item.val);
+                    $("#SchEstId").val(i.item.val);
+                    $("#inspectorId").val(i.item.defaultInspectorId);
+                    //alert(1);
+                },
+                minLength: 1
+            });
+        });
+
+        // $(function () {
+
+            
+        //     //console.log($('#estName').val());
+
+        // });
+    </script>
+
+    <script>
+            // function NewSchedule() {
+
+            //     var Tok = '@User.FindFirstValue("Token")'
+            //     var Role = '@User.FindFirstValue(ClaimTypes.Role)'
+            //     $.ajax({
+            //         type: "POST",
+            //         url:'@apiUrl' + '/ScheduleUpsert',
+            //         headers: {
+            //             'Authorization': `Bearer ${Tok}`,
+            //             //'Role': Role,
+            //             'Content-Type': 'application/json'
+            //         },
+            //         data: $('#Schedulerform').serialize(),
+            //         // contentType: false,
+            //         // processData: false,
+            //         beforeSend: function () {
+            //             $('div#loading-wrapper').show();
+            //             $('#spin').show();
+            //             $('#saveicon').hide();
+            //         },
+            //         success: function (data) {
+            //             if (data.success) {
+            //                 $('audio#success_sound')[0].play();
+            //                 setTimeout(() => {
+            //                     toastr.success(data.msg);
+            //                 }, 500)
+            //             }
+            //             else {
+            //                 $('audio#errorsound')[0].play();
+            //                 setTimeout(() => {
+            //                     toastr.error(data.msg);
+            //                 }, 775)
+            //             }
+            //         },
+            //         error: function (data) {
+            //             console.log(data);
+            //         },
+            //         complete: function () {
+            //             $('div#loading-wrapper').hide();
+            //             $('#spin').hide();
+            //             $('#saveicon').show();
+            //             $('#scheduleUploadModal').modal('hide');
+            //             //$('#userUpsert').modal('hide');
+            //             //Schtable.ajax.reload();
+            //         }
+            //     })
+            // }
+
+        function NewSchedule() {
+
+           
+            
+
+            var formData = {};
+
+            console.log($('#newScheduleForm').serializeArray());
+            $('#newScheduleForm').serializeArray().forEach(function (item) {
+                console.log(item);
+                formData[item.name] = item.value;
+            });
+
+            //return false;
+
+            $.ajax({
+                type: "POST",
+                url: '@apiUrl' + '/ScheduleUpsert',
+                headers: {
+                    'Authorization': `Bearer ${Tok}`,
+                    'Role': Role,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(formData),
+                beforeSend: function () {
+                    $('div#loading-wrapper').show();
+                    $('#spin').show();
+                    $('#saveicon').hide();
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data.success) {
+                        $('audio#success_sound')[0].play();
+                        setTimeout(() => {
+                            toastr.success(data.response.message);
+                        }, 500);
+                    } else {
+                        $('audio#errorsound')[0].play();
+                        setTimeout(() => {
+                            toastr.error(data.response.message);
+                        }, 775);
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+                complete: function () {
+                    $('div#loading-wrapper').hide();
+                    $('#spin').hide();
+                    $('#saveicon').show();
+                    $('#scheduleModal').modal('hide');
+                    dataTable.ajax.reload();
+                }
+            });
+        }
+
+
+        function ClearSearchPanel() {
+            $('#estNameidx').val('')
+            $('#permitNoidx').val('')
+            $('#purposeidx').val('--Select Purpose--')
+            $('#assignedidx').val('--Select Assigned To--')
+            $('#lowerdaternge').val('')
+            $('#upperdaternge').val('')
+            $('#schedulerTableIdx').DataTable().ajax.reload()
+        }
+    </script>
+}

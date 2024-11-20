@@ -1,0 +1,234 @@
+﻿@model InvoicePdfVM
+@{
+      Layout = null;
+      var baseUrl = @config.GetSection("BaseUrl").Value;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <title>Document</title>
+    <style>
+        table {
+            width: 1000px;
+            border-collapse: collapse;
+            font-size:20px
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: whitesmoke;
+            
+        }
+
+        tbody tr{
+              font-weight: 600;
+        }
+
+        th {
+            padding: 8px;
+            padding-bottom: 15px !important;
+            text-align: left;
+            font-weight: 400;
+        }
+
+        td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+      <div style="width:100%;float:left">
+            <div style="width:1%;float:left;height:2px"></div>
+            <div style="width:20%;float:left; padding-top:40px">
+                <img src="@baseUrl/Images/Logo/logoclient.png" height="155" />
+            </div>
+            <div style="width:79%;float:left;">
+                <div style="float:left; height:5px; width:100%"></div>
+                <div style="float:left">
+                    <div style="font-family:Verdana">
+                        <h1 style="color:#022E5F; padding-top:0px">BRAZOS COUNTY HEALTH DISTRICT<br /></h1>
+                    </div>
+                    <div style="font-size:22px;font-family:Verdana">
+                         <span style="padding-left:88px;padding-top:0px"><b>A City-County Public Health District</b><br /></span>
+                    </div>
+                    <div style="font-size:17px;font-family:Verdana">
+                              <span style="padding-left:130px;padding-top:0px">201 N. Texas Avenue, Bryan, TX 77803<br /></span>
+                    </div>
+                    <div style="font-size:17px;font-family:Verdana">
+                              <span style="padding-left:226px;padding-top:0px">v. 979.361.4440<br /></span>
+                    </div>
+                    <div style="font-size:17px;font-family:Verdana">
+                              <span style="padding-left:226px;padding-top:0px"> f. 979.823.2275<br /></span>
+                    </div>
+                    <div style="font-size:17px;font-family:Verdana">
+                              <span style="padding-left:200px;padding-top:0px"> www.brazoshealth.org<br /></span>
+                    </div>
+                </div> 
+            </div>
+      </div>
+      <div style="width:100%; float:left; height:70px"></div>
+      <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:50%; float:left;font-size:19px;font-family:Verdana">
+                  <span style="padding-left:25px;padding-top:0px">Invoice Number: <b>@Model.Payment!.Fees!.InvoiceNo</b><br /></span>
+            </div>
+            <div style="width:50%; float:left; font-size:19px;font-family:Verdana">
+                  <span style="padding-left:80px;padding-top:0px">Date & Time: <b>@Model.InvoiceDate</b><br /></span>
+            </div>
+            
+      </div>
+      <div style="width:100%; float:left; height:10px"></div>
+      @* <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+                  <span style="padding-left:105px;padding-top:0px">Billed To: <b>@Model.Establishment!.PermitNumber</b><br /></span>
+            </div>
+            <div style="width:50%; float:left; font-size:17px;font-family:Verdana">
+                  <span style="padding-left:133px;padding-top:0px"> Name: <b>@Model.Establishment!.Name </b><br /></span>
+            </div>
+      </div> *@
+    <div style="width:1000px; float:left">
+        <div style="width:5%; float:left"></div>
+        <div style="width:50%; float:left;font-size:17px;font-family:Verdana; height:170px">
+            <span style="padding-left:105px;padding-top:0px">Billed To: <b>@Model.Establishment!.PermitNumber</b><br /></span>
+        </div>
+        <div style="width:14.6%; float:left;height:2px"></div>
+        <div style="width:6%; float:left; font-size:17px;font-family:Verdana;padding-left:3px">
+            <span style="padding-top:0px"> Name:</span>
+        </div>
+        <div style="width:28.4%; float:left; font-size:17px;font-family:Verdana">
+            <span style="padding-top:0px"> <b>@Model.Establishment!.Name shdfgfgfg adgasfjd, sdgfj, sdfsdgf</b><br /></span>
+        </div>
+        <div style="width:14.6%; float:left;height:2px"></div>
+        <div style="width:8%; float:left; font-size:17px;font-family:Verdana;padding-left:3px; padding-top:5px">
+            <span style="padding-top:0px"> Address:</span>
+        </div>
+        <div style="width:26.4%; float:left; font-size:17px;font-family:Verdana; padding-top:5px">
+            <span style="padding-top:0px"> <b>@Model.Establishment!.Address jhasgdasd djfgs asdjfgsdfg 3242 sdfvbsdj, @Model.Establishment!.City, @Model.Establishment!.State, @Model.Establishment!.Zip</b><br /></span>
+        </div>
+    </div>
+      <div style="width:100%; float:left; height:45px"></div>
+      <div style="width:1001px; float:left; height:570px;">
+            <table>
+                  <thead>
+                        <tr>
+                              <th>Description</th>
+                              <th>&nbsp;Amount</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                        @* @if (Model.PaymentDetails!.Any())
+                        {
+                              foreach (var item in Model.PaymentDetails!)
+                              {
+                                    <tr>
+                                          <td>@item.Title</td>
+                                          <td>@item.Amount</td>
+                                    </tr>
+                              }
+                        } *@
+                        @if (Model.PaymentDetails!.Any())
+                        {
+                              foreach (var item in Model.PaymentDetails!)
+                              {
+                                    <tr>
+                                          <td>@item.Title</td>
+                                          <td>@((item.Amount < 0 ? "- $ " + System.Math.Abs(item.Amount).ToString("N2") : "$ " + item.Amount.ToString("N2")))</td>
+                                          @*<td>$ @(435345345.00.ToString("N2"))</td>*@
+                                    </tr>
+                                    
+                              }
+
+
+                        }
+
+                @*<tr>
+                              <td> New Food Service Permit Fee - Med/ High Risk</td>
+                              <td>$350.00</td>
+                        </tr>
+                        <tr>
+                              <td> New Food Service Permit Fee - Med/ High Risk</td>
+                              <td>$350.00</td>
+                        </tr>
+                        <tr>
+                              <td> New Food Service Permit Fee - Med/ High Risk</td>
+                              <td>$350.00</td>
+                        </tr>*@
+            </tbody>
+
+        </table>
+        @if (Model.Payment.PaymentStatus == 3)
+        {
+            <div style="color:Red; width:100%; text-align:center; padding-top:70px"><h1>CANCELLED</h1></div>
+            
+        }
+        @if (Model.Payment.PaymentStatus == 6)
+        {
+            <div style="color:Red; width:100%; text-align:center; padding-top:70px"><h1>VOIDED</h1></div>
+            @* <div style="color:Red; width:100%; text-align:center"><h2>Void Id: @Model.Payment!.VoidedTransactionNo</h2></div> *@
+            <div style="color:Red; width:100%; text-align:center"><h3>@Model.Payment!.ReasonForRefundVoid</h3></div>
+        }
+    </div>
+    
+    <div style="width:100%; text-align:left; padding-top:70px; font-weight:400"><h4>Penalty when paid after 30 days</h4></div>
+      <div style="width:1000px; float:left; padding-top:18px;padding-bottom:18px; padding-left:3px; background-color:black; font-weight:bold; font-size:16px; color:white">
+            <div style="float:left; padding-right:790px; padding-left:10px">
+                  <span> Total Amount Due</span>
+            </div>
+            <div style="float:left;">
+                  <span>@((Model.Payment.Amount) < 0 ? "- $ " + System.Math.Abs((Model.Payment.Amount)).ToString("N2") : "$ " + Model.Payment.Amount.ToString("N2"))</span>
+            </div>
+      </div>
+      <div style="float:left; width:100%; height:20px"></div>
+      <div style="font-family:Verdana; font-size:14px; font-weight:500">
+            <div style="float:left; padding-bottom:5px">
+                  <span>You may remit payment in person by Cash, Check, Money Order, Credit Card, or Debit Card.</span><br />
+            </div>
+            <div style="float:left; padding-bottom:5px">
+                  <span>You may remit payment by mail by Check. Please remove and include the bottom portion of this invoice with your payment.</span><br />
+            </div>
+            @* <div style="float:left; padding-bottom:5px">
+                  <span>You may remit payment online by Credit or Debit Card by going to www.brazoshealth.org.</span>
+            </div>  *@
+      </div>
+      <div style="float:left; width:100%; height:30px"></div>
+      <div style="float:left; width:1000px; border:1.5px dashed"></div>
+      <div style="float:left; width:100%; height:30px"></div>
+      <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:50%; float:left;font-size:19px;font-family:Verdana">
+                  <span style="padding-left:25px;padding-top:0px">Invoice Number: <b>@Model.Payment.InvoiceNo</b><br /></span>
+            </div>
+            <div style="width:50%; float:left; font-size:19px;font-family:Verdana">
+                  <span style="padding-left:80px;padding-top:0px">Date & Time: <b>@Model.InvoiceDate</b><br /></span>
+            </div>
+
+      </div>
+      <div style="width:100%; float:left; height:10px"></div>
+      <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+                  <span style="padding-left:105px;padding-top:0px">Billed To: <b>@Model.Establishment.PermitNumber</b><br /></span>
+            </div>
+            <div style="width:50%; float:left; font-size:17px;font-family:Verdana">
+                  <span style="padding-left:152px;padding-top:0px"> Name: <b>@Model.Establishment.Name</b><br /></span>
+            </div>
+      </div>
+      <div style="width:100%; float:left; height:10px"></div>
+      <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:50%; float:left;font-size:17px;font-family:Verdana">
+                  <span style="padding-left:30px;padding-top:0px">Total Amount Due: <b>@((Model.Payment.Amount) < 0 ? "- $ " + System.Math.Abs((Model.Payment.Amount)).ToString("N2") : "$ " + Model.Payment.Amount.ToString("N2"))</b><br /></span>
+            </div>
+      </div>
+      <div style="width:100%; float:left; height:30px"></div>
+      <div style="width:1000px; float:left">
+            <div style="width:5%; float:left"></div>
+            <div style="width:95%; float:left;font-size:17px;font-family:Verdana">
+                  <span style="padding-top:0px"> @Model.InvoiceCreatedBy</span>
+                  <span style="padding-left:85px;padding-top:0px"> @Model.Program</span>
+                  <span style="padding-left:260px;padding-top:0px">@Model.Jurisdiction</span>
+            </div>
+      </div>
+</body>
+</html>

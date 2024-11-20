@@ -1,0 +1,149 @@
+﻿@model PermitCertificateVM
+
+@{
+      Layout = null;
+      var baseUrl = @config.GetSection("BaseUrl").Value;
+      //DateTime Exp = new DateTime();
+      //var ExpDt = Model.establishment!.ExpiryDate;
+      //if (ExpDt != null)
+      //{
+      //    Exp = ExpDt?? DateTime.Now;
+      //}
+
+      var ExpDt = new DateTime();
+
+      if (Model.establishment!.ExpiryDate == null)
+      {
+            if (DateTime.Now.Date < new DateTime(DateTime.Now.Year, 12, 15))
+            {
+                  ExpDt = new DateTime(DateTime.Now.Year, 12, 31);
+            }
+            else
+            {
+                  ExpDt = new DateTime(DateTime.Now.AddYears(1).Year, 12, 31);
+            }
+      }
+      else
+      {
+          ExpDt  = Model.establishment.ExpiryDate??new DateTime();
+      }
+
+    //var ExpDt = new DateTime(DateTime.Now.Year, 12, 31);
+      //if (ExpDt != null)
+      //{
+      //      Exp = ExpDt ?? DateTime.Now;
+      //}
+    
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .watermark {
+            width: 300px;
+            height: 100px;
+            display: block;
+            position: relative;
+        }
+
+        .watermark::after {
+            content: "";
+            background: url(@baseUrl/Images/Logo/logoclient.png), center;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 900px; height: 50px;"></div>
+    <div @* class="watermark" *@ style="width: 904px; height: 558px; border: 1px solid black; ">
+        <div style="width: 879px; float: left; padding-top: 10px;">
+            <div style="width: 500px; float: left; padding-left: 15px;">
+                <div style="width: 500px; float: left; font-size: 22pt; font-weight: bold; font-family: Arial; padding-bottom: 5px; padding-top: 5px;">
+                    <i>@ExpDt.Year Food Permit</i>
+                </div>
+                <div style="width: 500px; float: left; font-size: 16pt; font-weight: bold; font-family: Arial; padding-bottom: 5px;">
+                    Brazos County Health District
+                </div>
+                <div style="width: 500px; float: left; padding-left: 25px;">
+                    201 NORTH TEXAS AVENUE <br />
+                    BRYAN TX 77803 <br />
+                    (979) 361-4440
+                </div>
+            </div>
+            <div style="width: 300px; float: left; position: relative; padding-bottom: 5px; padding-top: 5px; text-align: right;">
+                <img src="@baseUrl/Images/Logo/logoclient.png" height="180" width="180" />
+            </div>
+        </div>
+        <div style="width: 879px; float: left; padding-left: 35px;  font-size: 14pt; font-weight: bold; font-family: Arial;">
+            <i>Establishment Code No.</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>@Model.establishment.PermitNumber</u>
+        </div>
+        <div style="width: 879px; float: left; padding-left: 35px; padding-top: 10px; font-size: 14pt; font-weight: bold; font-family: Arial;">
+            THIS IS TO CERTIFY THAT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>@Model.establishmentOwner!.Name</u>
+        </div>
+        <div style="width: 879px; float: left; padding-left: 35px; padding-top: 10px; font-size: 14pt; font-weight: bold; font-family: Arial; ">
+            <i>Owner of:</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u style="color: red;">@Model.establishment.Name</u>
+        </div>
+        <div style="width: 879px; float: left; padding-left: 35px; padding-top: 10px; font-size: 12pt; font-weight: bold; font-family: Arial;">
+            Meets the minimum requirements to operate a: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>@Model.agencyStaffReqFields!.EstablishmentTypes!.Name</u>
+        </div>
+        <div style="width: 879px; float: left; padding-left: 35px; padding-top: 10px; font-size: 12pt; font-weight: bold; font-family: Arial;">
+            at: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>@Model.establishment.Address   @Model.establishment.City, @Model.establishment.State @Model.establishment.Zip</u>
+        </div>
+@*         <div style="width: 816px; float: left; padding-left: 35px; padding-top: 20px; font-size: 12pt; font-weight: bold; font-family: Arial;">
+            Issued by:
+            <span style="vertical-align: top; margin-left: 10px;">
+                <u>
+                    <img height="50" width="90" src="@baseUrl/Images/UsersSignature/1/1-sign.png" />
+                </u>
+            </span>
+        </div> *@
+        <div style="float:left; width: 879px; padding-left: 35px; padding-top: 20px; font-size: 14pt; font-weight: bold; font-family: Arial;">
+            <div style="float:left; padding-top:30px">
+                Issued by:
+            </div>
+            <div style="float:left;">
+                <img style="border-bottom:1px solid" height="70" width="150" src="@baseUrl/Images/UsersSignature/1/1-sign.png" />
+            </div>
+
+        </div>
+
+        @*@if (ExpDt != null)
+        {
+            <div style="width: 879px; float: left; padding-top: 11px; font-size: 12pt; font-weight: bold; font-family: Arial; text-align: center;">
+                Permit remains in effect until&nbsp;&nbsp;<u>@Exp.ToShortDateString()</u>&nbsp;&nbsp;or until removed for non compliance with
+            </div>
+        }*@
+            @if (Model.establishment.PermitStatusId >= 6 && Model.establishment.PermitStatusId <= 10)
+        {
+            <div style="width: 879px; float: left; padding-top: 11px; font-size: 12pt; font-weight: bold; font-family: Arial; text-align: center;">
+                Permit remains in effect until&nbsp;&nbsp;<u>@ExpDt.ToShortDateString()</u>&nbsp;&nbsp;or until removed for non compliance with
+            </div>
+        }
+        else
+        {
+            <div style="width: 879px; float: left; padding-top: 11px; font-size: 12pt; font-weight: bold; font-family: Arial; text-align: center;">
+                Permit remains in effect until&nbsp;&nbsp;<u>N/A</u>&nbsp;&nbsp;or until removed for non compliance with
+            </div>
+        }
+        
+        <div style="width: 879px; float: left; padding-top: 10px; font-size: 12pt; font-weight: bold; font-family: Arial; text-align: center;">
+            minimum State or Local regulatory standards.
+        </div>
+        <div style="width: 879px; float: left; padding-top: 10px; font-size: 12pt; font-weight: bold; font-family: Arial; text-align: center;">
+            Notify the health authority in the event of an imminent health hazard.
+        </div>
+    </div>
+
+</body>
+</html>

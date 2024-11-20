@@ -1,0 +1,314 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosAPI\\BrazosAPI.csproj": {}
+  },
+  "projects": {
+    "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosAPI\\BrazosAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosAPI\\BrazosAPI.csproj",
+        "projectName": "BrazosAPI",
+        "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosAPI\\BrazosAPI.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosAPI\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj": {
+                "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj"
+              },
+              "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj": {
+                "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj"
+              },
+              "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj": {
+                "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.30, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj",
+        "projectName": "BrazosApp.DataAccess",
+        "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj": {
+                "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj"
+              },
+              "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj": {
+                "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.28, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj",
+        "projectName": "BrazosApp.Models",
+        "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.ViewFeatures": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj",
+        "projectName": "BrazosApp.Utility",
+        "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Cryptography.KeyDerivation": {
+              "target": "Package",
+              "version": "[6.0.28, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

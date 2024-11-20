@@ -1,0 +1,601 @@
+﻿@model OnlineTFNewPermitVM
+@{
+    ViewData["Title"] = "New Permit";
+    var flg = 0;
+    var Dashboard = ViewBag.Dashboard.ToString();
+    var role = ViewBag.role.ToString();
+    var userId = Convert.ToInt32(ViewBag.userId);
+    var username = ViewBag.userName;
+    var reqTxt = "Required Field ";
+
+}
+
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="~/lib/AdminLte/Plugins/jquery-ui/jquery-ui.theme.min.css" type="text/css" />
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">New Temporary Food Permit</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Dashboard" style="color:#022E5F">Home</a></li>
+                    <li class="breadcrumb-item active">Permits</li>
+                    <li class="breadcrumb-item active">New Temporary Food Permit</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <form action="/TFNewMPermit" enctype="multipart/form-data" method="post" id="NewPermitDataForm">
+                <fieldset id="info">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">Event Details And Duration of Permit</h5>
+                        </div>
+                        <div class="card-body">
+                            <input name="Establishment.Id" id="estId" value="0" hidden />
+                            <input type="hidden" id="encryptedEstId" name="EncryptedEstId" value="" />
+                            <input type="hidden" name="Rl" id="rl" value="@role" />
+                            <input type="hidden" name="user" id="userId" value="@userId" />
+                            <input type="hidden" name="userName" id="username" value="@username" />
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Type of Temporary Event <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="hidden" name="OperationDetails.EventId" id="eventId" value="0" />
+                                        <input type="text" name="Event" id="event" class="form-control shadow mb-2 required" placeholder="Temporary Event" onkeyup="nullAll()" />
+                                        <span id="eventIdError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Location of Event (Must be Non-Residential) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="EventLocation" id="eventLocation" class="form-control shadow mb-2 required" placeholder="Location of Event" readonly />
+                                        <span id="eventLocationError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <fieldset id="dateControl" style="display:none">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">From <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Temporary Event" />
+                                            <span id="EstNameError" class="error text-danger"></span> *@
+                                            <input type="hidden" name="StartDate" id="startDate" value="" class="required" />
+                                            <div class="input-group shadow mb-3">
+                                                <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="fromDt" class="form-control" onchange="$('#startDate').val(new Date($(this).val()));$('#toDt').datepicker('setDate', null);$('#endDate').val(''); $('#toDt').datepicker('option', 'minDate' , new Date($(this).val()));$('#fromDtError').text('')" />
+                                                @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                                <div class="input-group-append" style="cursor:pointer">
+                                                    <div class="input-group-text" onclick="$('#fromDt').datepicker('show');">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="fromDtError" class="error text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label style="font-weight:600" class="col-form-label">To <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                            @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Location of Event" readonly />
+                                            <span id="EstNameError" class="error text-danger"></span> *@
+                                            <input type="hidden" name="EndDate" id="endDate" value="" class="required" />
+                                            <div class="input-group shadow mb-3">
+                                                <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="toDt" class="form-control" onchange="$('#endDate').val(new Date($(this).val())); $('#toDtError').text('')" />
+                                                @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                                <div class="input-group-append" style="cursor:pointer">
+                                                    <div class="input-group-text" onclick="$('#toDt').datepicker('show');">
+                                                        <i class="fas fa-calendar-alt"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="toDtError" class="error text-danger"></span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">ESTABLISHMENT DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Name <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Establishment Name" />
+                                        <span id="EstNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Address <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" placeholder="Address" />
+                                        <span id="strtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">State <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" placeholder="State" />
+                                        <span id="stateError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">City <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" placeholder="City" />
+                                        <span id="ctyError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Zip <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" placeholder="Zip" />
+                                        <span id="zipError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" placeholder="Phone" />
+                                        <span id="contactError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div class="card-header">
+                            <h5 style="color:#A48464">OWNER DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Operator or Contact Person <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" name="Owner.Name" id="OwnName" class="required form-control shadow mb-2" placeholder="Owner Name" />
+                                        <span id="OwnNameError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Operator’s Email <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" placeholder="Email Address" />
+                                        <span id="emailAddrError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Phone <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="required form-control shadow mb-2" name="Owner.ContactNo" id="ocontactNo" value="@Model.Owner!.ContactNo" placeholder="Phone" />
+                                        <span id="ocontactNoError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </fieldset>
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="color:#A48464">OPERATION DETAILS</h5>
+                    </div>
+                    <fieldset id="info2">
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">List of foods to be prepared or served <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.ListOfFoodToBePrepared" id="listofFoodToBePrepared" placeholder="List of foods to be prepared or served"></textarea>
+                                        <span id="listofFoodToBePreparedError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Start preparing at (time) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="time" name="OperationDetails.PreparingTime" id="preparingTime" class="form-control shadow mb-2 required" />
+                                        <span id="preparingTimeError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Serving at (time) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="time" name="OperationDetails.ServingTime" id="servingTime" class="form-control shadow mb-2 required" />
+                                        <span id="servingTimeError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">All time and temperature control for safety food (TCS) must be purchased and/or prepared in Brazos County. Receipts need to be kept to show proof of purchase. If any food is to be prepared at another location, it must be permitted in Brazos County. List name of permit holder and when that site will be used</label>
+                                        <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.OtherPermitHolderAndSite" id="otherpermitHolderAndSite"></textarea>
+                                        <span id="otherpermitHolderAndSiteError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div id="btnFooter" class="card-footer">
+                        <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn1" onclick="window.location.href='/TempPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+
+                        <button type="button" id="saveBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-save mr-2"></i> Save</button>
+                        <button type="button" id="editBtn" style="display:none" class="btn btn-sm btn-custom float-right" onclick="$('#saveBtn').show();$('#editBtn').css('display', 'none'); $('#info').prop('disabled', false);$('#info2').prop('disabled', false);"><i id="editicon" class="fas fa-edit mr-2"></i> Edit</button>
+                    </div>
+                </div>
+                
+            </form>
+            <fieldset id="docsView">
+                <div class="card card-outline" style="border-top:3px solid #022E5F">
+                    <div class="card-header">
+                        <h5 style="display:inline-block;color:#A48464">Associated Documents</h5>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right " id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Upload New Document</button>
+                        <input name="cnt" id="Cnt" value=0 hidden />
+                    </div>
+                    <div class="card-body">
+                        <partial name="_AssociatedDocsTable" />
+                    </div>
+                    <div id="btnFooter" class="card-footer">
+                        <button type="button" class="btn btn-sm btn-custom float-left mr-3" id="BackBtn2" onclick="window.location.href='/TempPermits'"><i class="fa-solid fa-arrow-left mr-2"></i> Back To Permit List</button>
+                        <button type="button" id="submitBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="var encryptedEstId = $('#encryptedEstId').val(); window.location.href = '/TFEdit?id=' + encryptedEstId">Submit <i id="submiticon" class="fas fa-arrow-circle-right ml-2"></i></button>
+                        @* <button type="button" class="btn btn-sm btn-custom float-right ml-3" id="verifyBtn" onclick="Submit();"><i class="fa fa-save mr-2"></i>Submit and Proceed To Admin Review</button> *@
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_DocumentUploadForm.cshtml", Model.Document)
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/Application/DocumentsTable.js?vs=@ViewBag.randomNumber.ToString()"></script>
+
+    <script>
+        function nullAll() {
+            if ($('#event').val() == "") {
+                $('#eventId').val(0);
+                $('#eventLocation').val("");
+                $('#dateControl').hide();
+                $('#fromDt').datepicker('setDate', null);
+                $('#toDt').datepicker('setDate', null);
+                $('#startDate').val("");
+                $('#endDate').val("");
+
+            }
+            else {
+                $('#eventIdError').text("");
+            }
+        }
+
+        $(function () {
+            bsCustomFileInput.init();
+
+            // $('#OwnName').attr('readonly', true);
+            // $('#ocontactNo').attr('readonly', true);
+            // $('#emailAddr').attr('readonly', true);
+
+            $('#contactNo').inputmask('(999) 999-9999');
+            $('#ocontactNo').inputmask('(999) 999-9999');
+            $('#zip').inputmask('99999');
+            $('#ozip').inputmask('99999');
+            $('#cpfzip').inputmask('99999');
+            $('#vyear').inputmask('9999');
+            //$('#ozip').inputmask('99999');
+
+
+            $('#docsView').css('display', 'none');
+
+
+            $('.custom-file-input.sp').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.sp').addClass("selected").html(fileName);
+            });
+
+
+            $('.custom-file-input.en').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label.en').addClass("selected").html(fileName);
+            });
+
+            $("input[type='text'].required, input[type='date'].required,input[type='time'].required, textarea.required").change(function () {
+                if ($(this).val().trim() !== "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("input[type='hidden'].required").change(function () {
+                if ($(this).val() != "") {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#applicantsignDt").change(function () {
+                $('#ApplicantsignDate').val(new Date($(this).val())).change();
+            });
+
+            $("select.required").change(function () {
+                if ($(this).val() != null) {
+                    $(this).parents("div.form-group").find("span.error").text("");
+                }
+            });
+
+            $("#toDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#fromDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: true,
+                changeYear: true,
+                minDate: new Date(),
+                //maxDate: new Date(),
+                yearRange: '-0:+10',
+                //duration: 'slow',
+            });
+
+            $("#applicantsignDt").datepicker({
+                dateFormat: 'mm-dd-yy',
+                changeMonth: false,
+                changeYear: false,
+                minDate: new Date(),
+                maxDate: new Date(),
+                yearRange: '-0:+0',
+            });
+
+            $("#event").autocomplete({
+                autoFocus: true,
+                source: function (request, response) {
+                    var url = '/EventAutoComplete';
+                    //console.log(request.term);
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: { "prefix": request.term },
+                        success: function (data) {
+                            //console.log(data);
+                            response($.map(data, function (item) {
+                                //console.log(item);
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            console.log(response.responseText)
+                        },
+                        failure: function (response) {
+                            //alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+
+                    //debugger;
+                    //alert(2);
+                    $("#eventLocation").val(i.item.location);
+                    $("#eventId").val(i.item.val);
+
+                    $('#dateControl').show();
+                    //$("#SchEstId").val(i.item.val);
+                    //alert(1);
+
+                    var fromdt = i.item.startDt.split('T');
+                    var todt = i.item.endDt.split('T');
+                    var fromdate = fromdt[0].replace(/\//g, '-');
+                    var todate = todt[0].replace(/\//g, '-');
+
+                    //console.log(fromdate)
+                    //console.log(todate)
+
+                    var stDt = fromdate.split('-');
+                    var toDt = todate.split('-');
+
+                    var frmonth = parseInt(stDt[1]) - 1;
+                    var tomonth = parseInt(toDt[1]) - 1;
+
+                    $("#fromDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+                    $("#fromDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+                    $("#toDt").datepicker("option", "minDate", new Date(stDt[0], frmonth, stDt[2]));
+                    $("#toDt").datepicker("option", "maxDate", new Date(toDt[0], tomonth, toDt[2]));
+
+                    // var dt = date.split(' ')
+                    // var s = dt[0].split('-');
+
+                    // $("#toDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+
+                    // $("#fromDt").datepicker({
+                    //     dateFormat: 'mm-dd-yy',
+                    //     changeMonth: true,
+                    //     changeYear: true,
+                    //     minDate: new Date(),
+                    //     //maxDate: new Date(),
+                    //     yearRange: '-0:+10',
+                    //     //duration: 'slow',
+                    // });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script>
+        function validate() {
+            var flg = 0;
+            let EmailPattern = new RegExp("([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@@([!#-'*+/-9=?a-z^-~-]+(\.[!#-'*+/-9=?a-z^-~-]+)*|\[[\t -z^-~]*])");
+            if ($('#eventId').val() == 0) {
+                $('#eventIdError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#EstName').val() == "") {
+                $('#EstNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#OwnName').val() == "") {
+                $('#OwnNameError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#strt').val() == "") {
+                $('#strtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#state').val() == "") {
+                $('#stateError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#cty').val() == "") {
+                $('#ctyError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#zip').val() == "") {
+                $('#zipError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+            if ($('#contactNo').val() == "") {
+                $('#contactError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() == "") {
+                $('#emailAddrError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#emailAddr').val() != "" && EmailPattern.test($('#emailAddr').val()) == false) {
+                $('#emailAddrError').text("\u24d8 Invalid Email ");
+                flg = 1;
+            }
+
+
+            if ($('#ocontactNo').val() == "") {
+                $('#ocontactNoError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#preparingTime').val() == "") {
+                $('#preparingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#servingTime').val() == "") {
+                $('#servingTimeError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#startDate').val() == "") {
+                $('#fromDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#endDate').val() == "") {
+                $('#toDtError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#listofFoodToBePrepared').val() == "") {
+                $('#listofFoodToBePreparedError').text("\u24d8 @reqTxt")
+                flg = 1;
+            }
+
+            if ($('#contactNo').val() != "" && $('#contactNo').val().replace(/\D/g, '').length < 10) {
+                $('#contactError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#ocontactNo').val() != "" && $('#ocontactNo').val().replace(/\D/g, '').length < 10) {
+                $('#ocontactNoError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            if ($('#zip').val() != "" && $('#zip').val().replace(/\D/g, '').length < 5) {
+                $('#zipError').text("\u24d8 Invalid Input ");
+                flg = 1;
+            }
+
+            //console.log($('#ApplicantsignDate').val());
+            if (flg == 1) {
+                return "Invalid"
+                //return "Valid"
+            }
+            else {
+                return "Valid"
+            }
+        }
+
+
+        function Submit() {
+
+            var str = validate();
+
+            if (str == "Invalid") {
+                return false;
+            }
+
+            else if (str == "Valid") {
+                var successmsg = "Information Saved Successfully";
+                var errormsg = "Unexpected Error Occurred";
+                // var successmsg = "";
+                // var infomsg = "";
+                // var errormsg = "";
+
+                $.ajax({
+                    type: "POST",
+                    url: "/TFNewMPermit",
+                    data: $('#NewPermitDataForm').serialize(),
+                    beforeSend: function () {
+                        $('div#loading-wrapper').show();
+                        $('#saveBtn').prop('disabled', true);
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.type == "Create") {
+                                $('#estId').val(data.id);
+                                $('#encryptedEstId').val(data.encryptid);
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                                setTimeout(() => {
+                                    toastr.info(infomsg);
+                                }, 3000)
+                                $('#BackBtn1').css('display', 'none');
+                                //$('#info').prop('disabled', true);
+                                //loadDataTable(false, "No");
+                                loadDataTable(false, "Yes");
+                            }
+                            else if (data.type == "Update") {
+                                $('audio#success_sound')[0].play();
+                                setTimeout(() => {
+                                    toastr.success(successmsg);
+                                }, 500)
+                            }
+                            $('#info').prop('disabled', true);
+                            $('#info2').prop('disabled', true);
+                            $('#docsView').show();
+                            //$('#submitBtn').show();
+                            $('#saveBtn').hide();
+                            $('#editBtn').show();
+                            //$('#estId').val(data.id);
+                        }
+                        else {
+                            $('audio#errorsound')[0].play();
+                            setTimeout(() => {
+                                toastr.error(errormsg);
+                            }, 775)
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    complete: function () {
+                        $('div#loading-wrapper').hide();
+                        $('#spin').hide();
+                        $('#saveicon').show();
+                        $('#saveBtn').prop('disabled', false);
+                    }
+                })
+            }
+        }
+    </script>
+}

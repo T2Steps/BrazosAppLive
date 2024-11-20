@@ -1,0 +1,271 @@
+﻿
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-8">
+                <h1 style="color:#A48464">
+                    SOLICITUD PARA PERMISO DE SERVICIO DE ALIMENTOS TEMPORAL
+                </h1>
+                <h5 style="color:#A48464">TODO ALIMENTO DEBE DE SER PREPARADA EN EL SITIO*</h5>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="AppDt" id="Appdt" class="form-control shadow" value="Fecha de aplicacion:@DateTime.Now.Date.ToShortDateString()" style="font-weight:bold; font-size:15px" disabled />
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline " style="border-top:3px solid #022E5F">
+                <div class="card-body">
+                    <form action="/TFNewPermit" enctype="multipart/form-data" method="post" id="NewPermitDataForm">
+                        <fieldset id="info">
+                            <div class="row shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">Detalles del evento y duración del permiso</h5>
+                            </div>
+                            <input name="ApplicationForId" id="applicationforId" value="@Model.ApplicationForId" hidden />
+                            <input name="ApplicationId" id="applicationId" value="@Model.ApplicationId" hidden />
+                            <input name="Owner.ContactNo" id="ownerContact" value="" hidden />
+                            <input name="Establishment.Id" id="estId" value="0" hidden />
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Tipo de evento temporal <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="hidden" name="OperationDetails.EventId" id="eventId" value="0" />
+                                    <input type="text" name="Event" id="event" class="form-control shadow mb-2 required" placeholder="Tipo de evento temporal" onkeyup="nullAll()" />
+                                    <span id="eventIdError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Locación del evento (No puede ser residencial) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="EventLocation" id="eventLocation" class="form-control shadow mb-2 required" placeholder="Locación del evento" readonly />
+                                    <span id="eventLocationError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <fieldset id="dateControl" style="display:none">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Desde <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Temporary Event" />
+                                        <span id="EstNameError" class="error text-danger"></span> *@
+                                        <input type="hidden" name="StartDate" id="startDate" value="" class="required" />
+                                        <div class="input-group shadow mb-3">
+                                            <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="fromDt" class="form-control" onchange="$('#startDate').val(($(this).val()));$('#toDt').datepicker('setDate', null); $('#toDt').datepicker('option', 'minDate' , new Date($(this).val()));$('#fromDtError').text('')" />
+                                            @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                            <div class="input-group-append" style="cursor:pointer">
+                                                <div class="input-group-text" onclick="$('#fromDt').datepicker('show');">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="fromDtError" class="error text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                        <label style="font-weight:600" class="col-form-label">Hasta <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        @* <input type="date" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Location of Event" readonly />
+                                        <span id="EstNameError" class="error text-danger"></span> *@
+                                        <input type="hidden" name="EndDate" id="endDate" value="" class="required" />
+                                        <div class="input-group shadow mb-3">
+                                            <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="toDt" class="form-control" onchange="$('#endDate').val(($(this).val())); $('#toDtError').text('')" />
+                                            @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                            <div class="input-group-append" style="cursor:pointer">
+                                                <div class="input-group-text" onclick="$('#toDt').datepicker('show');">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="toDtError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="row shadow mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">DETALLES DEL ESTABLECIMIENTO</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Nombre del establecimiento <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="Establishment.Name" id="EstName" class="form-control shadow mb-2 required" placeholder="Establishment Name" />
+                                    <span id="EstNameError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">DIRECCIÓN <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.Address" id="strt" placeholder="DIRECCIÓN" />
+                                    <span id="strtError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Estado <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.State" id="state" placeholder="Estado" />
+                                    <span id="stateError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Cuidad <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.City" id="cty" placeholder="Cuidad" />
+                                    <span id="ctyError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Código postal <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.Zip" id="zip" placeholder="Código postal" />
+                                    <span id="zipError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Número de teléfono <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2 required" name="Establishment.ContactNo" id="contactNo" placeholder="Número de teléfono" />
+                                    <span id="contactError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">DETALLES DEL PROPIETARIO</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Operador o persona de contacto <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" name="Owner.Name" id="OwnName" class="form-control shadow mb-2" placeholder="Operador o persona de contacto" />
+                                    <span id="OwnNameError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Correo electrónico del operador <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="text" class="form-control shadow mb-2" name="Owner.EmailId" id="emailAddr" placeholder="Correo electrónico del operador" />
+                                    <span id="emailAddrError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">DETALLES DE FUNCIONAMIENTO</h5>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Lista de los alimentos que serán preparados o servidos <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.ListOfFoodToBePrepared" id="listofFoodToBePrepared" placeholder="Lista de los alimentos que serán preparados o servidos"></textarea>
+                                    <span id="listofFoodToBePreparedError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Empezar a preparar a (horario) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="time" name="OperationDetails.PreparingTime" id="preparingTime" class="form-control shadow mb-2 required" />
+                                    <span id="preparingTimeError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Servir a (horario) <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    <input type="time" name="OperationDetails.ServingTime" id="servingTime" class="form-control shadow mb-2 required" />
+                                    <span id="servingTimeError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">
+                                        Todo alimento que requiere temperatura o tiempo para seguridad (TCS) debe de ser comprado y/o preparado en el condado de Brazos. Recibos deben de ser guardados para mostrar prueba de la compra.
+                                        Si cualquier alimento es preparado en otra locación, debe de ser de locación con permiso en el condado de Brazos. Lista el nombre del titular del permiso y cuando se va usar la locación.
+                                    </label>
+                                    <textarea type="text" class="form-control shadow mb-2 required" name="OperationDetails.OtherPermitHolderAndSite" id="otherpermitHolderAndSite" ></textarea>
+                                    <span id="otherpermitHolderAndSiteError" class="error text-danger"></span>
+                                </div>
+                            </div>
+                            @* <input name="ApplicationForId" id="applicationforId" value="@Model.ApplicationForId" hidden />
+                            <input name="ApplicationId" id="applicationId" value="@Model.ApplicationId" hidden /> *@
+                            @* <input name="Establishment.Id" id="estId" value="0" hidden /> *@
+                            <br />
+                            <p style="text-align:center" class="mb-0 pb-0">
+                                Solicitudes pare eventos temporales deben de ser entregadas por los menos <b>72 horas</b> antes del evento. Si no es entregada antes de 72 horas, NO se emitirá un permiso.
+                            </p>
+                            <p style="text-align:center">
+                                *Si las condiciones para el permiso temporal no se cumplen este permiso será revocado.
+                            </p>
+                            <p style="text-align:center; font-weight:bold">
+                                HE LEÍDO Y ESTOY DE ACUERDO CON LAS CONDICIONES DE ESTA SOLICITUD/PERMISO.
+                            </p>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <div id="applicantSignature">
+                                        <div class="row">
+                                            <input type="hidden" class="required" name="Establishment.ApplicantSign" id="applicantSignatureBase64" value="" />
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <div class="m-signature-pad">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                        <canvas id="applicant" width="490" height="160" style="border:1px solid;padding:7px" @* style="width:90%;display:block" class="h-auto" *@></canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="float-right">
+                                                        <button type="button" class="btn btn-sm btn-custom" onclick="return SaveSignature();">Guardar Los Datos&nbsp<i class="fa-regular fa-floppy-disk"></i></button>
+                                                        <button type="button" data-action="clear" class="btn btn-sm btn-danger">Borrar&nbsp<i class="fas fa-trash"></i></button>
+                                                    </span>
+                                                </div>
+                                                <label style="font-weight:600" class="col-form-label">Fecha de la solicitud</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="ApplicantSignError" class="error text-danger"></span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label style="font-weight:600" class="col-form-label">Fecha  <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                    @*<input type="text" name="inspection.PersonInCharge" id="personInCharge" class="form-control required" />  onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" onchange="funSignatureDate($(this))"*@
+                                    @*<input type="hidden" class="required" name="Establishment.ApplicantSignDate" id="ApplicantsignDate" value="" />*@
+                                    <input type="hidden" class="required" name="ApplicationDt" id="ApplicantsignDate" value="" />
+                                    <div class="input-group shadow mb-3">
+                                        <input type="text" style="border-right:hidden;cursor:pointer" placeholder="MM-DD-YYYY" id="applicantsignDt" class="form-control" onchange="$('#ApplicantsignDate').val(new Date($(this).val()));" />
+                                        @* <span style="background-color:#fff" class="input-group-text "><i class="fas fa-calendar-alt"></i></span> *@
+                                        <div class="input-group-append" style="cursor:pointer">
+                                            <div class="input-group-text" onclick="$('#applicantsignDt').datepicker('show');">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="ApplicantSignDateError" class="error text-danger"></span>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <fieldset @* style="display:none" *@ id="docsView">
+                            <div class="row mt-5 shadow  mb-1" style="border:1px solid lightgrey; background-color:whitesmoke">
+                                <h5 class="pt-1" style="color:#A48464">SUBIR DOCUMENTOS RELEVANTES</h5>
+                            </div>
+                            <div class="mt-2">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#documentUploadModal" class="btn btn-sm btn-custom float-right mt-2  mb-4" id="uploadModalBtn" onclick="clrall();"><i class="fa-solid fa-upload mr-2"></i> Cargar nuevo documento</button>
+                                <input name="cnt" id="Cnt" value=0 hidden />
+                            </div>
+                            <div class="table-responsive">
+                                <table id="docstable" style="width:100%" class="table table-bordered table-hover dataTable dtr-inline">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">
+                                                Número de serie
+                                            </th>
+                                            <th class="text-left">
+                                                Archivo
+                                            </th>
+                                            <th class="text-left">
+                                                Descripción
+                                            </th>
+                                            <th class="text-left">
+                                                Notas asociadas
+                                            </th>
+                                            <th class="text-left">
+                                                Acción
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="submitBtn" style="display:none" class="btn btn-sm btn-custom float-right ml-1" onclick="var applicationId = $('#encryptedApplicationId').val(); window.location.href = '/success?id=' + applicationId">Entregar <i id="submiticon" class="fas fa-arrow-circle-right ml-2"></i></button>
+                    <button type="button" id="saveBtn" class="btn btn-sm btn-custom float-right ml-1" onclick="return Submit()"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-save mr-2"></i> Ahorrar</button>
+                    <button type="button" id="editBtn" style="display:none" class="btn btn-sm btn-custom float-right" onclick="$('#submitBtn').hide();$('#saveBtn').show();$('#editBtn').css('display', 'none'); $('#info').prop('disabled', false);"><i id="editicon" class="fas fa-edit mr-2"></i> Editar</button>
+                    @*<button type="button" class="btn btn-sm btn-custom float-right" onclick="var sum = parseInt($('#Cnt').val())+1; $('#Cnt').val(sum); console.log(sum); console.log($('#Cnt').val()); if(parseInt($('#Cnt').val())>4){alert('stop')}">Save <i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fas fa-arrow-circle-right ml-2"></i></button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+

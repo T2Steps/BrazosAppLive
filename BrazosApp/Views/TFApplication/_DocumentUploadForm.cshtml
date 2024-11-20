@@ -1,0 +1,69 @@
+﻿@model Document
+
+<div class="modal fade" id="documentUploadModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#A48464" class="modal-title" id="exampleModalLabel"></h5>
+                @* <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button> *@
+            </div>
+            <div class="modal-body">
+                <form action="/DocsUpload" enctype="multipart/form-data" id="documentUploadForm">
+                    <div class="card card-outline" style="border-top:3px solid #022E5F">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="card-body">
+                            <input name="user.Id" id="userId" value="0" hidden />
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label sp">Descripción <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <label style="font-weight:600" class="col-form-label en">Description <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <input type="text" class="form-control shadow mb-3" name="Description" id="description" @* placeholder="Description" *@ />
+                                        <span id="descriptionError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label sp">Notas asociadas <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        <label style="font-weight:600" class="col-form-label en">Associated Notes <span style="font-size: 20px ;color:red; visibility:hidden">&#42;</span></label>
+                                        @* <input type="text" class="form-control shadow mb-3" name="AssociatedNote" id="associateNote"  placeholder="Description"  /> *@
+                                        <textarea class="form-control shadow mb-3" name="AssociatedNote" id="associateNote"></textarea>
+                                        <span id="AssociatedNoteError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label style="font-weight:600" class="col-form-label sp">Elija el archivo <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <label style="font-weight:600" class="col-form-label en">Choose File <span style="font-size: 20px ;color:red">&#42;</span></label>
+                                        <div class="custom-file shadow mb-3">
+                                            @*<input type="file" class="custom-file-input" id="exampleInputFile" onchange="ValidateFile($(this))">
+                                            <label class="custom-file-label en" for="exampleInputFile">No File Chosen</label>
+                                            <label class="custom-file-label sp" for="exampleInputFile">Ningún archivo elegido</label>*@
+                                            <input type="file" class="custom-file-input en" id="exampleInputFileEN" onchange="ValidateFile($(this))">
+                                          <label class="custom-file-label en" for="exampleInputFileEN">No File Chosen</label>
+                                          <input type="file" class="custom-file-input sp" id="exampleInputFileSP" onchange="ValidateFile($(this))">
+                                          <label class="custom-file-label sp" for="exampleInputFileSP">Ningún archivo elegido</label>
+                                        </div>
+                                        <span id="fileError" class="error text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right sp" onclick="Modalert()"> Cancelar</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary float-right en" onclick="Modalert()"> Cancel</button>
+                        <button type="button" id="uploadBtnsp" class="btn btn-sm btn-custom float-right sp" onclick="return UploadDoc();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa-solid fa-upload mr-2"></i> Sube el Archivo</button>
+                        <button type="button" id="uploadBtnen" class="btn btn-sm btn-custom float-right en" onclick="return UploadDoc();"><i id="spin" style="display:none" class="fas fa-spinner fa-spin mr-2"></i><i id="saveicon" class="fa-solid fa-upload mr-2"></i> Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

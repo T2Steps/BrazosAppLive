@@ -1,0 +1,276 @@
+﻿@model DailyMoneyReportVM
+
+@{
+    Layout = null;
+    var baseUrl = @config.GetSection("BaseUrl").Value;
+    var userId = 0;
+    var ReceiptNo = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        table {
+            width: 1000px;
+            border-collapse: collapse;            
+        }
+        tbody tr:nth-child(even) {
+            background-color: whitesmoke;
+        }
+        tbody tr {
+            font-weight: normal;
+            font-size: 14px
+        }
+        th {
+            padding: 8px;
+            padding-bottom: 15px !important;
+            text-align: left;
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #abaaaa;
+        }
+        td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:100%; float:left; border-bottom: 1px solid black;">
+        <div style="width:26%; float:left; text-align:right;padding-right:10px">
+            <img src="@baseUrl/Images/Logo/logoclient.png" height="125" style="padding-top:10px" />
+        </div>
+        <div style="width:68%; float:left">
+            <div style="font-size:20px; font-family:Verdana; padding-top:10px;padding-bottom:3px">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BRAZOS COUNTY HEALTH DISTRICT<br /></span>
+            </div>
+            <div style="font-size:17px; font-family:Verdana;padding-bottom:3px; padding-left:27px">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;201 North Texas Ave. Bryan, TX 77803<br /></span>
+            </div>
+            <div style="font-size:17px; font-family:Verdana; padding-bottom:3px;padding-left:5px">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;www.BrazosHealth.org<br /></span>
+            </div>
+            <div style="font-size:17px; font-family:Verdana;padding-bottom:3px; padding-left:33px">
+                <span>Phone: (979) 361-4440 Fax: (979) 361-5759<br /></span>
+            </div>
+        </div>
+    </div>    
+    <div style="width:100%; float:left; padding-top: 5px; padding-bottom: 10px; text-align: center; font-family:Verdana;">
+        <h1>Daily Money Report</h1>
+    </div>
+    <div style="width:100%; float:left; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            Dates
+        </div>
+        <div style="width: 70%;float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            @Model.dailyMoneyReport.strFromDate   @Model.dailyMoneyReport.strToDate
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 5px; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            Program/s
+        </div>
+        <div style="width: 70%; float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            @Model.dailyMoneyReport.strPrograms
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 5px; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            <span>Jurisdiction/s</span>
+        </div>
+        <div style="width: 70%; float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            <span>@Model.dailyMoneyReport.strJurisdictions</span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 5px; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            <span>AccountDescription/s</span>
+        </div>
+        <div style="width: 70%; float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            <span>@Model.dailyMoneyReport.strAccountDescriptions</span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 5px; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            <span>User/s</span>
+        </div>
+        <div style="width: 70%; float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            <span>@Model.dailyMoneyReport.strUserNames</span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 5px; font-family:Verdana;">
+        <div style="width: 30%; float:left; font-size:16px; font-weight: bold; font-family:Verdana;">
+            <span>Method/s of Payment</span>
+        </div>
+        <div style="width: 70%; float:left; font-size:16px; font-weight: normal; font-family:Verdana;">
+            <span>@Model.dailyMoneyReport.strPaymentModes</span>
+        </div>
+    </div>
+    <div style="width:100%; float:left; padding-top: 20px; font-family:Verdana;">
+        <h3>Summary</h3>
+    </div>
+    <div style="width:100%; float:left; font-family:Verdana;">
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: right;">Cash</th>
+                    <th style="text-align: right;">Check</th>
+                    <th style="text-align: right;">Money Order</th>
+                    <th style="text-align: right;">Credit Cards</th>
+                    <th style="text-align: right;">Voids</th>
+                    <th style="text-align: right;">Refunds</th>
+                    <th style="text-align: right;">Final Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.dailyMoneyReport.dailyMoneySummaries!.Any())
+                {
+                    foreach (var summary in Model.dailyMoneyReport.dailyMoneySummaries!)
+                    {
+                        <tr>
+                            <td style="text-align: right;">@((summary.TotalCashAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalCashAmount).ToString("N2") : "$ " + summary.TotalCashAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalChequeAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalChequeAmount).ToString("N2") : "$ " + summary.TotalChequeAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalMoneyOrderAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalMoneyOrderAmount).ToString("N2") : "$ " + summary.TotalMoneyOrderAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalCardAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalCardAmount).ToString("N2") : "$ " + summary.TotalCardAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalVoidAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalVoidAmount).ToString("N2") : "$ " + summary.TotalVoidAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalRefundAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalRefundAmount).ToString("N2") : "$ " + summary.TotalRefundAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((summary.TotalFinalAmount < 0 ? "- $ " + System.Math.Abs(summary.TotalFinalAmount).ToString("N2") : "$ " + summary.TotalFinalAmount.ToString("N2")))</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="width:100%; float:left; padding-top: 10px; padding-bottom: 5px; font-family:Verdana;">
+        <h3>User Wise Summary</h3>
+    </div>
+    <div style="width:100%; float:left; font-family:Verdana;">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th style="text-align: right;">Cash</th>
+                    <th style="text-align: right;">Check</th>
+                    <th style="text-align: right;">Money Order</th>
+                    <th style="text-align: right;">Credit Cards</th>
+                    <th style="text-align: right;">Voids</th>
+                    <th style="text-align: right;">Refunds</th>
+                    <th style="text-align: right;">Total</th>
+                </tr>
+            </thead>
+            <tbody>                
+                @if (Model.dailyMoneyReport.dailyMoneyUserWiseSummaries!.Any())
+                {
+                    foreach (var userSummary in Model.dailyMoneyReport.dailyMoneyUserWiseSummaries!)
+                    {
+                        <tr>
+                            <td>@userSummary.UserAlias</td>
+                            <td style="text-align: right;">@((userSummary.CashAmount < 0 ? "- $ " + System.Math.Abs(userSummary.CashAmount).ToString("N2") : "$ " + userSummary.CashAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.ChequeAmount < 0 ? "- $ " + System.Math.Abs(userSummary.ChequeAmount).ToString("N2") : "$ " + userSummary.ChequeAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.MoneyOrderAmount < 0 ? "- $ " + System.Math.Abs(userSummary.MoneyOrderAmount).ToString("N2") : "$ " + userSummary.MoneyOrderAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.CardAmount < 0 ? "- $ " + System.Math.Abs(userSummary.CardAmount).ToString("N2") : "$ " + userSummary.CardAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.VoidAmount < 0 ? "- $ " + System.Math.Abs(userSummary.VoidAmount).ToString("N2") : "$ " + userSummary.VoidAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.RefundAmount < 0 ? "- $ " + System.Math.Abs(userSummary.RefundAmount).ToString("N2") : "$ " + userSummary.RefundAmount.ToString("N2")))</td>
+                            <td style="text-align: right;">@((userSummary.TotalAmount < 0 ? "- $ " + System.Math.Abs(userSummary.TotalAmount).ToString("N2") : "$ " + userSummary.TotalAmount.ToString("N2")))</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.dailyMoneyReport.dailyMoneyUserWises.Any())
+    {
+        <div style="visibility:hidden;">test</div>
+        <div style="page-break-before:always;"></div>
+        <div style="width:100%; float:left; padding-top: 5px; padding-bottom: 5px; font-family:Verdana;">
+            <h3>By Users</h3>
+        </div>
+
+        var groupedUserList = (from user in Model.dailyMoneyReport.dailyMoneyUserWises select new { Id = user.Id, Name = user.UserAlias }).GroupBy(x => new
+        {
+            x.Id,
+            x.Name
+        }).ToList();
+
+        foreach (var user in groupedUserList)
+        {
+            <div style="width:100%; float:left; background-color: #abaaaa; font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-family:Verdana;">
+                <h5>@user.Key.Name</h5>
+            </div>
+            
+            var groupedReceiptList = (from receipt in Model.dailyMoneyReport.dailyMoneyUserWises.Where(x => x.Id == user.Key.Id)
+                                      select new
+                                      {
+                                          UserId = receipt.Id,
+                                          ReceiptNo = receipt.ReceiptNo,
+                                          InvoiceNo = receipt.InvoiceNo,
+                                          PaymentOn = receipt.PaymentOn,
+                                          TotalAmount = receipt.TotalAmount,
+                                          Program = receipt.Program,
+                                          Jurisdiction = receipt.Jurisdiction
+                                      }).GroupBy(x => new
+                                      {
+                                          x.UserId,
+                                          x.ReceiptNo,
+                                          x.InvoiceNo,
+                                          x.PaymentOn,
+                                          x.TotalAmount,
+                                          x.Program,
+                                          x.Jurisdiction
+                                      }).ToList();
+            <div style="width:100%; padding-top: 5px; padding-bottom: 5px; font-family:Verdana;">
+                <table style="width:100%; font-family:Verdana;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Receipt</td>
+                            <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Date & Time</td>
+                            <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Program</td>
+                            <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Jurisdiction</td>
+                            <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px; text-align: right;">Total</td>
+                        </tr>
+                        @foreach (var receipt in groupedReceiptList)
+                        {
+                            var groupedPaymentMethod = (from paymentMethod in Model.dailyMoneyReport.dailyMoneyUserWises.Where(x => x.Id == user.Key.Id && x.ReceiptNo == receipt.Key.ReceiptNo)
+                                                        select new
+                                                        {
+                                                            PaymentMethod = paymentMethod.PaymentMethod,
+                                                            AmountReceived = paymentMethod.AmountReceived
+                                                        }).ToList();
+
+                            <tr>
+                                <td style="width: 20%;">@receipt.Key.ReceiptNo</td>
+                                <td style="width: 20%;">@receipt.Key.PaymentOn.Value.ToString()</td>
+                                <td style="width: 20%;">@receipt.Key.Program</td>
+                                <td style="width: 20%;">@receipt.Key.Jurisdiction</td>
+                                <td style="width: 20%; text-align: right;">@((receipt.Key.TotalAmount < 0 ? "- $ " + System.Math.Abs(receipt.Key.TotalAmount).ToString("N2") : "$ " + receipt.Key.TotalAmount.ToString("N2")))</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px;">Mode of Payment</td>
+                                <td style="width: 20%; font-weight: bold; padding-top: 5px; padding-bottom: 5px; text-align: right;">Amount Received</td>
+                            </tr>
+                            @if (groupedPaymentMethod.Any())
+                            {
+                                @foreach (var paymentMethod in groupedPaymentMethod)
+                                {
+                                    <tr>
+                                        <td style="width: 20%; padding-top: 5px; padding-bottom: 5px;">@paymentMethod.PaymentMethod</td>
+                                        <td style="width: 20%; padding-top: 5px; padding-bottom: 5px; text-align: right;">@((paymentMethod.AmountReceived < 0 ? "- $ " + System.Math.Abs(paymentMethod.AmountReceived).ToString("N2") : "$ " + paymentMethod.AmountReceived.ToString("N2")))</td>
+                                    </tr>
+                                }
+                            }
+                            <tr>
+                                <td colspan="5"><hr /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    
+</body>
+</html>

@@ -1,0 +1,502 @@
+﻿@using System.Security.Claims
+@model ProfileVM
+
+
+@{
+      ViewData["Title"] = "Profile";
+      var baseurl = ViewBag.baseurl.ToString();
+      var apiUrl = ViewBag.apiUrl.ToString();
+      var Dashboard = ViewBag.Dashboard.ToString();
+      var role = ViewBag.role.ToString();
+      var signFileName = Model.User!.SignFileName;
+      var userId = Model.User.Id;
+      var src = "";
+      if (role == SD.SuperAdmin)
+      {
+            src = ViewBag.baseurl + "/Images/AdminLte/avatar5.png";
+      }
+      else if (role == SD.AdminInspector || role == SD.Admin)
+      {
+            src = ViewBag.baseurl + "/Images/AdminLte/avatar.png";
+      }
+      else if (role == SD.Inspector || role == SD.Clerk)
+      {
+            src = ViewBag.baseurl + "/Images/AdminLte/avatar4.png";
+      }
+
+}
+<style>
+    .rounded {
+        flex: none;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#A48464">My Profile</h1>
+            </div>
+            <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href=@Dashboard style="color:#022E5F">Home</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                  </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row m-2">
+        <div class="col-md-12">
+            <div class="card card-outline" style="border-top:3px solid #022E5F">
+                <div class="card-header">
+                    <img src="@src" style="float:left;border-radius:50%" height="45" width="45" />
+                    <h2 style="font-size:20px;color:#A48464;padding-top:10px;padding-left:15px" class="card-title">
+                        @User.Identity.Name
+                    </h2>
+                    <div class="card-tools">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#resetPassword" class="btn btn-block btn-custom float-right mt-2" onclick="clrall();"><i class="fas fa-edit mr-2"></i> Reset Password</button>
+                    </div>
+                    
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">First Name</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="User.FirstName" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Last Name</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.LastName" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">BHCD</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.BHCD" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Email Address</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.EmailId" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Registered Sanitarian</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.RegisteredSanitarian" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Sanitarian in Training</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.SanitarianInTrain" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Designated Representative</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.DesignatedRepresentative" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Certified Pool Operator</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.CertifiedPoolOperator" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Designation</label>
+                                    <input type="text" class="form-control shadow mb-3" readonly asp-for="@Model.User.Role.Name" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Signature</label>
+                                    <div class="input-group">
+                                          <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                          </div>
+                                          <div class="input-group-append">
+                                                <button type="button" class="btn btn-sm btn-secondary" onclick="return SignatureUpload();">Upload</button>
+                                          </div>
+                                    </div>
+                                    <span id="signatureUploadError" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="font-weight:600">Uploaded Signature</label>
+                                    <div class="input-group">
+                                          <img id="signImg" src="" class="img-fluid" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-->
+    </div>
+
+</section>
+
+@await Html.PartialAsync("_ResetPasswordPartialView", Model.ResetPassword)
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+
+    <script>
+          $(function(){
+                bsCustomFileInput.init();
+                if("@signFileName"==""){
+                    $("#signImg").attr("src", "/Images/AdminLte/default-150x150.png");
+                    $("#signImg").attr("alt", "No Image To Preview");
+                    $("#signImg").css("border", "1px solid");
+                }
+                else{
+                    $("#signImg").attr("src", "/Images/UsersSignature/@userId/@signFileName");
+                    $("#signImg").attr("alt", "Uploaded Signature");
+                    $("#signImg").css("border", "1px solid");
+                }
+          });
+    </script>
+
+    <script>
+        function clrall() {
+            $('#PasswordReset').trigger('reset');
+            if ($('#showhideicon1').hasClass("fa-eye-slash")) 
+            {
+                $('#showhideicon1').removeClass('fa-eye-slash');
+                $('#showhideicon1').addClass('fa-eye');
+                $('#curpas').attr('type', 'password');
+            }
+            if ($('#showhideicon2').hasClass("fa-eye-slash")) {
+                $('#showhideicon2').removeClass('fa-eye-slash');
+                $('#showhideicon2').addClass('fa-eye');
+                $('#newpas').attr('type', 'password');
+            }
+            if ($('#showhideicon3').hasClass("fa-eye-slash")) {
+                $('#showhideicon3').removeClass('fa-eye-slash');
+                $('#showhideicon3').addClass('fa-eye');
+                $('#conpas').attr('type', 'password');
+            }
+        }
+    </script>
+
+    <script>
+        function SignatureUpload()
+        {
+            var flg=0;
+            if($('#exampleInputFile').val()=="")
+            {
+                $('#signatureUploadError').text("ⓘ No File Chosen To Upload ");
+                setTimeout(() => {
+                    $('#signatureUploadError').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if(flg==1){
+                  return false;
+            }
+            else{
+                  var src = ""
+                    var url = '/SignatureUpload';
+                    //var Tok = "";
+                    // if ('@role' == '@SD.AdminInspector' || '@role' == '@SD.Inspector') {
+                    //     url = '@apiUrl' + '/Inspector/SignatureUpload'
+                    //     Tok = '@User.FindFirstValue("Token")'
+                    // }
+                    // else {
+                    //     url = '/SignatureUpload'
+                    //     Tok = '';
+                    // }
+                  var formData = new FormData();
+                  formData.append('SignFile', $('#exampleInputFile')[0].files[0]);
+                  $.ajax({
+                        type: "POST",
+                        url: url,
+                        // headers: {
+                        //     'Authorization': `Bearer ${Tok}`,
+                        //     //'Content-Type': 'application/json'
+                        // },
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('div#loading-wrapper').show();
+                        },
+                        success: function(data){
+                              console.log(data);
+                            if (data.success) {
+                                $('audio#success_sound')[0].play();
+                                if (data.msg != undefined) {
+                                    setTimeout(() => {
+                                        toastr.success(data.msg);
+                                    }, 500)
+                                    src = data.src + '?t=' + new Date();
+                                }
+                                else {
+                                    setTimeout(() => {
+                                        toastr.success(data.response.message);
+                                    }, 500)
+                                    src = data.response.result + '?t=' + new Date();
+                                }
+                            }
+                            else {
+                                $('audio#errorsound')[0].play();
+                                if (data.msg != undefined) { 
+                                    setTimeout(() => {
+                                        toastr.error(data.msg);
+                                    }, 775)
+                                }
+                                else{
+                                    setTimeout(() => {
+                                        toastr.error(data.response.message);
+                                    }, 775)
+                                }
+                                
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                        complete: function (data) {
+                            console.log(src);
+                              //console.log(data);
+                            $('div#loading-wrapper').hide();
+                            //$("#signImg").attr("src", "");
+                            //console.log(src);
+                            //console.log(src);
+                            $("#signImg").attr("src", "/Images/AdminLte/default-150x150.png");
+                            $("#signImg").attr("src", src);
+                            $("#signImg").attr("alt", "Uploaded Signature");
+                            $('#exampleInputFile').val("");
+                            $('.custom-file-input').next('.custom-file-label').html('Choose file');
+                            //var url="/Profile"
+                            //window.location.href = url;
+                        }
+                  })
+            }
+        }
+
+        function validate() 
+        {
+            var flg = 0;
+            if ($('#curpas').val() == "") {
+                $('#curpaserror').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#curpaserror').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#newpas').val() == "") {
+                $('#newpaserror').text("ⓘ Required Field");
+                setTimeout(() => {
+                    $('#newpaserror').html("");
+                }, 5000)
+                flg = 1;
+            }
+            if ($('#conpas').val() == "") {
+                $('#conpaserror').text("ⓘ Required Field ");
+                setTimeout(() => {
+                    $('#conpaserror').html("");
+                }, 5000)
+                flg = 1;
+            }
+
+            if (flg == 1) { return "Invalid" }
+            else {return "Valid" }
+        }
+
+        function Resetpassword() 
+        {
+            var str = validate();
+            if (str == "Invalid") {
+                return false;
+            }
+            else if(str=="Valid"){
+                var url = "";
+                var Tok = "";
+                if ('@role' == '@SD.AdminInspector' || '@role' == '@SD.Inspector') {
+                    url = '@apiUrl' + '/Inspector/Reset_Password'
+                    Tok = '@User.FindFirstValue("Token")'
+                }
+                else {
+                    url = '/Reset_Password'
+                    Tok = '';
+                }
+                // var formData = new FormData();
+                // formData.append('CurrentPassword', $('#curpas').val())
+                // formData.append('NewPassword', $('#newpas').val())
+                // formData.append('ConfirmPassword', $('#conpas').val())
+                
+                  $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers: {
+                            'Authorization': `Bearer ${Tok}`,
+                            //'Content-Type': 'application/json'
+                        },
+                        data: $('#PasswordReset').serialize(),
+                        beforeSend: function () {
+                            $('div#loading-wrapper').show();
+                            $('#spin').show();
+                            $('#saveicon').hide();
+                        },
+                        success: function(data){
+                            console.log(data);
+                            console.log(data.msg);
+                            if (data.success) {
+                                if (data.msg != undefined) {
+                                    $('audio#success_sound')[0].play();
+                                    setTimeout(() => {
+                                        toastr.success(data.msg);
+                                    }, 500)
+                                }
+                                else {
+                                    $('audio#success_sound')[0].play();
+                                    setTimeout(() => {
+                                    toastr.success(data.response.message);
+                                    }, 500)
+                                }
+                            }
+                            else{
+                                if (data.msg != undefined) {
+                                    $('audio#errorsound')[0].play();
+                                    setTimeout(() => {
+                                        toastr.error(data.msg);
+                                    }, 775)
+                                }
+                                else {
+                                    $('audio#errorsound')[0].play();
+                                    setTimeout(() => {
+                                        toastr.error(data.response.message);
+                                    }, 775)
+                                }
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                        complete: function () {
+                            $('div#loading-wrapper').hide();
+                            $('#spin').hide();
+                            $('#saveicon').show();
+                            $('#resetPassword').modal('hide');
+                        }
+                  })
+            }
+        }
+    </script>
+
+    <script>
+        var x = document.getElementById("curpas");
+        var y = document.getElementById("newpas");
+        var z = document.getElementById("conpas");
+        function showhide3() {
+            debugger;
+            var k = document.getElementById("showhideicon3");
+
+            if (z.type === "password") {
+                if (k.classList.contains('fa-eye')) {
+                    k.classList.remove('fa-eye')
+                    k.classList.add('fa-eye-slash')
+                }
+                z.type = "text";
+            }
+            else {
+                k.classList.remove('fa-eye-slash');
+                k.classList.add('fa-eye');
+                z.type = "password";
+            }
+        }
+    </script>
+
+    <script>
+        function showhide2() {
+            debugger;
+
+            var j = document.getElementById("showhideicon2");
+
+            if (y.type === "password") {
+                if (j.classList.contains('fa-eye')) {
+                    j.classList.remove('fa-eye')
+                    j.classList.add('fa-eye-slash')
+                }
+                y.type = "text";
+            }
+            else {
+                j.classList.remove('fa-eye-slash');
+                j.classList.add('fa-eye');
+                y.type = "password";
+            }
+
+        }
+    </script>
+
+    <script>
+        function showhide1() {
+            debugger;
+
+            var i = document.getElementById("showhideicon1");
+            if (x.type === "password") {
+                if (i.classList.contains('fa-eye')) {
+                    i.classList.remove('fa-eye')
+                    i.classList.add('fa-eye-slash')
+                }
+                x.type = "text";
+            }
+            else {
+                i.classList.remove('fa-eye-slash');
+                i.classList.add('fa-eye');
+                x.type = "password";
+            }
+        }
+    </script>
+
+    <script>
+        function Modalert() {
+            var flg = 0;
+            if ($('#curpas').val() != "") {
+                flg = 1;
+            }
+            if ($('#newpas').val() != "") {
+                flg = 1;
+            }
+            if ($('#conpas').val() != "") {
+                flg = 1;
+            }
+            if (flg == 1) {
+                if (confirm("You have some unsaved Changes. On closing, your progress will be lost")) {
+                    $('#resetPassword').modal('hide');
+                }
+            }
+            else {
+                $('#resetPassword').modal('hide');
+            }
+        }
+    </script>
+}
+
+
