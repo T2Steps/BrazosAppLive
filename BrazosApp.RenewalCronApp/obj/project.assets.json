@@ -9541,11 +9541,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\BrazosApp.RenewalCronApp.csproj",
+      "projectUniqueName": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\BrazosApp.RenewalCronApp.csproj",
       "projectName": "BrazosApp.RenewalCronApp",
-      "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\BrazosApp.RenewalCronApp.csproj",
+      "projectPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\BrazosApp.RenewalCronApp.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\obj\\",
+      "outputPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.RenewalCronApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9566,17 +9566,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj": {
-              "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj"
+            "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj": {
+              "projectPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj"
             },
-            "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj": {
-              "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj"
+            "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj": {
+              "projectPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.Models\\BrazosApp.Models.csproj"
             },
-            "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj": {
-              "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj"
+            "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj": {
+              "projectPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.Utility\\BrazosApp.Utility.csproj"
             },
-            "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp\\BrazosApp.csproj": {
-              "projectPath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp\\BrazosApp.csproj"
+            "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp\\BrazosApp.csproj": {
+              "projectPath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp\\BrazosApp.csproj"
             }
           }
         }
@@ -9585,6 +9585,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -9624,7 +9629,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

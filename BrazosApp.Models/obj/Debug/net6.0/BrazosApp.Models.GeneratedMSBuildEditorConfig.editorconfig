@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BrazosApp.Models
-build_property.ProjectDir = D:\Tech2Steps\Office\Projects\BrazosApp\Working\BrazosAppLive\BrazosApp.Models\
+build_property.ProjectDir = D:\Office\Projects\Adapt360\Brazos\Working\BrazosAppLive\BrazosApp.Models\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

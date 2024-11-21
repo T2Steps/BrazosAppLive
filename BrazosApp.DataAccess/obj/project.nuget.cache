@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KkEUSTcPMAMTC47OVQpe2wVcTk7lsopZ5vd+kSBiPZ/Juru7dDyuT47LvJQY0O5Ays2pbkMR4zQMTCHQJ/Rmbw==",
+  "dgSpecHash": "1GKa9IAN0wPBzh4eoGVsYfmR1yeW9quS2gS8oygLiygIk3Y/83AiULaRL3jE6aIQ+UvRRSoEiwvpxPbGgPZNIw==",
   "success": true,
-  "projectFilePath": "D:\\Tech2Steps\\Office\\Projects\\BrazosApp\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj",
+  "projectFilePath": "D:\\Office\\Projects\\Adapt360\\Brazos\\Working\\BrazosAppLive\\BrazosApp.DataAccess\\BrazosApp.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
